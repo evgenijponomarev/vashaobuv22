@@ -19,6 +19,7 @@ export default function LocationButton({ onClick, currentStore }) {
 
         .${B}__text {
           color: #fff;
+          white-space: nowrap;
         }
 
         .${B}:hover {

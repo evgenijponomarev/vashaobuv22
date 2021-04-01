@@ -95,6 +95,7 @@ export default function Menu({ currentStore }) {
           color: #fff;
           display: flex;
           align-items: center;
+          white-space: nowrap;
         }
 
         .${B}__link:hover {
@@ -102,12 +103,6 @@ export default function Menu({ currentStore }) {
         }
 
         @media (max-width: 700px) {
-          .${B}__link {
-            font-size: 14px;
-          }
-        }
-
-        @media (max-width: 620px) {
           .${B} {
             overflow: hidden;
             position: fixed;
