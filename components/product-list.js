@@ -1,5 +1,3 @@
-import Link from 'next/link';
-
 import Product from './product';
 
 export default function ProductList({ products }) {
@@ -7,12 +5,10 @@ export default function ProductList({ products }) {
 
   return (
     <div className={B}>
-      {products.map((product, key) => (
-        <Link href={`/new/${key}`} key={key}>
-          <a className={`${B}__item`}>
-            <Product productData={product}/>
-          </a>
-        </Link>
+      {products.map((product) => (
+        <div className={`${B}__item`} key={product.code}>
+          <Product productData={product}/>
+        </div>
       ))}
 
       <style jsx>{`
@@ -24,9 +20,27 @@ export default function ProductList({ products }) {
 
         .${B}__item {
           display: block;
-          text-decoration: none;
-          color: inherit;
-          padding: 4px;
+          padding: 10px;
+          width: 20%;
+          align-self: stretch;
+        }
+
+        @media (max-width: 800px) {
+          .${B}__item {
+            width: 25%;
+          }
+        }
+
+        @media (max-width: 560px) {
+          .${B}__item {
+            width: 33%;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .${B}__item {
+            width: 50%;
+          }
         }
       `}</style>
     </div>

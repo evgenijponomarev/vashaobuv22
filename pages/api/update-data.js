@@ -53,6 +53,7 @@ function makeDataFiles() {
         const shoesEntry = sourceData.shoes.find(shoe => shoe.code === product.shoe_code);
 
         return {
+          code: shoesEntry.code,
           name: shoesEntry.name,
           articul: shoesEntry.articul,
           type: shoesEntry.type,
