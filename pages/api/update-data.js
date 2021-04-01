@@ -11,15 +11,31 @@ const PUBLIC_DIR = path.join(process.cwd(), 'public');
 const DATA_DIR = path.join(process.cwd(), 'data');
 const UPLOADS_DIR = path.join(process.cwd(), 'uploads');
 const SHOES_PHOTOS_DIR = path.join(PUBLIC_DIR, 'shoes_photos');
-const DUMP_FILE_NAME = '1s_dump';
-const DUMP_FILE_PATH = path.join(UPLOADS_DIR, `${DUMP_FILE_NAME}.zip`);
+const DUMP_FIELD_NAME = '1s_dump';
+const DUMP_FILE_NAME = `${DUMP_FIELD_NAME}.zip`;
+const DUMP_FILE_PATH = path.join(UPLOADS_DIR, DUMP_FILE_NAME);
 const DATA_FILE_NAME = 'data.json';
 const DATA_FILE_PATH = path.join(DATA_DIR, DATA_FILE_NAME);
 const STORES_FILE_PATH = path.join(DATA_DIR, 'stores.json');
 const BONUSES_FILE_PATH = path.join(DATA_DIR, 'bonuses.json');
+const LOG_FILE_PATH = path.join(process.cwd(), '1s_import.log');
 
-const buildData = () => {
+let importFileName = '';
+
+function validateData (data) {
+  return !!data.stores
+    && !!data.bonuses
+    && !!data.shoes
+    && !!data.products;
+}
+
+function makeDataFiles() {
   const sourceData = JSON.parse(fs.readFileSync(DATA_FILE_PATH));
+
+  if (!validateData(sourceData)) {
+    throw new Error('Invalid data format.');
+  }
+
   const bonuses = sourceData.bonuses;
   const stores = [];
 
@@ -54,20 +70,9 @@ const buildData = () => {
 
   fs.writeFileSync(STORES_FILE_PATH, JSON.stringify(stores));
   fs.writeFileSync(BONUSES_FILE_PATH, JSON.stringify(bonuses));
-};
+}
 
-const onError = (error, req, res) => {
-  res.status(501).json({
-    status: 'error',
-    error: `Sorry something Happened! ${error.message}`,
-  });
-};
-
-const onNoMatch = (req, res) => {
-  res.status(405).json({ error: `Method '${req.method}' Not Allowed` });
-};
-
-const onSuccess = async (req, res) => {
+async function unzip() {
   try {
     await extractZip(DUMP_FILE_PATH, {
       dir: UPLOADS_DIR,
@@ -76,28 +81,70 @@ const onSuccess = async (req, res) => {
       },
     });
 
-    buildData();
-
-    res.status(200).json({ status: 'ok' });
+    console.log('File unzipped');
   } catch (err) {
-    console.log(err);
+    console.error(err);
 
     res.status(502).json({
       status: 'error',
-      error: 'File was not unzipped',
+      error: 'File not unzipped',
     });
+
+    process.exit(1);
   }
-};
+}
+
+function buildData() {
+  try {
+    makeDataFiles();
+    console.log('Data updated');
+  } catch (err) {
+    console.error(err);
+
+    res.status(502).json({
+      status: 'error',
+      error: 'Incorrect JSON format',
+    });
+
+    process.exit(1);
+  };
+}
+
+function onError(error, req, res) {
+  res.status(501).json({
+    status: 'error',
+    error: `Sorry something Happened! ${error.message}`,
+  });
+}
+
+function onNoMatch(req, res) {
+  res.status(405).json({ error: `Method '${req.method}' Not Allowed` });
+}
+
+async function onSuccess(req, res) {
+  await unzip();
+  buildData();
+
+  const currentTimestamp = Date.now();
+  const currentTime = new Date(currentTimestamp).toString()
+
+  fs.appendFileSync(LOG_FILE_PATH, `Time: ${currentTime}. Filename: ${importFileName}\n`);
+
+  res.status(200).json({ status: 'ok' });
+}
 
 const uploadMiddleware = multer({
   storage: multer.diskStorage({
     destination: UPLOADS_DIR,
-    filename: (req, file, cb) => cb(null, file.originalname),
+    filename: (req, file, cb) => {
+      importFileName = file.originalname;
+      cb(null, DUMP_FILE_NAME);
+    },
   }),
-}).single(DUMP_FILE_NAME);
+});
 
 export default nextConnect({ onError, onNoMatch })
-  .use(uploadMiddleware)
+  .use(uploadMiddleware.single(DUMP_FIELD_NAME))
   .post(onSuccess);
 
 export const config = {
