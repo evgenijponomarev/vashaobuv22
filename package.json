@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next build && next start",
+    "start-production": "nodemon -p 80"
   },
   "dependencies": {
     "cyrillic-to-translit-js": "^3.1.0",
@@ -15,5 +16,8 @@
     "next-connect": "^0.10.1",
     "react": "17.0.1",
     "react-dom": "17.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }
