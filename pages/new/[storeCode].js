@@ -1,29 +1,22 @@
-import { useState, useEffect } from 'react';
-import productsModel from '../../models/products';
-import storesModel from '../../models/stores';
+import { useRouter } from 'next/router';
+import Data from '../../lib/data';
 import Layout from '../../components/layout';
 import ProductList from '../../components/product-list';
 import Pagination from '../../components/pagination';
 
-const COUNT_ON_PAGE = 20;
-
-export default function New({ stores = [], products = [] }) {
-  const currentStore = stores.find(store => store.isCurrent);
-
-  const [pageList, setPageList] = useState(getPageList(1));
-
-  useEffect(() => {
-    const userStoreCode = localStorage.getItem('store');
-
-    if (userStoreCode !== currentStore.code) {
-      localStorage.setItem('store', currentStore.code);
-      setPageList(getPageList(1));
-    }
-  });
+export default function New({ storeCode, stores = [], products = [] }) {
+  const router = useRouter();
+  const currentRoute = router.asPath;
+  const currentStoreCode = router.query.storeCode || '';
 
   return (
-    <Layout stores={stores} currentStore={currentStore}>
-      <ProductList products={pageList}/>
+    <Layout stores={stores}>
+      <ProductList
+        products={products.map(product => ({
+          ...product,
+          url: `/new/${currentStoreCode}/${product.code}`,
+        }))}
+      />
 
       {/* <Pagination
         pagesCount={pagesCount}
@@ -34,38 +27,14 @@ export default function New({ stores = [], products = [] }) {
   )
 }
 
-export async function getStaticProps({ params }) {
-  const stores = storesModel.getList().map(store => ({
-    ...store,
-    isCurrent: store.code === params.storeCode,
-  }));
-  const products = productsModel.getList(params);
+export async function getServerSideProps({ query }) {
+  const data = new Data(query);
 
   return {
     props: {
-      stores,
-      products,
+      storeCode: query.storeCode,
+      stores: data.getStores(),
+      products: data.getProducts(),
     },
-    revalidate: 5,
-  };
-}
-
-export async function getStaticPaths() {
-  const stores = storesModel.getList();
-  const paths = stores.map((store) => {
-    const storeCode = store.code;
-    const pageNumbersList = productsModel.getPageNumbersList({ storeCode });
-
-    return pageNumbersList.map((pageNum) => ({
-      params: {
-        storeCode,
-        pageNum,
-      }
-    }));
-  }).flat();
-
-  return {
-    paths,
-    fallback: true,
   };
 }

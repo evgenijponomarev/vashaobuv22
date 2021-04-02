@@ -8,7 +8,7 @@ export default function Product({ productData }) {
 
   return (
     <div className={B}>
-      <Link href={`/new/${productData.storeCode}/${productData.code}`}>
+      <Link href={productData.url}>
         <a
           className={`${B}__link`}
           title={title}
