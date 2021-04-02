@@ -4,16 +4,16 @@ import { useRouter } from 'next/router'
 import Link from 'next/link';
 import styleVars from '../styles/vars';
 
-export default function Menu({ currentStore }) {
+export default function Menu() {
   const B = 'menu';
   const [isOpened, setMenuOpened] = useState(false);
   const router = useRouter();
   const currentRoute = router.asPath;
-  const storeCode = currentStore?.code ?? '';
+  const currentStoreCode = router.query.storeCode || '';
 
   const routes = [
-    { url: `/new/${storeCode}`, text: 'Новинки' },
-    { url: `/profit/${storeCode}`, text: 'Выгодные предложения' },
+    { url: `/new/${currentStoreCode}`, text: 'Новинки' },
+    { url: `/profit/${currentStoreCode}`, text: 'Выгодные предложения' },
     { url: '/bonuses', text: 'Бонусная программа' },
     { url: '/contacts', text: 'Контакты' },
   ];

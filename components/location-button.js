@@ -1,9 +1,9 @@
-export default function LocationButton({ onClick, currentStore }) {
+export default function LocationButton({ onClick, storeName = '' }) {
   const B = 'location-button';
 
   return (
     <button className={B} onClick={onClick}>
-      <div className={`${B}__text`}>{currentStore?.name ?? ''}</div>
+      <div className={`${B}__text`}>{storeName}</div>
 
       <style jsx global>{`
         .${B} {

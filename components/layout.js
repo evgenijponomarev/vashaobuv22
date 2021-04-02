@@ -1,16 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Header from '../components/header';
 import Menu from '../components/menu';
 import LocationButton from '../components/location-button';
 import Container from '../components/container';
 import LocationDialog from '../components/location-dialog';
-import styleVars from '../styles/vars';
 
-export default function Layout({ children, stores = [], currentStore }) {
+export default function Layout({ children, stores = [] }) {
   const B = 'layout';
 
+  const currentStore = stores.find(store => store.isCurrent);
+  const currentStoreCode = currentStore?.code ?? '';
+  const currentStoreName = currentStore?.name ?? '';
+
   const [isLocationDialogOpened, toggleLocationDialog] = useState(false);
+
+  useEffect(() => {
+    const userStoreCode = localStorage.getItem('store');
+
+    if (currentStoreCode && currentStoreCode !== userStoreCode) {
+      localStorage.setItem('store', currentStoreCode);
+    }
+  });
 
   return (
     <div className={B}>
@@ -20,11 +31,11 @@ export default function Layout({ children, stores = [], currentStore }) {
       </Head>
 
       <Header>
-        <Menu currentStore={currentStore}/>
+        <Menu/>
 
         <LocationButton
           onClick={() => toggleLocationDialog(true)}
-          currentStore={currentStore}
+          storeName={currentStoreName}
         />
       </Header>
 
@@ -41,25 +52,6 @@ export default function Layout({ children, stores = [], currentStore }) {
       )}
 
       <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-        }
-
-        body,
-        button,
-        a {
-          font-family: ${styleVars.fontFamily};
-          font-size: 16px;
-          font-weight: 300;
-          color: #353535;
-        }
-
-        * {
-          box-sizing: border-box;
-        }
-
         .${B}__content {
           padding: 20px 0;
         }
