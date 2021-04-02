@@ -1,5 +1,0 @@
-{
-  "verbose": true,
-  "watch": ["1s_import.log"],
-  "ext": "log"
-}
