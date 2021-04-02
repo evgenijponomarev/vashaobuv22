@@ -22,6 +22,7 @@ export default function DialogWindow({ title, children, mix = '' }) {
           background: #fff;
           padding: 20px;
           border-radius: ${styleVars.borderRadius};
+          box-shadow: ${styleVars.boxShadow} rgba(0, 0, 0, .2);
         }
 
         .${B}__title {
