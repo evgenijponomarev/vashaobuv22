@@ -1,19 +1,23 @@
 import Container from '../components/container'
 import styleVars from '../styles/vars';
 
-export default function Header({ children }) {
+export default function Header({ children, mix }) {
   const B = 'header';
 
   return (
-    <div className={B}>
+    <div className={[B, mix].join(' ')}>
       <Container mix={`${B}__container`}>
         {children}
       </Container>
 
       <style jsx global>{`
         .${B} {
+          position: fixed;
+          top: 0;
+          left: 0;
+          z-index: 10;
           width: 100%;
-          height: 40px;
+          height: ${styleVars.headerHeigh};
           background: ${styleVars.colors.green};
           display: flex;
           align-items: center;

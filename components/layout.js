@@ -5,6 +5,7 @@ import Menu from '../components/menu';
 import LocationButton from '../components/location-button';
 import Container from '../components/container';
 import LocationDialog from '../components/location-dialog';
+import styleVars from '../styles/vars';
 
 export default function Layout({ children, stores = [] }) {
   const B = 'layout';
@@ -30,14 +31,16 @@ export default function Layout({ children, stores = [] }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header>
-        <Menu/>
+      <div className={`${B}__header`}>
+        <Header>
+          <Menu/>
 
-        <LocationButton
-          onClick={() => toggleLocationDialog(true)}
-          storeName={currentStoreName}
-        />
-      </Header>
+          <LocationButton
+            onClick={() => toggleLocationDialog(true)}
+            storeName={currentStoreName}
+          />
+        </Header>
+      </div>
 
       <Container mix={`${B}__content`}>
         {children}
@@ -52,6 +55,10 @@ export default function Layout({ children, stores = [] }) {
       )}
 
       <style jsx global>{`
+        .${B}__header {
+          height: ${styleVars.headerHeigh};
+        }
+
         .${B}__content {
           padding: 20px 0;
         }
