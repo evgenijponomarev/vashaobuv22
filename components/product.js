@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import proptypes from '../lib/proptypes';
 import styleVars from '../styles/vars';
 
 export default function Product({ productData }) {
@@ -53,7 +54,8 @@ export default function Product({ productData }) {
         </a>
       </Link>
 
-      <style jsx>{`
+      <style jsx>
+        {`
         .${B} {
           padding-bottom: 10px;
           position: relative;
@@ -128,7 +130,12 @@ export default function Product({ productData }) {
             padding: 10px 4px;
           }
         }
-      `}</style>
+      `}
+      </style>
     </div>
   );
 }
+
+Product.propTypes = {
+  productData: proptypes.product.isRequired,
+};

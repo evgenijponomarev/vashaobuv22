@@ -1,16 +1,17 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
-import Header from '../components/header';
-import Menu from '../components/menu';
-import LocationButton from '../components/location-button';
-import Container from '../components/container';
-import LocationDialog from '../components/location-dialog';
+import proptypes from '../lib/proptypes';
+import Header from './header';
+import Menu from './menu';
+import LocationButton from './location-button';
+import Container from './container';
+import LocationDialog from './location-dialog';
 import styleVars from '../styles/vars';
 
-export default function Layout({ children, stores = [] }) {
+export default function Layout({ children, stores }) {
   const B = 'layout';
 
-  const currentStore = stores.find(store => store.isCurrent);
+  const currentStore = stores.find((store) => store.isCurrent);
   const currentStoreCode = currentStore?.code ?? '';
   const currentStoreName = currentStore?.name ?? '';
 
@@ -54,7 +55,8 @@ export default function Layout({ children, stores = [] }) {
         />
       )}
 
-      <style jsx global>{`
+      <style jsx global>
+        {`
         .${B}__header {
           height: ${styleVars.headerHeigh};
         }
@@ -62,7 +64,17 @@ export default function Layout({ children, stores = [] }) {
         .${B}__content {
           padding: 20px 0;
         }
-      `}</style>
+      `}
+      </style>
     </div>
   );
 }
+
+Layout.defaultProps = {
+  stores: [],
+};
+
+Layout.propTypes = {
+  stores: proptypes.stores,
+  children: proptypes.node.isRequired,
+};

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Data from '../lib/data';
@@ -14,13 +15,13 @@ export default function Home({ stores }) {
     if (storeCode) {
       router.push(`/new/${storeCode}`);
     } else {
-      toggleLocationDialog(true)
+      toggleLocationDialog(true);
     }
   });
 
   return (
     <Layout>
-      {isLocationDialogOpened && <LocationDialog stores={stores}/>};
+      {isLocationDialogOpened && <LocationDialog stores={stores}/>}
     </Layout>
   );
 }
@@ -35,3 +36,11 @@ export async function getStaticProps() {
     revalidate: 10,
   };
 }
+
+Home.propTypes = {
+  stores: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    code: PropTypes.string.isRequired,
+    isCurrent: PropTypes.bool.isRequired,
+  })).isRequired,
+};

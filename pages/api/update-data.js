@@ -22,7 +22,7 @@ const LOG_FILE_PATH = path.join(process.cwd(), '1s_import.log');
 
 let importFileName = '';
 
-function validateData (data) {
+function validateData(data) {
   return !!data.stores
     && !!data.bonuses
     && !!data.shoes
@@ -36,10 +36,10 @@ function makeDataFiles() {
     throw new Error('Invalid data format.');
   }
 
-  const bonuses = sourceData.bonuses;
+  const { bonuses } = sourceData;
   const stores = [];
 
-  sourceData.stores.forEach(storeName => {
+  sourceData.stores.forEach((storeName) => {
     const storeCode = cyrillicToTranslit.transform(storeName, '_').toLowerCase();
 
     stores.push({
@@ -48,9 +48,9 @@ function makeDataFiles() {
     });
 
     const storeProducts = sourceData.products
-      .filter(product => product.store === storeName)
-      .map(product => {
-        const shoesEntry = sourceData.shoes.find(shoe => shoe.code === product.shoe_code);
+      .filter((product) => product.store === storeName)
+      .map((product) => {
+        const shoesEntry = sourceData.shoes.find((shoe) => shoe.code === product.shoe_code);
 
         return {
           code: shoesEntry.code,
@@ -74,41 +74,12 @@ function makeDataFiles() {
 }
 
 async function unzip() {
-  try {
-    await extractZip(DUMP_FILE_PATH, {
-      dir: UPLOADS_DIR,
-      onEntry: function(entry) {
-        this.dir = entry.fileName === DATA_FILE_NAME ? DATA_DIR : SHOES_PHOTOS_DIR;
-      },
-    });
-
-    console.log('File unzipped');
-  } catch (err) {
-    console.error(err);
-
-    res.status(502).json({
-      status: 'error',
-      error: 'File not unzipped',
-    });
-
-    process.exit(1);
-  }
-}
-
-function buildData() {
-  try {
-    makeDataFiles();
-    console.log('Data updated');
-  } catch (err) {
-    console.error(err);
-
-    res.status(502).json({
-      status: 'error',
-      error: 'Incorrect JSON format',
-    });
-
-    process.exit(1);
-  };
+  await extractZip(DUMP_FILE_PATH, {
+    dir: UPLOADS_DIR,
+    onEntry: function onEntry(entry) {
+      this.dir = entry.fileName === DATA_FILE_NAME ? DATA_DIR : SHOES_PHOTOS_DIR;
+    },
+  });
 }
 
 function onError(error, req, res) {
@@ -123,11 +94,37 @@ function onNoMatch(req, res) {
 }
 
 async function onSuccess(req, res) {
-  await unzip();
-  buildData();
+  try {
+    await unzip();
+
+    console.log('File unzipped');
+  } catch (err) {
+    console.error(err);
+
+    res.status(502).json({
+      status: 'error',
+      error: 'File not unzipped',
+    });
+
+    process.exit(1);
+  }
+
+  try {
+    makeDataFiles();
+    console.log('Data updated');
+  } catch (err) {
+    console.error(err);
+
+    res.status(502).json({
+      status: 'error',
+      error: 'Incorrect JSON format',
+    });
+
+    process.exit(1);
+  }
 
   const currentTimestamp = Date.now();
-  const currentTime = new Date(currentTimestamp).toString()
+  const currentTime = new Date(currentTimestamp).toString();
 
   fs.appendFileSync(LOG_FILE_PATH, `Time: ${currentTime}. Filename: ${importFileName}\n`);
 

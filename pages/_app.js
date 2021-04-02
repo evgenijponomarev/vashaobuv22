@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-props-no-spreading, react/forbid-prop-types */
+import PropTypes from 'prop-types';
 import styleVars from '../styles/vars';
 
 export default function App({ Component, pageProps }) {
@@ -5,7 +7,8 @@ export default function App({ Component, pageProps }) {
     <>
       <Component {...pageProps}/>
 
-      <style jsx global>{`
+      <style jsx global>
+        {`
         html,
         body {
           padding: 0;
@@ -24,7 +27,17 @@ export default function App({ Component, pageProps }) {
         * {
           box-sizing: border-box;
         }
-      `}</style>
+      `}
+      </style>
     </>
   );
 }
+
+App.defaultProps = {
+  pageProps: {},
+};
+
+App.propTypes = {
+  Component: PropTypes.func.isRequired,
+  pageProps: PropTypes.object,
+};

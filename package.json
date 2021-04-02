@@ -7,7 +7,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next build && next start",
-    "start-production": "next build && next start -p 80"
+    "start-production": "next build && next start -p 80",
+    "lint": "npx eslint ."
   },
   "dependencies": {
     "cyrillic-to-translit-js": "^3.1.0",
@@ -15,7 +16,16 @@
     "multer": "^1.4.2",
     "next": "^10.0.0",
     "next-connect": "^0.10.1",
+    "prop-types": "^15.7.2",
     "react": "17.0.1",
     "react-dom": "17.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.23.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.23.1",
+    "eslint-plugin-react-hooks": "^4.2.0"
   }
 }

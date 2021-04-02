@@ -1,30 +1,22 @@
-import { useRouter } from 'next/router';
+import proptypes from '../../lib/proptypes';
 import Data from '../../lib/data';
 import Layout from '../../components/layout';
 import ProductList from '../../components/product-list';
 import Pagination from '../../components/pagination';
 
-export default function New({ storeCode, stores = [], products = [] }) {
-  const router = useRouter();
-  const currentRoute = router.asPath;
-  const currentStoreCode = router.query.storeCode || '';
-
+export default function New({ storeCode, stores, products }) {
   return (
     <Layout stores={stores}>
       <ProductList
-        products={products.map(product => ({
+        products={products.map((product) => ({
           ...product,
-          url: `/new/${currentStoreCode}/${product.code}`,
+          url: `/new/${storeCode}/${product.code}`,
         }))}
       />
 
-      {/* <Pagination
-        pagesCount={pagesCount}
-        currentPageNum={}
-        onChangePage={pageNum => setPageList(getPageList(pageNum))}
-      /> */}
+      <Pagination/>
     </Layout>
-  )
+  );
 }
 
 export async function getServerSideProps({ query }) {
@@ -38,3 +30,9 @@ export async function getServerSideProps({ query }) {
     },
   };
 }
+
+New.propTypes = {
+  storeCode: proptypes.string.isRequired,
+  stores: proptypes.stores.isRequired,
+  products: proptypes.products.isRequired,
+};

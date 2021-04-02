@@ -1,6 +1,7 @@
+import proptypes from '../lib/proptypes';
 import styleVars from '../styles/vars';
 
-export default function DialogWindow({ title, children, mix = '' }) {
+export default function DialogWindow({ title, children, mix }) {
   const B = 'dialog-window';
 
   return (
@@ -13,11 +14,13 @@ export default function DialogWindow({ title, children, mix = '' }) {
         {children}
       </div>
 
-      <style jsx global>{`
+      <style jsx global>
+        {`
         .${B} {
           position: fixed;
           left: 50%;
           top: 50%;
+          z-index: 10;
           transform: translate(-50%, -50%);
           background: #fff;
           padding: 20px;
@@ -36,7 +39,19 @@ export default function DialogWindow({ title, children, mix = '' }) {
         .${B}__content {
           padding-top: 20px;
         }
-      `}</style>
+      `}
+      </style>
     </div>
   );
 }
+
+DialogWindow.defaultProps = {
+  title: '',
+  mix: '',
+};
+
+DialogWindow.propTypes = {
+  title: proptypes.string,
+  children: proptypes.node.isRequired,
+  mix: proptypes.string,
+};

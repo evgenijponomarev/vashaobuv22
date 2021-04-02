@@ -1,4 +1,5 @@
-import Container from '../components/container'
+import proptypes from '../lib/proptypes';
+import Container from './container';
 import styleVars from '../styles/vars';
 
 export default function Header({ children, mix }) {
@@ -10,7 +11,8 @@ export default function Header({ children, mix }) {
         {children}
       </Container>
 
-      <style jsx global>{`
+      <style jsx global>
+        {`
         .${B} {
           position: fixed;
           top: 0;
@@ -28,7 +30,17 @@ export default function Header({ children, mix }) {
           display: flex;
           height: 100%;
         }
-      `}</style>
+      `}
+      </style>
     </div>
   );
 }
+
+Header.defaultProps = {
+  mix: '',
+};
+
+Header.propTypes = {
+  children: proptypes.node.isRequired,
+  mix: proptypes.string,
+};

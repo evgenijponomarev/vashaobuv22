@@ -1,3 +1,4 @@
+import proptypes from '../lib/proptypes';
 import Product from './product';
 
 export default function ProductList({ products }) {
@@ -11,7 +12,8 @@ export default function ProductList({ products }) {
         </div>
       ))}
 
-      <style jsx>{`
+      <style jsx>
+        {`
         .${B} {
           display: flex;
           flex-wrap: wrap;
@@ -42,7 +44,12 @@ export default function ProductList({ products }) {
             width: 50%;
           }
         }
-      `}</style>
+      `}
+      </style>
     </div>
-  )
+  );
 }
+
+ProductList.propTypes = {
+  products: proptypes.products.isRequired,
+};

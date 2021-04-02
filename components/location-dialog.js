@@ -1,13 +1,10 @@
 import Link from 'next/link';
+import proptypes from '../lib/proptypes';
 import DialogOverlay from './dialog-overlay';
 import DialogWindow from './dialog-window';
 import styleVars from '../styles/vars';
 
-export default function LocationDialog({
-  stores,
-  onClose = () => {},
-  onClickStore = () => {},
-}) {
+export default function LocationDialog({ stores, onClose, onClickStore }) {
   const B = 'location-dialog';
 
   return (
@@ -26,7 +23,8 @@ export default function LocationDialog({
         </ul>
       </DialogWindow>
 
-      <style jsx global>{`
+      <style jsx global>
+        {`
         .${B}__store-list {
           list-style: none;
           margin: 0;
@@ -49,7 +47,19 @@ export default function LocationDialog({
           background: ${styleVars.colors.green};
           color: #fff;
         }
-      `}</style>
+      `}
+      </style>
     </div>
   );
 }
+
+LocationDialog.defaultProps = {
+  onClose: () => {},
+  onClickStore: () => {},
+};
+
+LocationDialog.propTypes = {
+  stores: proptypes.stores.isRequired,
+  onClose: proptypes.func,
+  onClickStore: proptypes.func,
+};

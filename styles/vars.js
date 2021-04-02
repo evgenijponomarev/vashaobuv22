@@ -7,4 +7,4 @@ export default {
   boxShadow: '0 0 4px -1px',
   borderRadius: '4px',
   headerHeigh: '40px',
-}
+};

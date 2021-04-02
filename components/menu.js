@@ -20,9 +20,14 @@ export default function Menu() {
 
   return (
     <div className={`${B} ${isOpened ? `${B}_opened` : ''}`}>
-      <button className={`${B}__toggler`} onClick={() => setMenuOpened(!isOpened)}/>
+      <button
+        type="button"
+        className={`${B}__toggler`}
+        onClick={() => setMenuOpened(!isOpened)}
+      >
+        Меню
+      </button>
 
-      
       <ul className={`${B}__items`}>
         {routes.map(({ url, text }) => (
           <li
@@ -36,7 +41,8 @@ export default function Menu() {
         ))}
       </ul>
 
-      <style jsx global>{`
+      <style jsx global>
+        {`
         .${B} {
           height: 100%;
         }
@@ -175,7 +181,8 @@ export default function Menu() {
             background-image: url(/images/close.svg);
           }
         }
-      `}</style>
+      `}
+      </style>
     </div>
   );
 }

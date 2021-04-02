@@ -1,11 +1,14 @@
-export default function LocationButton({ onClick, storeName = '' }) {
+import proptypes from '../lib/proptypes';
+
+export default function LocationButton({ onClick, storeName }) {
   const B = 'location-button';
 
   return (
-    <button className={B} onClick={onClick}>
+    <button type="button" className={B} onClick={onClick}>
       <div className={`${B}__text`}>{storeName}</div>
 
-      <style jsx global>{`
+      <style jsx global>
+        {`
         .${B} {
           display: flex;
           background: none;
@@ -42,7 +45,13 @@ export default function LocationButton({ onClick, storeName = '' }) {
             font-size: 14px;
           }
         }
-      `}</style>
+      `}
+      </style>
     </button>
   );
 }
+
+LocationButton.propTypes = {
+  storeName: proptypes.string.isRequired,
+  onClick: proptypes.func.isRequired,
+};
