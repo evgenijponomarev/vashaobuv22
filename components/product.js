@@ -9,7 +9,13 @@ export default function Product({ productData }) {
 
   return (
     <div className={B}>
-      <Link href={productData.url}>
+      <Link href={{
+        pathname: '/shoes/[code]',
+        query: {
+          code: productData.code,
+        },
+      }}
+      >
         <a
           className={`${B}__link`}
           title={title}
@@ -113,7 +119,7 @@ export default function Product({ productData }) {
           top: 0;
           width: 20px;
           height: 100%;
-          background: linear-gradient(to right, transparent, #fff);
+          background: linear-gradient(to right, rgba(255, 255, 255, 0), #fff);
         }
 
         .${B}__price::after {

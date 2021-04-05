@@ -4,19 +4,31 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import styleVars from '../styles/vars';
 
+const menuItems = [
+  {
+    pathname: '/new/[storeCode]',
+    text: 'Новинки',
+  },
+  {
+    pathname: '/profit/[storeCode]',
+    text: 'Выгодные предложения',
+  },
+  {
+    pathname: '/bonuses/[storeCode]',
+    text: 'Бонусная программа',
+  },
+  {
+    pathname: '/contacts/[storeCode]',
+    text: 'Контакты',
+  },
+];
+
 export default function Menu() {
   const B = 'menu';
-  const [isOpened, setMenuOpened] = useState(false);
-  const router = useRouter();
-  const currentRoute = router.asPath;
-  const currentStoreCode = router.query.storeCode || '';
 
-  const routes = [
-    { url: `/new/${currentStoreCode}`, text: 'Новинки' },
-    { url: `/profit/${currentStoreCode}`, text: 'Выгодные предложения' },
-    { url: '/bonuses', text: 'Бонусная программа' },
-    { url: '/contacts', text: 'Контакты' },
-  ];
+  const router = useRouter();
+
+  const [isOpened, setMenuOpened] = useState(false);
 
   return (
     <div className={`${B} ${isOpened ? `${B}_opened` : ''}`}>
@@ -29,16 +41,26 @@ export default function Menu() {
       </button>
 
       <ul className={`${B}__items`}>
-        {routes.map(({ url, text }) => (
-          <li
-            className={`${B}__item${url === currentRoute ? ` ${B}__item_current` : ''}`}
-            key={url}
-          >
-            <Link href={url}>
-              <a className={`${B}__link`}>{text}</a>
-            </Link>
-          </li>
-        ))}
+        {menuItems.map(({ pathname, text }) => {
+          const classNameList = [
+            `${B}__item`,
+            (router.pathname === pathname ? `${B}__item_current` : ''),
+          ];
+
+          return (
+            <li className={classNameList.join(' ')} key={pathname}>
+              <Link href={{
+                pathname,
+                query: {
+                  storeCode: router.query.storeCode,
+                },
+              }}
+              >
+                <a className={`${B}__link`}>{text}</a>
+              </Link>
+            </li>
+          );
+        })}
       </ul>
 
       <style jsx global>
@@ -62,6 +84,7 @@ export default function Menu() {
           border: none;
           outline: none;
           cursor: pointer;
+          font-size: 0;
         }
 
         .${B}__items {

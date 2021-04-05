@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 import proptypes from '../lib/proptypes';
 import Header from './header';
@@ -11,9 +12,10 @@ import styleVars from '../styles/vars';
 export default function Layout({ children, stores }) {
   const B = 'layout';
 
-  const currentStore = stores.find((store) => store.isCurrent);
-  const currentStoreCode = currentStore?.code ?? '';
-  const currentStoreName = currentStore?.name ?? '';
+  const router = useRouter();
+
+  const currentStoreCode = router.query.storeCode;
+  const currentStoreName = stores.find(({ code }) => code === currentStoreCode)?.name ?? '';
 
   const [isLocationDialogOpened, toggleLocationDialog] = useState(false);
 
