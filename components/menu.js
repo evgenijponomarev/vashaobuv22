@@ -72,8 +72,8 @@ export default function Menu() {
         .${B}__toggler {
           display: none;
           position: absolute;
-          right: 0;
-          bottom: 0;
+          left: 0;
+          top: 0;
           z-index: 1;
           width: 40px;
           height: 40px;
@@ -133,17 +133,10 @@ export default function Menu() {
 
         @media (max-width: 700px) {
           .${B} {
-            overflow: hidden;
-            position: fixed;
-            right: 10px;
-            bottom: 10px;
             width: 40px;
-            height: 40px;
-            background-color: ${styleVars.colors.green};
-            transition-property: width, height;
-            transition-duration: ${styleVars.transitionTime};
-            box-shadow: ${styleVars.boxShadow} rgba(0, 0, 0, .4);
+            height: auto;
             border-radius: ${styleVars.borderRadius};
+            position: relative;
           }
 
           .${B}__toggler {
@@ -151,14 +144,21 @@ export default function Menu() {
           }
 
           .${B}__items {
-            opacity: 0;
-            transition-property: opacity;
-            transition-duration: ${styleVars.transitionTime};
-            transition-delay: 0;
+            display: none;
+            position: absolute;
+            top: ${styleVars.headerHeigh};
+            left: 0;
+            background-color: ${styleVars.colors.green};
+            height: auto;
+            border-radius: ${styleVars.borderRadius};
+            margin-top: 10px;
+            margin-left: 10px;
+            padding: 10px 20px;
+            box-shadow: ${styleVars.boxShadow} rgba(0, 0, 0, .5);
           }
 
           .${B}__item {
-            height: auto; 
+            height: auto;
           }
 
           .${B}__link {
@@ -177,19 +177,11 @@ export default function Menu() {
 
           .${B}_opened {
             width: 210px;
-            height: 130px;
             align-items: flex-start;
-            transition-property: width, height;
-            transition-duration: ${styleVars.transitionTime};
           }
 
           .${B}_opened .${B}__items {
             display: block;
-            opacity: 1;
-            padding: 10px;
-            transition-property: opacity;
-            transition-duration: ${styleVars.transitionTime};
-            transition-delay: ${styleVars.transitionTime};
           }
 
           .${B}_opened .${B}__item {
