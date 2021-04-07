@@ -18,7 +18,12 @@ export default function ProductList({ products, pagination, filters }) {
   useEffect(() => {
     setLastPageNum(pagination.pageNum);
     setProductList(products);
-  }, [router.query.page]);
+  }, [
+    router.query.storeCode,
+    router.query.page,
+    router.query.auditory,
+    router.query.type,
+  ]);
 
   async function getNextPage() {
     const queryString = Object.entries({
@@ -33,9 +38,37 @@ export default function ProductList({ products, pagination, filters }) {
     setProductList([...productList, ...data]);
   }
 
+  function onChangeFilter(field, value) {
+    router.push({
+      pathname: router.pathname,
+      query: {
+        ...router.query,
+        [field]: value,
+        page: 1,
+      },
+    });
+  }
+
+  function onClearFilter(field) {
+    const { query } = router;
+    delete query[field];
+    query.page = 1;
+
+    router.push({
+      pathname: router.pathname,
+      query,
+    });
+  }
+
   return (
     <div className={B}>
-      {filters.length > 0 && <Filter filters={filters}/>}
+      {filters && (
+        <Filter
+          filters={filters}
+          onChange={onChangeFilter}
+          onClear={onClearFilter}
+        />
+      )}
 
       {productList.map((product) => (
         <div className={`${B}__item`} key={product.code}>
@@ -89,7 +122,7 @@ export default function ProductList({ products, pagination, filters }) {
 }
 
 ProductList.defaultProps = {
-  filters: [],
+  filters: null,
 };
 
 ProductList.propTypes = {

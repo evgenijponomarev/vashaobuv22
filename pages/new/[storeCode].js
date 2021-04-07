@@ -25,11 +25,20 @@ export default function New({
 }
 
 export async function getServerSideProps({ query }) {
-  const isNew = true;
-  const { storeCode, page } = query;
+  const {
+    storeCode,
+    page,
+    auditory,
+    type,
+  } = query;
+  const selectFilter = {
+    is_new: true,
+    ...(auditory ? { auditory } : null),
+    ...(type ? { type } : null),
+  };
   const stores = getStores();
-  const { products, pagination } = getProductsPageData(storeCode, page, { isNew });
-  const filters = getProductsFilters(storeCode, { isNew });
+  const { products, pagination } = getProductsPageData(storeCode, page, selectFilter);
+  const filters = getProductsFilters(storeCode, { is_new: true });
 
   return {
     props: {

@@ -60,7 +60,7 @@ export default function Pagination({ pagination }) {
           width: 40px;
           height: 40px;
           box-shadow: 0 0 0 2px ${styleVars.colors.green};
-          border-radius: 20px;
+          border-radius: ${styleVars.borderRadius};
           text-align: center;
           line-height: 40px;
           text-decoration: none;

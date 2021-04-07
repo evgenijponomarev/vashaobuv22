@@ -29,7 +29,7 @@ export default function ContentLoader({ onClick }) {
           padding: 0 20px;
           border: 2px solid ${styleVars.colors.green};
           color: ${styleVars.colors.green};
-          border-radius: 20px;
+          border-radius: ${styleVars.borderRadius};
           margin-bottom: 20px;
           cursor: pointer;
         }
