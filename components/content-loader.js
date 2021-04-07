@@ -14,7 +14,7 @@ export default function ContentLoader({ onClick }) {
         Показать еще
       </button>
 
-      <style>
+      <style jsx>
         {`
         .${B} {
           display: flex;

@@ -2,11 +2,12 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import proptypes from '../lib/proptypes';
+import Filter from './filter';
 import Product from './product';
 import Pagination from './pagination';
 import ContentLoader from './content-loader';
 
-export default function ProductList({ products, pagination }) {
+export default function ProductList({ products, pagination, filters }) {
   const B = 'product-list';
 
   const router = useRouter();
@@ -28,12 +29,14 @@ export default function ProductList({ products, pagination }) {
 
     const { data } = await axios.get(`/api/shoes?${queryString}`);
 
-    setLastPageNum(data.pagination.pageNum);
-    setProductList([...productList, ...data.products]);
+    setLastPageNum(lastPageNum + 1);
+    setProductList([...productList, ...data]);
   }
 
   return (
     <div className={B}>
+      {filters.length > 0 && <Filter filters={filters}/>}
+
       {productList.map((product) => (
         <div className={`${B}__item`} key={product.code}>
           <Product productData={product}/>
@@ -85,7 +88,12 @@ export default function ProductList({ products, pagination }) {
   );
 }
 
+ProductList.defaultProps = {
+  filters: [],
+};
+
 ProductList.propTypes = {
   products: proptypes.products.isRequired,
   pagination: proptypes.pagination.isRequired,
+  filters: proptypes.filters,
 };
