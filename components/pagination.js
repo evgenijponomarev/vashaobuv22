@@ -42,8 +42,13 @@ export default function Pagination({ pagination }) {
       <style jsx>
         {`
         .${B} {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          padding-bottom: 40px;
           display: flex;
           justify-content: center;
+          flex-wrap: wrap;
         }
 
         .${B}__item {
@@ -77,4 +82,6 @@ export default function Pagination({ pagination }) {
   );
 }
 
-Pagination.propTypes = proptypes.pagination.isRequired;
+Pagination.propTypes = {
+  pagination: proptypes.pagination.isRequired,
+};
