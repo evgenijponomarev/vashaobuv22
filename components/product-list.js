@@ -13,10 +13,10 @@ export default function ProductList({ products, pagination, filters }) {
   const router = useRouter();
 
   const [productList, setProductList] = useState(products);
-  const [lastPageNum, setLastPageNum] = useState(pagination.pageNum);
+  const [lastPageNum, setLastPageNum] = useState(pagination?.pageNum);
 
   useEffect(() => {
-    setLastPageNum(pagination.pageNum);
+    setLastPageNum(pagination?.pageNum);
     setProductList(products);
   }, [
     router.query.storeCode,
@@ -76,12 +76,18 @@ export default function ProductList({ products, pagination, filters }) {
         </div>
       ))}
 
-      {lastPageNum < pagination.pagesCount && <ContentLoader onClick={getNextPage}/>}
+      {
+        pagination
+        && lastPageNum < pagination.pagesCount
+        && <ContentLoader onClick={getNextPage}/>
+      }
 
-      <Pagination
-        pagination={pagination}
-        onGetMore={getNextPage}
-      />
+      {pagination && (
+        <Pagination
+          pagination={pagination}
+          onGetMore={getNextPage}
+        />
+      )}
 
       <style jsx>
         {`
@@ -122,11 +128,12 @@ export default function ProductList({ products, pagination, filters }) {
 }
 
 ProductList.defaultProps = {
+  pagination: null,
   filters: null,
 };
 
 ProductList.propTypes = {
   products: proptypes.products.isRequired,
-  pagination: proptypes.pagination.isRequired,
+  pagination: proptypes.pagination,
   filters: proptypes.filters,
 };

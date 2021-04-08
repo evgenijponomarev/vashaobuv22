@@ -9,7 +9,7 @@ import Container from './container';
 import LocationDialog from './location-dialog';
 import styleVars from '../styles/vars';
 
-export default function Layout({ children, stores }) {
+export default function Layout({ children, stores, title }) {
   const B = 'layout';
 
   const router = useRouter();
@@ -38,14 +38,18 @@ export default function Layout({ children, stores }) {
         <Header>
           <Menu/>
 
-          <LocationButton
-            onClick={() => toggleLocationDialog(true)}
-            storeName={currentStoreName}
-          />
+          {currentStoreName && (
+            <LocationButton
+              onClick={() => toggleLocationDialog(true)}
+              storeName={currentStoreName}
+            />
+          )}
         </Header>
       </div>
 
       <Container mix={`${B}__content`}>
+        {title && <h1 className={`${B}__title`}>{title}</h1>}
+
         {children}
       </Container>
 
@@ -63,6 +67,12 @@ export default function Layout({ children, stores }) {
           height: ${styleVars.headerHeigh};
         }
 
+        .${B}__title {
+          font-weight: 300;
+          padding: 10px;
+          margin: 0;
+        }
+
         .${B}__content {
           padding: 20px 0;
         }
@@ -74,9 +84,12 @@ export default function Layout({ children, stores }) {
 
 Layout.defaultProps = {
   stores: [],
+  title: '',
+  children: null,
 };
 
 Layout.propTypes = {
   stores: proptypes.stores,
-  children: proptypes.node.isRequired,
+  title: proptypes.string,
+  children: proptypes.node,
 };

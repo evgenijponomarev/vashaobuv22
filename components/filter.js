@@ -34,12 +34,14 @@ export default function Filter({ filters, onChange, onClear }) {
         isSelected: type === router.query.type,
       })),
     },
-  ].filter((select) => select.options.length > 0);
+  ].filter((select) => select.options.length > 1);
 
   function onChangeSelect(filterCode, value, action) {
     if (action === 'clear') onClear(filterCode);
     else onChange(filterCode, value);
   }
+
+  if (filterSelects.length === 0) return null;
 
   return (
     <div className={B}>
@@ -74,7 +76,7 @@ export default function Filter({ filters, onChange, onClear }) {
 
         .${B} .${B}__select,
         .${B} .${B}__menu {
-          border: 2px solid ${styleVars.colors.green};
+          border: 1px solid ${styleVars.colors.green};
           border-radius: ${styleVars.borderRadius};
         }
 

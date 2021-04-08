@@ -26,6 +26,8 @@ export default function Product({ productData }) {
             alt={title}
           />
 
+          <div className={`${B}__badge`}>Кэшбек {productData.extra_bonus}%</div>
+
           <div className={`${B}__details`}>
             <div className={`${B}__name`}>
               {productData.name}
@@ -65,16 +67,37 @@ export default function Product({ productData }) {
         .${B} {
           padding-bottom: 10px;
           position: relative;
-          overflow: hidden;
+          border-radius: ${styleVars.borderRadius};
+          transition: transform .2s;
         }
 
         .${B}__link {
           display: block;
           text-decoration: none;
+          border-radius: inherit;
         }
 
         .${B}__image {
           width: 100%;
+          border-radius: inherit;
+          transition: box-shadow .2s;
+          box-shadow: ${styleVars.boxShadow} rgba(0, 0, 0, .2);
+        }
+
+        .${B}__badge {
+          position: absolute;
+          top: 10px;
+          left: -8px;
+          padding: 4px 10px; 
+          background: ${styleVars.colors.green};
+          color: #fff;
+          border-radius: 4px;
+          text-align: center;
+          box-shadow: ${styleVars.boxShadow} rgba(0, 0, 0, .2);
+        }
+
+        .${B}__details {
+          padding: 0 4px;
         }
 
         .${B}__name {
@@ -127,8 +150,12 @@ export default function Product({ productData }) {
           font-size: 18px;
         }
 
+        .${B}:hover {
+          transform: scale(1.01);
+        }
+
         .${B}:hover .${B}__image {
-          box-shadow: ${styleVars.boxShadow} rgba(0, 0, 0, .3);
+          box-shadow: ${styleVars.boxShadow} rgba(0, 0, 0, .5);
         }
 
         @media (max-width: 700px) {

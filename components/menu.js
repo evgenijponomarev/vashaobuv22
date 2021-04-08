@@ -10,8 +10,8 @@ const menuItems = [
     text: 'Новинки',
   },
   {
-    pathname: '/profit/[storeCode]',
-    text: 'Выгодные предложения',
+    pathname: '/actions/[storeCode]',
+    text: 'Акции',
   },
   {
     pathname: '/bonuses/[storeCode]',
@@ -131,7 +131,7 @@ export default function Menu() {
           opacity: .8;
         }
 
-        @media (max-width: 700px) {
+        @media (max-width: 600px) {
           .${B} {
             width: 40px;
             height: auto;

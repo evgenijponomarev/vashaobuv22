@@ -17,7 +17,7 @@ export default function New({
 }
 
 export async function getServerSideProps({ query }) {
-  return getProductsPageServerSideProps(query, { is_new: true });
+  return getProductsPageServerSideProps(query, { extra_bonus: true });
 }
 
 New.propTypes = {
