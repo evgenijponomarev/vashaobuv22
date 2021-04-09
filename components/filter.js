@@ -67,11 +67,20 @@ export default function Filter({ filters, onChange, onClear }) {
           width: 100%;
           display: flex;
           flex-wrap: wrap;
+          position: sticky;
+          top: ${styleVars.headerHeigh};
+          z-index: 10;
+          background: #fff;
         }
 
         .${B}__field {
           width: ${100 / filterSelects.length}%;
           padding: 10px;
+        }
+
+        .${B} .${B}__control {
+          min-height: 30px;
+          height: 30px;
         }
 
         .${B} .${B}__select,
@@ -83,6 +92,10 @@ export default function Filter({ filters, onChange, onClear }) {
         .${B} .${B}__single-value,
         .${B} .${B}__placeholder {
           color: ${styleVars.colors.green};
+        }
+
+        .${B} .${B}__indicator {
+          padding: 0 8px;
         }
 
         .${B} .${B}__indicator-separator {
@@ -118,6 +131,7 @@ export default function Filter({ filters, onChange, onClear }) {
         @media (max-width: 480px) {
           .${B}__field {
             width: 100%;
+            padding: 5px 10px;
           }
         }
         `}

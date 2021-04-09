@@ -10,7 +10,7 @@ export default function New({
   filters,
 }) {
   return (
-    <Layout stores={stores}>
+    <Layout stores={stores} title="Выгодные предложения">
       <ProductList products={products} pagination={pagination} filters={filters}/>
     </Layout>
   );
