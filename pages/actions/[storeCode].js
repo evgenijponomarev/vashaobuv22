@@ -1,12 +1,15 @@
 import proptypes from '../../lib/proptypes';
-import { getStores } from '../../lib/data';
+import { getStores, getBanners } from '../../lib/data';
 import Layout from '../../components/layout';
 import ProfitLink from '../../components/profit-link';
+import BannerList from '../../components/banner-list';
 
-export default function Actions({ stores }) {
+export default function Actions({ stores, banners = [] }) {
   return (
     <Layout stores={stores} title="Акции">
       <ProfitLink/>
+
+      <BannerList banners={banners}/>
     </Layout>
   );
 }
@@ -24,10 +27,11 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps() {
+export async function getStaticProps({ params }) {
   return {
     props: {
       stores: getStores(),
+      banners: getBanners(params.storeCode),
     },
     revalidate: 10,
   };
@@ -35,4 +39,5 @@ export async function getStaticProps() {
 
 Actions.propTypes = {
   stores: proptypes.stores.isRequired,
+  banners: proptypes.banners.isRequired,
 };

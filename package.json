@@ -7,7 +7,6 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next build && next start",
-    "start-production": "next build && next start -p 80",
     "lint": "npx eslint ."
   },
   "dependencies": {
