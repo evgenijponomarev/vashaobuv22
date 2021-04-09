@@ -11,7 +11,7 @@ export default function DialogOverlay({ onClick }) {
           position: fixed;
           left: 0;
           top: 0;
-          z-index: 10;
+          z-index: 30;
           width: 100%;
           height: 100%;
           background: rgba(255, 255, 255, .9);

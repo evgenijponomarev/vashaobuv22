@@ -17,7 +17,7 @@ export default function Header({ children, mix }) {
           position: fixed;
           top: 0;
           left: 0;
-          z-index: 10;
+          z-index: 20;
           width: 100%;
           height: ${styleVars.headerHeigh};
           background: ${styleVars.colors.green};

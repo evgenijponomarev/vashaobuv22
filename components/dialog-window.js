@@ -20,7 +20,7 @@ export default function DialogWindow({ title, children, mix }) {
           position: fixed;
           left: 50%;
           top: 50%;
-          z-index: 10;
+          z-index: 40;
           transform: translate(-50%, -50%);
           background: #fff;
           padding: 20px;
