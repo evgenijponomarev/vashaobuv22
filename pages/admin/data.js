@@ -6,7 +6,7 @@ export default function AdminData() {
   return (
     <Layout title="Загрузка данных" isAdmin>
       <AdminUploadForm
-        action="/api/update-data"
+        action="/api/data"
         fieldName="1s_dump"
       />
     </Layout>

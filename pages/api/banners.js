@@ -1,14 +1,13 @@
-import path from 'path';
-import fs from 'fs';
+import fsHelpers from '../../lib/fs-helpers';
 
 const actions = {
   DELETE(req) {
     const { storeCode, bannerNum, fileExt } = req.query;
 
-    const fileName = `${storeCode}_banner_${bannerNum}.${fileExt}`;
-    const filePath = path.join(process.cwd(), 'public', 'banners', fileName);
+    fsHelpers(storeCode, bannerNum, fileExt);
+  },
+  POST() {
 
-    fs.unlinkSync(filePath);
   },
 };
 
