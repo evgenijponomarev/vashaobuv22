@@ -2,7 +2,7 @@ import _ from 'lodash';
 import axios from 'axios';
 import { useState } from 'react';
 import proptypes from '../../lib/proptypes';
-import { getStores, getBanners } from '../../lib/data';
+import { getStores, getBannerLinks } from '../../lib/data';
 import Layout from '../../components/layout';
 import AdminPanel from '../../components/admin-panel';
 import AdminTabs from '../../components/admin-tabs';
@@ -68,7 +68,7 @@ export async function getStaticProps() {
   return {
     props: {
       stores: getStores(),
-      banners: getBanners(),
+      banners: getBannerLinks(),
     },
     revalidate: 10,
   };

@@ -3,9 +3,7 @@ import fs from 'fs';
 import nextConnect from 'next-connect';
 import multer from 'multer';
 import extractZip from 'extract-zip';
-import CyrillicToTranslit from 'cyrillic-to-translit-js';
-
-const cyrillicToTranslit = new CyrillicToTranslit();
+import { validateData, updateData } from '../../lib/data';
 
 const PUBLIC_DIR = path.join(process.cwd(), 'public');
 const DATA_DIR = path.join(process.cwd(), 'data');
@@ -16,61 +14,16 @@ const DUMP_FILE_NAME = `${DUMP_FIELD_NAME}.zip`;
 const DUMP_FILE_PATH = path.join(UPLOADS_DIR, DUMP_FILE_NAME);
 const DATA_FILE_NAME = 'data.json';
 const DATA_FILE_PATH = path.join(DATA_DIR, DATA_FILE_NAME);
-const STORES_FILE_PATH = path.join(DATA_DIR, 'stores.json');
-const BONUSES_FILE_PATH = path.join(DATA_DIR, 'bonuses.json');
 const LOG_FILE_PATH = path.join(process.cwd(), '1s_import.log');
 
 let importFileName = '';
 
-function validateData(data) {
-  return !!data.stores
-    && !!data.bonuses
-    && !!data.shoes
-    && !!data.products;
-}
-
 function makeDataFiles() {
   const sourceData = JSON.parse(fs.readFileSync(DATA_FILE_PATH));
 
-  if (!validateData(sourceData)) {
-    throw new Error('Invalid data format.');
-  }
+  if (!validateData(sourceData)) throw new Error('Invalid data format.');
 
-  const { bonuses } = sourceData;
-  const stores = [];
-
-  sourceData.stores.forEach((storeName) => {
-    const storeCode = cyrillicToTranslit.transform(storeName, '_').toLowerCase();
-
-    stores.push({
-      name: storeName,
-      code: storeCode,
-    });
-
-    const storeProducts = sourceData.products
-      .filter((product) => product.store === storeName)
-      .map((product) => {
-        const shoesEntry = sourceData.shoes.find((shoe) => shoe.code === product.shoe_code);
-
-        return {
-          code: shoesEntry.code,
-          name: shoesEntry.name,
-          articul: shoesEntry.articul,
-          type: shoesEntry.type,
-          auditory: shoesEntry.auditory,
-          size_line: shoesEntry.size_line,
-          price: product.price,
-          is_new: product.is_new,
-          extra_bonus: product.extra_bonus,
-        };
-      });
-
-    const filePath = path.join(DATA_DIR, `products.${storeCode}.json`);
-    fs.writeFileSync(filePath, JSON.stringify(storeProducts));
-  });
-
-  fs.writeFileSync(STORES_FILE_PATH, JSON.stringify(stores));
-  fs.writeFileSync(BONUSES_FILE_PATH, JSON.stringify(bonuses));
+  updateData(sourceData);
 }
 
 async function unzip() {

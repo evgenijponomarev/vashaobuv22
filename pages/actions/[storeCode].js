@@ -1,5 +1,5 @@
 import proptypes from '../../lib/proptypes';
-import { getStores, getBanners } from '../../lib/data';
+import { getStores, getBannerLinks } from '../../lib/data';
 import Layout from '../../components/layout';
 import ProfitLink from '../../components/profit-link';
 import BannerList from '../../components/banner-list';
@@ -31,7 +31,7 @@ export async function getStaticProps({ params }) {
   return {
     props: {
       stores: getStores(),
-      banners: getBanners(params.storeCode),
+      banners: getBannerLinks(params.storeCode),
     },
     revalidate: 10,
   };
