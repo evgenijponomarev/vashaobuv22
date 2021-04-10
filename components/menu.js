@@ -1,32 +1,49 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-
 import Link from 'next/link';
 import styleVars from '../styles/vars';
+import proptypes from '../lib/proptypes';
 
-const menuItems = [
-  {
-    pathname: '/new/[storeCode]',
-    text: 'Новинки',
-  },
-  {
-    pathname: '/actions/[storeCode]',
-    text: 'Акции',
-  },
-  {
-    pathname: '/bonuses/[storeCode]',
-    text: 'Бонусная программа',
-  },
-  {
-    pathname: '/contacts/[storeCode]',
-    text: 'Контакты',
-  },
-];
+const items = {
+  public: [
+    {
+      pathname: '/new/[storeCode]',
+      text: 'Новинки',
+    },
+    {
+      pathname: '/actions/[storeCode]',
+      text: 'Акции',
+    },
+    {
+      pathname: '/bonuses/[storeCode]',
+      text: 'Бонусная программа',
+    },
+    {
+      pathname: '/contacts/[storeCode]',
+      text: 'Контакты',
+    },
+  ],
+  admin: [
+    {
+      pathname: '/',
+      text: 'Перейти на сайт',
+    },
+    {
+      pathname: '/admin',
+      text: 'Баннеры',
+    },
+    {
+      pathname: '/admin/data',
+      text: 'Данные',
+    },
+  ],
+};
 
-export default function Menu() {
+export default function Menu({ isAdmin }) {
   const B = 'menu';
 
   const router = useRouter();
+  const { storeCode } = router.query;
 
   const [isOpened, setMenuOpened] = useState(false);
 
@@ -41,21 +58,20 @@ export default function Menu() {
       </button>
 
       <ul className={`${B}__items`}>
-        {menuItems.map(({ pathname, text }) => {
+        {items[isAdmin ? 'admin' : 'public'].map(({ pathname, text }) => {
           const classNameList = [
             `${B}__item`,
             (router.pathname === pathname ? `${B}__item_current` : ''),
           ];
 
+          const href = isAdmin ? pathname : {
+            pathname,
+            query: { storeCode },
+          };
+
           return (
             <li className={classNameList.join(' ')} key={pathname}>
-              <Link href={{
-                pathname,
-                query: {
-                  storeCode: router.query.storeCode,
-                },
-              }}
-              >
+              <Link href={href}>
                 <a className={`${B}__link`}>{text}</a>
               </Link>
             </li>
@@ -201,3 +217,11 @@ export default function Menu() {
     </div>
   );
 }
+
+Menu.defaultProps = {
+  isAdmin: false,
+};
+
+Menu.propTypes = {
+  isAdmin: proptypes.bool,
+};

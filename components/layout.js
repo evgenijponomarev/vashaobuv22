@@ -9,7 +9,12 @@ import Container from './container';
 import LocationDialog from './location-dialog';
 import styleVars from '../styles/vars';
 
-export default function Layout({ children, stores, title }) {
+export default function Layout({
+  children,
+  stores,
+  title,
+  isAdmin,
+}) {
   const B = 'layout';
 
   const router = useRouter();
@@ -36,7 +41,7 @@ export default function Layout({ children, stores, title }) {
 
       <div className={`${B}__header`}>
         <Header>
-          <Menu/>
+          <Menu isAdmin={isAdmin}/>
 
           {currentStoreName && (
             <LocationButton
@@ -86,10 +91,12 @@ Layout.defaultProps = {
   stores: [],
   title: '',
   children: null,
+  isAdmin: false,
 };
 
 Layout.propTypes = {
   stores: proptypes.stores,
   title: proptypes.string,
   children: proptypes.node,
+  isAdmin: proptypes.bool,
 };
