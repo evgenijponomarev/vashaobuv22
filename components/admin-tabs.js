@@ -38,14 +38,19 @@ export default function AdminTabs({ tabList, contentList }) {
         {`
         .${B}__tab-list {
           border-color: ${styleVars.colors.green};
+          margin: 0;
         }
 
         .${B}__tab_selected {
           border-color: ${styleVars.colors.green};
+          border-radius: 0;
         }
 
         .${B}__tab-panel {
           padding: 10px 0;
+          border-left: 1px solid ${styleVars.colors.green};
+          border-right: 1px solid ${styleVars.colors.green};
+          border-bottom: 1px solid ${styleVars.colors.green};
         }
         `}
       </style>

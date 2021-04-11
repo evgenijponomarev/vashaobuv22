@@ -4,7 +4,6 @@ import { useState } from 'react';
 import proptypes from '../../lib/proptypes';
 import { getStores, getBannerLinks } from '../../lib/data';
 import Layout from '../../components/layout';
-import AdminPanel from '../../components/admin-panel';
 import AdminTabs from '../../components/admin-tabs';
 import AdminBannerList from '../../components/admin-banner-list';
 import AdminUploadForm from '../../components/admin-upload-form';
@@ -38,28 +37,26 @@ export default function AdminBanners({ stores, banners }) {
 
   return (
     <Layout title="Баннеры" isAdmin>
-      <AdminPanel>
-        <AdminTabs
-          tabList={stores.map(({ name }) => name)}
-          contentList={stores.map((store) => ({
-            key: store.code,
-            content: (
-              <>
-                <AdminUploadForm
-                  action="/api/banners"
-                  fieldName="banner"
-                  hiddenFields={[{
-                    key: 'store',
-                    value: store.code,
-                  }]}
-                />
+      <AdminTabs
+        tabList={stores.map(({ name }) => name)}
+        contentList={stores.map((store) => ({
+          key: store.code,
+          content: (
+            <>
+              <AdminUploadForm
+                action="/api/banners"
+                fieldName="banner"
+                hiddenFields={[{
+                  key: 'store',
+                  value: store.code,
+                }]}
+              />
 
-                <AdminBannerList banners={bannersByStore[store.code]} onDelete={onDelete}/>
-              </>
-            ),
-          }))}
-        />
-      </AdminPanel>
+              <AdminBannerList banners={bannersByStore[store.code]} onDelete={onDelete}/>
+            </>
+          ),
+        }))}
+      />
     </Layout>
   );
 }

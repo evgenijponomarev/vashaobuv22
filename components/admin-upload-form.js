@@ -1,5 +1,4 @@
 import proptypes from '../lib/proptypes';
-import styleVars from '../styles/vars';
 
 export default function AdminUploadForm({ action, fieldName, hiddenFields }) {
   const B = 'admin-upload-form';
@@ -21,8 +20,6 @@ export default function AdminUploadForm({ action, fieldName, hiddenFields }) {
         {`
         .${B} {
           padding: 10px;
-          box-shadow: ${styleVars.boxShadow} rgba(0, 0, 0, .5);
-          border-radius: ${styleVars.borderRadius};
         }
         `}
       </style>
