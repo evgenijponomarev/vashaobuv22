@@ -59,10 +59,10 @@ export default function Pagination({ pagination }) {
           display: block;
           width: 40px;
           height: 40px;
-          box-shadow: 0 0 0 2px ${styleVars.colors.green};
+          border: 2px solid ${styleVars.colors.green};
           border-radius: ${styleVars.borderRadius};
           text-align: center;
-          line-height: 40px;
+          line-height: 36px;
           text-decoration: none;
           color: ${styleVars.colors.green};
         }
