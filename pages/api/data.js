@@ -1,6 +1,7 @@
 import path from 'path';
 import nextConnect from 'next-connect';
 import fsHelpers from '../../lib/fs-helpers';
+import apiHelpers from '../../lib/api-helpers';
 import { validateData, updateData } from '../../lib/data';
 
 const PUBLIC_DIR = path.join(process.cwd(), 'public');
@@ -12,71 +13,31 @@ const DATA_FILE_NAME = 'data.json';
 
 let importFileName = '';
 
-function sendCommonError(err, req, res) {
-  res.status(501).json({
-    status: 'error',
-    error: `Sorry something Happened! ${err.message}`,
-  });
-}
-
-function sendNoMatchError(req, res) {
-  res.status(405).json({
-    error: `Method '${req.method}' Not Allowed`,
-  });
-}
-
-function sendUnzipError(res) {
-  res.status(502).json({
-    status: 'error',
-    error: 'File not unzipped',
-  });
-}
-
-function sendJsonError(res) {
-  res.status(502).json({
-    status: 'error',
-    error: 'Incorrect JSON format',
-  });
-}
-
-function sendSuccessResponse(res) {
-  res.status(200).json({ status: 'ok' });
+function unzipHandler(entry) {
+  this.dir = entry.fileName === DATA_FILE_NAME ? DATA_DIR : SHOES_PHOTOS_DIR;
 }
 
 async function onSuccess(req, res) {
   try {
-    await fsHelpers.unzip(DUMP_FILE_NAME, function onEntry(entry) {
-      this.dir = entry.fileName === DATA_FILE_NAME ? DATA_DIR : SHOES_PHOTOS_DIR;
-    });
-
-    console.log('File unzipped');
+    await fsHelpers.unzip(DUMP_FILE_NAME, unzipHandler);
   } catch (err) {
     console.error(err);
-
-    sendUnzipError(res);
-
-    process.exit(1);
+    apiHelpers.sendUnzipError(res);
+    return;
   }
 
   try {
     const sourceData = fsHelpers.getSourceData();
-
-    if (!validateData(sourceData)) throw new Error('Invalid data format.');
-
+    if (!validateData(sourceData)) apiHelpers.sendDataFormatError(res);
     updateData(sourceData);
-
-    console.log('Data updated');
   } catch (err) {
     console.error(err);
-
-    sendJsonError(res);
-
-    process.exit(1);
+    apiHelpers.sendJsonError(res);
+    return;
   }
 
   fsHelpers.updateDataImportLogs(importFileName);
-
-  sendSuccessResponse(res);
+  apiHelpers.sendSuccessResponse(res);
 }
 
 const uploadMiddleware = fsHelpers.getUploadMiddlware(
@@ -84,10 +45,8 @@ const uploadMiddleware = fsHelpers.getUploadMiddlware(
   (originalname) => { importFileName = originalname; },
 );
 
-export default nextConnect({
-  onError: sendCommonError,
-  onNoMatch: sendNoMatchError,
-}).use(uploadMiddleware.single(DUMP_FIELD_NAME))
+export default nextConnect(apiHelpers.getCommonErrors())
+  .use(uploadMiddleware.single(DUMP_FIELD_NAME))
   .post(onSuccess);
 
 export const config = {

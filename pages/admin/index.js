@@ -1,12 +1,18 @@
 import _ from 'lodash';
 import axios from 'axios';
 import { useState } from 'react';
+import initializeBasicAuth from 'nextjs-basic-auth';
 import proptypes from '../../lib/proptypes';
 import { getStores, getBannerLinks } from '../../lib/data';
 import Layout from '../../components/layout';
 import AdminTabs from '../../components/admin-tabs';
 import AdminBannerList from '../../components/admin-banner-list';
 import AdminUploadForm from '../../components/admin-upload-form';
+import users from '../../secret/users.json';
+
+const API_URL = '/api/banners';
+
+const basicAuthCheck = initializeBasicAuth({ users });
 
 export default function AdminBanners({ stores, banners }) {
   const [bannersByStore, setBannersByStore] = useState(stores.reduce((acc, store) => ({
@@ -15,16 +21,13 @@ export default function AdminBanners({ stores, banners }) {
   }), {}));
 
   async function onDelete(bannerLink) {
-    if (!window.confirm('Точно?')) return;
+    if (!window.confirm('Это взвешенное решение?')) return;
 
-    const [fileName, fileExt] = _.last(bannerLink.split('/')).split('.');
-    const [storeCode, bannerNum] = fileName.split('_banner_');
-    const query = Object.entries({ storeCode, bannerNum, fileExt })
-      .map(([key, value]) => `${key}=${value}`)
-      .join('&');
+    const fileName = _.last(bannerLink.split('/'));
+    const storeCode = _.head(fileName.split('_banner_'));
 
     try {
-      await axios.delete(`/api/banners?${query}`);
+      await axios.delete(`${API_URL}?fileName=${fileName}`);
 
       setBannersByStore({
         ...bannersByStore,
@@ -44,15 +47,18 @@ export default function AdminBanners({ stores, banners }) {
           content: (
             <>
               <AdminUploadForm
-                action="/api/banners"
+                action={API_URL}
                 fieldName="banner"
                 hiddenFields={[{
-                  key: 'store',
+                  key: 'storeCode',
                   value: store.code,
                 }]}
               />
 
-              <AdminBannerList banners={bannersByStore[store.code]} onDelete={onDelete}/>
+              <AdminBannerList
+                banners={bannersByStore[store.code]}
+                onDelete={onDelete}
+              />
             </>
           ),
         }))}
@@ -61,13 +67,14 @@ export default function AdminBanners({ stores, banners }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps({ req, res }) {
+  await basicAuthCheck(req, res);
+
   return {
     props: {
       stores: getStores(),
       banners: getBannerLinks(),
     },
-    revalidate: 10,
   };
 }
 

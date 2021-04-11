@@ -1,23 +1,46 @@
+import path from 'path';
+import multiparty from 'multiparty';
 import fsHelpers from '../../lib/fs-helpers';
+import apiHelpers from '../../lib/api-helpers';
 
 const actions = {
   DELETE(req) {
-    const { storeCode, bannerNum, fileExt } = req.query;
+    const { fileName } = req.query;
 
-    fsHelpers(storeCode, bannerNum, fileExt);
+    if (path.dirname(fileName) !== '.') {
+      throw new Error(`Invalid file name: ${fileName}`);
+    }
+
+    fsHelpers.deleteBanner(fileName);
   },
-  POST() {
 
+  POST(req) {
+    const form = new multiparty.Form();
+
+    form.parse(req, (err, fields, files) => {
+      const storeCode = fields.storeCode[0];
+      const fileData = files.banner[0];
+      fsHelpers.saveBanner(storeCode, fileData);
+    });
   },
 };
 
 export default function handler(req, res) {
-  try {
-    actions[req.method](req);
+  const action = actions[req.method];
 
-    res.status(200).json();
+  if (!action) {
+    apiHelpers.sendNoMatchError(req, res);
+    return;
+  }
+
+  try {
+    action(req);
+    apiHelpers.sendSuccessResponse(res);
   } catch (err) {
-    console.error(err);
-    res.status(502).json({ error: 'Request error' });
+    apiHelpers.sendServerError(res);
   }
 }
+
+export const config = {
+  api: { bodyParser: false },
+};
