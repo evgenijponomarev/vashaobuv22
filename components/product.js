@@ -26,7 +26,9 @@ export default function Product({ productData }) {
             alt={title}
           />
 
-          <div className={`${B}__badge`}>Кэшбек {productData.extra_bonus}%</div>
+          {!!productData.extra_bonus && (
+            <div className={`${B}__badge`}>Кэшбек {productData.extra_bonus}%</div>
+          )}
 
           <div className={`${B}__details`}>
             <div className={`${B}__name`}>

@@ -1,137 +1,127 @@
 import { useRouter } from 'next/router';
-import Select from 'react-select';
+import { useState } from 'react';
+import Checkbox from './checkbox';
 import proptypes from '../lib/proptypes';
 import styleVars from '../styles/vars';
 
-const AUDITORY_LABELS = {
-  m: 'Для мужчин',
-  f: 'Для женщин',
-  p: 'Для подростков',
-  c: 'Для детей',
+const OPTION_LABELS = {
+  auditory: {
+    f: 'Для женщин',
+    m: 'Для мужчин',
+    p: 'Для подростков',
+    c: 'Для детей',
+  },
 };
 
-export default function Filter({ filters, onChange, onClear }) {
+export default function Filter({ filters }) {
   const B = 'filter';
 
   const router = useRouter();
 
-  const filterSelects = [
-    {
-      code: 'auditory',
-      name: 'Для кого?',
-      options: filters.auditory.map((auditory) => ({
-        value: auditory,
-        label: AUDITORY_LABELS[auditory],
-        isSelected: auditory === router.query.auditory,
+  const [filtersData, setFiltersData] = useState(
+    Object.entries(filters).map(([code, values]) => ({
+      code,
+      options: values.map((value) => ({
+        value,
+        label: OPTION_LABELS[code] ? OPTION_LABELS[code][value] : value,
+        isChecked: router.query[code]?.split(',').includes(value) ?? false,
       })),
-    },
-    {
-      code: 'type',
-      name: 'Тип обуви',
-      options: filters.type.map((type) => ({
-        value: type,
-        label: type,
-        isSelected: type === router.query.type,
-      })),
-    },
-  ].filter((select) => select.options.length > 1);
+    })).filter((select) => select.options.length > 1),
+  );
 
-  function onChangeSelect(filterCode, value, action) {
-    if (action === 'clear') onClear(filterCode);
-    else onChange(filterCode, value);
+  const [isOpened, toggleOpened] = useState(false);
+
+  function onChangeFilter(filterCode, value) {
+    setFiltersData(filtersData.map((filter) => {
+      if (filter.code !== filterCode) return filter;
+
+      return {
+        ...filter,
+        options: filter.options.map((option) => ({
+          ...option,
+          isChecked: option.value === value ? !option.isChecked : option.isChecked,
+        })),
+      };
+    }));
   }
 
-  if (filterSelects.length === 0) return null;
+  if (filtersData.length === 0) return null;
 
   return (
-    <div className={B}>
-      {filterSelects.map((filter) => (
-        <div className={`${B}__field`} key={filter.code}>
-          <Select
-            isClearable
-            options={filter.options}
-            instanceId={`${B}-select-${filter.code}`}
-            className={`${B}__select`}
-            classNamePrefix={`${B}`}
-            placeholder={filter.name}
-            onChange={(option, { action }) => onChangeSelect(filter.code, option?.value, action)}
-            isSearchable={false}
-            defaultValue={filter.options.find((option) => option.isSelected)}
-          />
-        </div>
-      ))}
+    <div className={`${B}${isOpened ? ` ${B}_opened` : ''}`}>
+      <button
+        className={`${B}__opener`}
+        type="button"
+        onClick={() => toggleOpened(!isOpened)}
+      >
+        {!isOpened && 'Открыть фильтр'}
+        {isOpened && 'Закрыть фильтр'}
+      </button>
+
+      <div className={`${B}__fields`}>
+        {filtersData.map(({ code, options }) => (
+          <div className={`${B}__field`} key={code}>
+            {options.map(({ label, value, isChecked }) => (
+              <div className={`${B}__checkbox`} key={value}>
+                <Checkbox
+                  id={`${code}_${value}`}
+                  label={label}
+                  isChecked={isChecked}
+                  onChange={() => onChangeFilter(code, value)}
+                />
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
 
       <style jsx global>
         {`
         .${B} {
-          width: 100%;
-          display: flex;
-          flex-wrap: wrap;
-          position: sticky;
-          top: ${styleVars.headerHeigh};
-          z-index: 10;
-          background: #fff;
-        }
-
-        .${B}__field {
-          width: ${100 / filterSelects.length}%;
           padding: 10px;
         }
 
-        .${B} .${B}__control {
-          min-height: 30px;
-          height: 30px;
-        }
-
-        .${B} .${B}__select,
-        .${B} .${B}__menu {
+        .${B}__opener {
+          display: none;
+          width: 100%;
+          background: #fff;
+          font-size: 20px;
+          color: ${styleVars.colors.green};
+          cursor: pointer;
           border: 1px solid ${styleVars.colors.green};
           border-radius: ${styleVars.borderRadius};
+          text-align: center;
+          padding: 4px 0;
         }
 
-        .${B} .${B}__single-value,
-        .${B} .${B}__placeholder {
-          color: ${styleVars.colors.green};
-        }
-
-        .${B} .${B}__indicator {
-          padding: 0 8px;
-        }
-
-        .${B} .${B}__indicator-separator {
-          display: none;
-        }
-
-        .${B} .${B}__indicator svg {
-          color: ${styleVars.colors.green};
-        }
-
-        .${B} .${B}__menu {
-          overflow: hidden;
-        }
-
-        .${B} .${B}__option:active,
-        .${B} .${B}__option--is-focused,
-        .${B} .${B}__option--is-selected {
+        .${B}__opener:hover,
+        .${B}__opener:focus {
           background: ${styleVars.colors.green};
           color: #fff;
         }
 
-        .${B} .${B}__control {
-          border: none;
-          border-radius: inherit;
-          box-shadow: none;
+        .${B}__field {
+          padding: 10px;
+          border: 1px solid ${styleVars.colors.green};
+          border-radius: ${styleVars.borderRadius};
         }
 
-        .${B} .${B}__menu-list {
-          padding-top: 0;
-          padding-bottom: 0;
+        .${B}__field + .${B}__field {
+          margin-top: 20px;
         }
 
-        @media (max-width: 480px) {
-          .${B}__field {
-            width: 100%;
-            padding: 5px 10px;
+        @media (max-width: 600px) {
+          .${B}__opener {
+            display: block;
+          }
+
+          .${B}__fields {
+            display: none;
+            margin-top: 10px;
+          }
+
+          .${B}_opened .${B}__fields {
+            display: block;
           }
         }
         `}
@@ -142,6 +132,4 @@ export default function Filter({ filters, onChange, onClear }) {
 
 Filter.propTypes = {
   filters: proptypes.filters.isRequired,
-  onChange: proptypes.func.isRequired,
-  onClear: proptypes.func.isRequired,
 };

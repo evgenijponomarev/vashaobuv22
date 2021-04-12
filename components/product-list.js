@@ -6,6 +6,7 @@ import Filter from './filter';
 import Product from './product';
 import Pagination from './pagination';
 import ContentLoader from './content-loader';
+import styleVars from '../styles/vars';
 
 export default function ProductList({ products, pagination, filters }) {
   const B = 'product-list';
@@ -60,38 +61,63 @@ export default function ProductList({ products, pagination, filters }) {
     });
   }
 
+  function isVisibleFilter() {
+    const filterEntries = Object.entries(filters);
+
+    return filterEntries.length > 0
+      && filterEntries.some(([, value]) => value.length > 1);
+  }
+
   return (
     <div className={B}>
-      {filters && (
-        <Filter
-          filters={filters}
-          onChange={onChangeFilter}
-          onClear={onClearFilter}
-        />
-      )}
-
-      {productList.map((product) => (
-        <div className={`${B}__item`} key={product.code}>
-          <Product productData={product}/>
+      {isVisibleFilter() && (
+        <div className={`${B}__sidebar`}>
+          <Filter
+            filters={filters}
+            onChange={onChangeFilter}
+            onClear={onClearFilter}
+          />
         </div>
-      ))}
-
-      {
-        pagination
-        && lastPageNum < pagination.pagesCount
-        && <ContentLoader onClick={getNextPage}/>
-      }
-
-      {pagination && (
-        <Pagination
-          pagination={pagination}
-          onGetMore={getNextPage}
-        />
       )}
+
+      <div className={`${B}__items`}>
+        {productList.map((product) => (
+          <div className={`${B}__item`} key={product.code}>
+            <Product productData={product}/>
+          </div>
+        ))}
+
+        {
+          pagination
+          && lastPageNum < pagination.pagesCount
+          && <ContentLoader onClick={getNextPage}/>
+        }
+
+        {pagination && (
+          <Pagination
+            pagination={pagination}
+            onGetMore={getNextPage}
+          />
+        )}
+      </div>
 
       <style jsx>
         {`
         .${B} {
+          display: flex;
+        }
+
+        .${B}__sidebar {
+          position: sticky;
+          top: ${styleVars.headerHeigh};
+          z-index: 10;
+          background: #fff;
+          width: 200px;
+          flex-shrink: 0;
+          align-self: flex-start;
+        }
+
+        .${B}__items {
           display: flex;
           flex-wrap: wrap;
           align-items: flex-start;
@@ -104,21 +130,31 @@ export default function ProductList({ products, pagination, filters }) {
           align-self: stretch;
         }
 
-        @media (max-width: 800px) {
+        @media (max-width: 1000px) {
           .${B}__item {
             width: 25%;
           }
         }
 
-        @media (max-width: 560px) {
+        @media (max-width: 800px) {
           .${B}__item {
             width: 33%;
           }
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 700px) {
           .${B}__item {
             width: 50%;
+          }
+        }
+
+        @media (max-width: 600px) {
+          .${B} {
+            flex-direction: column;
+          }
+
+          .${B}__sidebar {
+            width: 100%;
           }
         }
       `}
