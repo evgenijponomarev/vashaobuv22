@@ -47,7 +47,7 @@ export default function AdminTabs({ tabList, contentList }) {
         }
 
         .${B}__tab-panel {
-          padding: 10px 0;
+          padding: ${styleVars.padding}px 0;
           border-left: 1px solid ${styleVars.colors.green};
           border-right: 1px solid ${styleVars.colors.green};
           border-bottom: 1px solid ${styleVars.colors.green};

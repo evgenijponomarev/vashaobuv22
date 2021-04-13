@@ -19,7 +19,7 @@ export default function Header({ children, mix }) {
           left: 0;
           z-index: 20;
           width: 100%;
-          height: ${styleVars.headerHeigh};
+          height: ${styleVars.headerHeigh}px;
           background: ${styleVars.colors.green};
           display: flex;
           align-items: center;

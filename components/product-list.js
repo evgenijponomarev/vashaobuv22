@@ -109,7 +109,7 @@ export default function ProductList({ products, pagination, filters }) {
 
         .${B}__sidebar {
           position: sticky;
-          top: ${styleVars.headerHeigh};
+          top: ${styleVars.headerHeigh}px;
           z-index: 10;
           background: #fff;
           width: 200px;
@@ -125,7 +125,7 @@ export default function ProductList({ products, pagination, filters }) {
 
         .${B}__item {
           display: block;
-          padding: 10px;
+          padding: ${styleVars.padding}px;
           width: 20%;
           align-self: stretch;
         }

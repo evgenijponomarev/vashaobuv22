@@ -24,14 +24,14 @@ export default function DialogWindow({ title, children, mix }) {
           transform: translate(-50%, -50%);
           background: #fff;
           padding: 20px;
-          border-radius: ${styleVars.borderRadius};
+          border-radius: ${styleVars.borderRadius}px;
           box-shadow: ${styleVars.boxShadow} rgba(0, 0, 0, .2);
         }
 
         .${B}__title {
           margin: 0;
           padding: 0;
-          font-size: 20px;
+          font-size: 24px;
           font-weight: 300;
           white-space: nowrap;
         }

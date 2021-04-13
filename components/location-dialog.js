@@ -49,9 +49,11 @@ export default function LocationDialog({
 
         .${B}__link {
           display: block;
-          padding: 10px 0;
+          padding: ${styleVars.padding}px 0;
           text-decoration: none;
           color: ${styleVars.colors.green};
+          font-size: 18px;
+          border-radius: ${styleVars.borderRadius}px;
         }
 
         .${B}__link:hover {

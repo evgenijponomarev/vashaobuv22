@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useRef } from 'react';
 import { useRouter } from 'next/router';
 import proptypes from '../lib/proptypes';
+import styleVars from '../styles/vars';
 
 export default function AdminUploadForm({ action, fieldName, hiddenFields }) {
   const B = 'admin-upload-form';
@@ -43,7 +44,7 @@ export default function AdminUploadForm({ action, fieldName, hiddenFields }) {
       <style jsx>
         {`
         .${B} {
-          padding: 10px;
+          padding: ${styleVars.padding}px;
         }
         `}
       </style>

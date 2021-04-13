@@ -69,12 +69,12 @@ export default function Layout({
       <style jsx global>
         {`
         .${B}__header {
-          height: ${styleVars.headerHeigh};
+          height: ${styleVars.headerHeigh}px;
         }
 
         .${B}__title {
           font-weight: 300;
-          padding: 10px;
+          padding: ${styleVars.padding}px;
           margin: 0;
         }
 

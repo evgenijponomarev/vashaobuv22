@@ -5,6 +5,7 @@ export default {
   transitionTime: '.2s',
   fontFamily: '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif',
   boxShadow: '0 0 4px -1px',
-  borderRadius: '12px',
-  headerHeigh: '40px',
+  borderRadius: 12,
+  headerHeigh: 40,
+  padding: 10,
 };

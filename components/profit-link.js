@@ -18,16 +18,16 @@ export default function ProfitLink({ storeCode }) {
       <style jsx>
         {`
         .${B} {
-          padding: 10px;
+          padding: ${styleVars.padding}px;
           display: flex;
           justify-content: center;
         }
 
         .${B}__link {
           display: block;
-          padding: 10px 20px;
+          padding: ${styleVars.padding}px 20px;
           border: 2px solid ${styleVars.colors.green};
-          border-radius: ${styleVars.borderRadius};
+          border-radius: ${styleVars.borderRadius}px;
           text-align: center;
           color: ${styleVars.colors.green};
           text-decoration: none;

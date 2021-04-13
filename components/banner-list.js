@@ -1,4 +1,5 @@
 import proptypes from '../lib/proptypes';
+import styleVars from '../styles/vars';
 
 export default function BannerList({ banners }) {
   const B = 'banner-list';
@@ -19,7 +20,7 @@ export default function BannerList({ banners }) {
         {`
         .${B}__item {
           width: 100%;
-          padding: 10px;
+          padding: ${styleVars.padding}px;
         }
 
         .${B}__image {

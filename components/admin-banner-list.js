@@ -24,12 +24,12 @@ export default function AdminBannerList({ banners, onDelete }) {
         {`
         .${B} {
           display: flex;
-          padding: 10px 0;
+          padding: ${styleVars.padding}px 0;
         }
 
         .${B}__item {
           width: 20%;
-          padding: 10px;
+          padding: ${styleVars.padding}px;
           text-align: center;
         }
 
@@ -38,7 +38,7 @@ export default function AdminBannerList({ banners, onDelete }) {
         }
 
         .${B}__delete-button {
-          margin-top: 10px;
+          margin-top: ${styleVars.padding}px;
           font-size: 0;
           width: 30px;
           height: 30px;

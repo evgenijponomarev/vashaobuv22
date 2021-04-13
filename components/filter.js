@@ -92,7 +92,7 @@ export default function Filter({ filters, onChange }) {
       <style jsx global>
         {`
         .${B} {
-          padding: 10px;
+          padding: ${styleVars.padding}px;
         }
 
         .${B}__opener {
@@ -103,7 +103,7 @@ export default function Filter({ filters, onChange }) {
           color: ${styleVars.colors.green};
           cursor: pointer;
           border: 1px solid ${styleVars.colors.green};
-          border-radius: ${styleVars.borderRadius};
+          border-radius: ${styleVars.borderRadius}px;
           text-align: center;
           padding: 4px 0;
         }
@@ -115,9 +115,9 @@ export default function Filter({ filters, onChange }) {
         }
 
         .${B}__field {
-          padding: 10px;
+          padding: ${styleVars.padding}px;
           border: 1px solid ${styleVars.colors.green};
-          border-radius: ${styleVars.borderRadius};
+          border-radius: ${styleVars.borderRadius}px;
         }
 
         .${B}__field + .${B}__field {
@@ -131,7 +131,7 @@ export default function Filter({ filters, onChange }) {
 
           .${B}__fields {
             display: none;
-            margin-top: 10px;
+            margin-top: ${styleVars.padding}px;
           }
 
           .${B}_opened .${B}__fields {

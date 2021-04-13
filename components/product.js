@@ -68,10 +68,10 @@ export default function Product({ productData }) {
       <style jsx>
         {`
         .${B} {
-          padding-bottom: 10px;
+          padding-bottom: ${styleVars.padding}px;
           position: relative;
-          border-radius: ${styleVars.borderRadius};
-          transition: transform .2s;
+          border-radius: ${styleVars.borderRadius}px;
+          transition: transform ${styleVars.transitionTime};
         }
 
         .${B}__link {
@@ -91,7 +91,7 @@ export default function Product({ productData }) {
           position: absolute;
           top: 10px;
           left: -8px;
-          padding: 4px 10px; 
+          padding: 4px ${styleVars.padding}px; 
           background: ${styleVars.colors.green};
           color: #fff;
           border-radius: 4px;
@@ -105,7 +105,7 @@ export default function Product({ productData }) {
 
         .${B}__name {
           font-size: 18px;
-          padding: 10px 4px;
+          padding: ${styleVars.padding}px 4px;
           color: ${styleVars.colors.green};
         }
 
@@ -163,7 +163,7 @@ export default function Product({ productData }) {
 
         @media (max-width: 700px) {
           .${B}__name {
-            padding: 10px 4px;
+            padding: ${styleVars.padding}px 4px;
           }
         }
       `}

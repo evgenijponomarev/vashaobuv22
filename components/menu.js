@@ -113,7 +113,7 @@ export default function Menu({ storeCode, isAdmin }) {
         .${B}__item {
           list-style: none;
           margin: 0;
-          padding: 0 10px;
+          padding: 0 ${styleVars.padding}px;
           height: 100%;
         }
 
@@ -150,7 +150,7 @@ export default function Menu({ storeCode, isAdmin }) {
           .${B} {
             width: 40px;
             height: auto;
-            border-radius: ${styleVars.borderRadius};
+            border-radius: ${styleVars.borderRadius}px;
             position: relative;
           }
 
@@ -161,14 +161,14 @@ export default function Menu({ storeCode, isAdmin }) {
           .${B}__items {
             display: none;
             position: absolute;
-            top: ${styleVars.headerHeigh};
+            top: ${styleVars.headerHeigh}px;
             left: 0;
             background-color: ${styleVars.colors.green};
             height: auto;
-            border-radius: ${styleVars.borderRadius};
-            margin-top: 10px;
-            margin-left: 10px;
-            padding: 10px 20px;
+            border-radius: ${styleVars.borderRadius}px;
+            margin-top: ${styleVars.padding}px;
+            margin-left: ${styleVars.padding}px;
+            padding: ${styleVars.padding}px 20px;
             box-shadow: ${styleVars.boxShadow} rgba(0, 0, 0, .5);
           }
 

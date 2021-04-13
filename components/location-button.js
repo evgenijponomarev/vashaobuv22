@@ -1,4 +1,5 @@
 import proptypes from '../lib/proptypes';
+import styleVars from '../styles/vars';
 
 export default function LocationButton({ onClick, storeName }) {
   const B = 'location-button';
@@ -15,7 +16,7 @@ export default function LocationButton({ onClick, storeName }) {
           border: none;
           outline: none;
           margin-left: auto;
-          padding: 0 10px;
+          padding: 0 ${styleVars.padding}px;
           cursor: pointer;
           align-items: center;
         }
