@@ -39,12 +39,12 @@ export default function ProductList({ products, pagination, filters }) {
     setProductList([...productList, ...data]);
   }
 
-  function onChangeFilter(field, value) {
+  function onChangeFilter(filterCode, filterValues) {
     router.push({
       pathname: router.pathname,
       query: {
         ...router.query,
-        [field]: value,
+        [filterCode]: filterValues.join(','),
         page: 1,
       },
     });

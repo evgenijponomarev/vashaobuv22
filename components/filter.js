@@ -13,7 +13,7 @@ const OPTION_LABELS = {
   },
 };
 
-export default function Filter({ filters }) {
+export default function Filter({ filters, onChange }) {
   const B = 'filter';
 
   const router = useRouter();
@@ -31,18 +31,32 @@ export default function Filter({ filters }) {
 
   const [isOpened, toggleOpened] = useState(false);
 
-  function onChangeFilter(filterCode, value) {
-    setFiltersData(filtersData.map((filter) => {
+  function checkOption(filter, value) {
+    return {
+      ...filter,
+      options: filter.options.map((option) => ({
+        ...option,
+        isChecked: option.value === value ? !option.isChecked : option.isChecked,
+      })),
+    };
+  }
+
+  function onChangeFilter(filterCode, filterValue) {
+    const newFilterData = filtersData.map((filter) => {
       if (filter.code !== filterCode) return filter;
 
-      return {
-        ...filter,
-        options: filter.options.map((option) => ({
-          ...option,
-          isChecked: option.value === value ? !option.isChecked : option.isChecked,
-        })),
-      };
-    }));
+      return checkOption(filter, filterValue);
+    });
+
+    setFiltersData(newFilterData);
+
+    const filterValues = newFilterData
+      .find(({ code }) => code === filterCode)
+      .options
+      .filter(({ isChecked }) => isChecked)
+      .map(({ value }) => value);
+
+    onChange(filterCode, filterValues);
   }
 
   if (filtersData.length === 0) return null;
@@ -132,4 +146,5 @@ export default function Filter({ filters }) {
 
 Filter.propTypes = {
   filters: proptypes.filters.isRequired,
+  onChange: proptypes.func.isRequired,
 };
