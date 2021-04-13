@@ -13,22 +13,32 @@ const OPTION_LABELS = {
   },
 };
 
+const AUDITORY_ORDER = ['f', 'm', 'p', 'c'];
+
 export default function Filter({ filters, onChange }) {
   const B = 'filter';
 
   const router = useRouter();
 
-  const [filtersData, setFiltersData] = useState(
-    Object.entries(filters).map(([code, values]) => ({
+  if (filters.auditory) {
+    filters.auditory.sort((a, b) => {
+      if (AUDITORY_ORDER.indexOf(a) > AUDITORY_ORDER.indexOf(b)) return 1;
+      return -1;
+    });
+  }
+
+  const filtersList = Object.entries(filters)
+    .map(([code, values]) => ({
       code,
       options: values.map((value) => ({
         value,
         label: OPTION_LABELS[code] ? OPTION_LABELS[code][value] : value,
         isChecked: router.query[code]?.split(',').includes(value) ?? false,
       })),
-    })).filter((select) => select.options.length > 1),
-  );
+    }))
+    .filter((select) => select.options.length > 1);
 
+  const [filtersData, setFiltersData] = useState(filtersList);
   const [isOpened, toggleOpened] = useState(false);
 
   function checkOption(filter, value) {
@@ -124,7 +134,7 @@ export default function Filter({ filters, onChange }) {
           margin-top: 20px;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 550px) {
           .${B}__opener {
             display: block;
           }

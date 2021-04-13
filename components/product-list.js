@@ -148,7 +148,7 @@ export default function ProductList({ products, pagination, filters }) {
           }
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 550px) {
           .${B} {
             flex-direction: column;
           }
