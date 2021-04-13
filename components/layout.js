@@ -10,6 +10,8 @@ import LocationDialog from './location-dialog';
 import styleVars from '../styles/vars';
 
 export default function Layout({
+  storeCode,
+  pathname,
   children,
   stores,
   title,
@@ -19,18 +21,15 @@ export default function Layout({
 
   const router = useRouter();
 
-  const currentStoreCode = router.query.storeCode;
-  const currentStoreName = stores.find(({ code }) => code === currentStoreCode)?.name ?? '';
-
   const [isLocationDialogOpened, toggleLocationDialog] = useState(false);
+
+  const storeName = stores.find(({ code }) => code === storeCode)?.name ?? '';
 
   useEffect(() => {
     const userStoreCode = localStorage.getItem('store');
 
-    if (currentStoreCode && currentStoreCode !== userStoreCode) {
-      localStorage.setItem('store', currentStoreCode);
-    }
-  });
+    if (storeCode && storeCode !== userStoreCode) localStorage.setItem('store', storeCode);
+  }, [storeCode]);
 
   return (
     <div className={B}>
@@ -41,12 +40,12 @@ export default function Layout({
 
       <div className={`${B}__header`}>
         <Header>
-          <Menu isAdmin={isAdmin}/>
+          <Menu storeCode={storeCode} isAdmin={isAdmin}/>
 
-          {currentStoreName && (
+          {storeName && (
             <LocationButton
               onClick={() => toggleLocationDialog(true)}
-              storeName={currentStoreName}
+              storeName={storeName}
             />
           )}
         </Header>
@@ -60,6 +59,7 @@ export default function Layout({
 
       {isLocationDialogOpened && (
         <LocationDialog
+          pathname={pathname || router.pathname}
           stores={stores}
           onClose={() => toggleLocationDialog(false)}
           onClickStore={() => toggleLocationDialog(false)}
@@ -88,6 +88,8 @@ export default function Layout({
 }
 
 Layout.defaultProps = {
+  storeCode: '',
+  pathname: '',
   stores: [],
   title: '',
   children: null,
@@ -95,6 +97,8 @@ Layout.defaultProps = {
 };
 
 Layout.propTypes = {
+  storeCode: proptypes.string,
+  pathname: proptypes.string,
   stores: proptypes.stores,
   title: proptypes.string,
   children: proptypes.node,

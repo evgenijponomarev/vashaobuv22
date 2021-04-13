@@ -68,8 +68,8 @@ export default function Filter({ filters, onChange }) {
         type="button"
         onClick={() => toggleOpened(!isOpened)}
       >
-        {!isOpened && 'Открыть фильтр'}
-        {isOpened && 'Закрыть фильтр'}
+        {!isOpened && 'Показать фильтр'}
+        {isOpened && 'Скрыть фильтр'}
       </button>
 
       <div className={`${B}__fields`}>
@@ -99,7 +99,7 @@ export default function Filter({ filters, onChange }) {
           display: none;
           width: 100%;
           background: #fff;
-          font-size: 20px;
+          font-size: 18px;
           color: ${styleVars.colors.green};
           cursor: pointer;
           border: 1px solid ${styleVars.colors.green};

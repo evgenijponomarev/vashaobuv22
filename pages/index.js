@@ -24,7 +24,7 @@ export default function Home({ stores }) {
   });
 
   return (
-    <Layout>
+    <Layout pathname="/new/[storeCode]">
       {isLocationDialogOpened && <LocationDialog stores={stores}/>}
     </Layout>
   );

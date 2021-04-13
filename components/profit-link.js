@@ -1,19 +1,15 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import proptypes from '../lib/proptypes';
 import styleVars from '../styles/vars';
 
-export default function ProfitLink() {
+export default function ProfitLink({ storeCode }) {
   const B = 'profit-link';
-
-  const router = useRouter();
 
   return (
     <div className={B}>
       <Link href={{
         pathname: '/profit/[storeCode]',
-        query: {
-          storeCode: router.query.storeCode,
-        },
+        query: { storeCode },
       }}
       >
         <a className={`${B}__link`}>Выгодные предложения</a>
@@ -48,3 +44,7 @@ export default function ProfitLink() {
     </div>
   );
 }
+
+ProfitLink.propTypes = {
+  storeCode: proptypes.string.isRequired,
+};

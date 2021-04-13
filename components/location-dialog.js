@@ -1,14 +1,16 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import proptypes from '../lib/proptypes';
 import DialogOverlay from './dialog-overlay';
 import DialogWindow from './dialog-window';
 import styleVars from '../styles/vars';
 
-export default function LocationDialog({ stores, onClose, onClickStore }) {
+export default function LocationDialog({
+  pathname,
+  stores,
+  onClose,
+  onClickStore,
+}) {
   const B = 'location-dialog';
-
-  const router = useRouter();
 
   return (
     <div className={B}>
@@ -19,7 +21,7 @@ export default function LocationDialog({ stores, onClose, onClickStore }) {
           {stores.map((store) => (
             <li key={store.code} className={`${B}__store`}>
               <Link href={{
-                pathname: router.pathname,
+                pathname,
                 query: {
                   storeCode: store.code,
                 },
@@ -68,6 +70,7 @@ LocationDialog.defaultProps = {
 };
 
 LocationDialog.propTypes = {
+  pathname: proptypes.string.isRequired,
   stores: proptypes.stores.isRequired,
   onClose: proptypes.func,
   onClickStore: proptypes.func,

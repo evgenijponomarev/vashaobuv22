@@ -39,11 +39,10 @@ const items = {
   ],
 };
 
-export default function Menu({ isAdmin }) {
+export default function Menu({ storeCode, isAdmin }) {
   const B = 'menu';
 
   const router = useRouter();
-  const { storeCode } = router.query;
 
   const [isOpened, setMenuOpened] = useState(false);
 
@@ -220,8 +219,10 @@ export default function Menu({ isAdmin }) {
 
 Menu.defaultProps = {
   isAdmin: false,
+  storeCode: '',
 };
 
 Menu.propTypes = {
   isAdmin: proptypes.bool,
+  storeCode: proptypes.string,
 };

@@ -10,10 +10,10 @@ export default function Product({ productData }) {
   return (
     <div className={B}>
       <Link href={{
-        pathname: '/shoes/[storeCode]/[code]',
+        pathname: '/shoes/[storeCode]/[productCode]',
         query: {
           storeCode: productData.storeCode,
-          code: productData.code,
+          productCode: productData.code,
         },
       }}
       >

@@ -4,10 +4,10 @@ import Layout from '../../components/layout';
 import ProfitLink from '../../components/profit-link';
 import BannerList from '../../components/banner-list';
 
-export default function Actions({ stores, banners = [] }) {
+export default function Actions({ storeCode, stores, banners = [] }) {
   return (
-    <Layout stores={stores} title="Акции">
-      <ProfitLink/>
+    <Layout storeCode={storeCode} stores={stores} title="Акции">
+      <ProfitLink storeCode={storeCode}/>
 
       <BannerList banners={banners}/>
     </Layout>
@@ -30,6 +30,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   return {
     props: {
+      storeCode: params.storeCode,
       stores: getStores(),
       banners: getBannerLinks(params.storeCode),
     },
@@ -40,4 +41,5 @@ export async function getStaticProps({ params }) {
 Actions.propTypes = {
   stores: proptypes.stores.isRequired,
   banners: proptypes.banners.isRequired,
+  storeCode: proptypes.string.isRequired,
 };

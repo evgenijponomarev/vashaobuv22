@@ -4,13 +4,14 @@ import Layout from '../../components/layout';
 import ProductList from '../../components/product-list';
 
 export default function New({
+  storeCode,
   stores,
   products,
   pagination,
   filters,
 }) {
   return (
-    <Layout stores={stores} title="Выгодные предложения">
+    <Layout storeCode={storeCode} stores={stores} title="Выгодные предложения">
       <ProductList products={products} pagination={pagination} filters={filters}/>
     </Layout>
   );
@@ -21,6 +22,7 @@ export async function getServerSideProps({ query }) {
 }
 
 New.propTypes = {
+  storeCode: proptypes.string.isRequired,
   stores: proptypes.stores.isRequired,
   products: proptypes.products.isRequired,
   pagination: proptypes.pagination.isRequired,
