@@ -208,7 +208,7 @@ export default function Menu({ storeCode, isAdmin }) {
           }
 
           .${B}_opened .${B}__toggler {
-            background-image: url(/images/close.svg);
+            background-image: url(/images/close-white.svg);
           }
         }
       `}

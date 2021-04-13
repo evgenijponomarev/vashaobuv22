@@ -1,8 +1,12 @@
+import { useState } from 'react';
 import proptypes from '../lib/proptypes';
 import styleVars from '../styles/vars';
+import PhotoDialog from './photo-dialog';
 
 export default function ProductCard({ data, photos }) {
   const B = 'product-card';
+
+  const [openedPhoto, setOpenedPhoto] = useState('');
 
   const options = [
     { name: 'Артикул', value: data.articul },
@@ -12,14 +16,21 @@ export default function ProductCard({ data, photos }) {
   return (
     <div className={B}>
       <div className={`${B}__photos`}>
-        <div className={`${B}__photo ${B}__main-photo`}>
+        <div
+          className={`${B}__photo ${B}__main-photo`}
+          onClick={() => setOpenedPhoto(photos[0])}
+        >
           <img className={`${B}__img`} src={photos[0]} alt={data.name}/>
         </div>
 
         {photos.length > 1 && (
           <div className={`${B}__added-photos`}>
             {photos.slice(1).map((photoUrl) => (
-              <div className={`${B}__photo ${B}__added-photo`} key={photoUrl}>
+              <div
+                className={`${B}__photo ${B}__added-photo`}
+                key={photoUrl}
+                onClick={() => setOpenedPhoto(photoUrl)}
+              >
                 <img className={`${B}__img`} src={photoUrl} alt={data.name}/>
               </div>
             ))}
@@ -42,6 +53,14 @@ export default function ProductCard({ data, photos }) {
           ))}
         </div>
       </div>
+
+      {openedPhoto && (
+        <PhotoDialog
+          photoUrl={openedPhoto}
+          title={data.name}
+          onClose={() => setOpenedPhoto('')}
+        />
+      )}
 
       <style jsx global>
         {`

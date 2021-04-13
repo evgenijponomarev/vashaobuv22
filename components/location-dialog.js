@@ -16,7 +16,11 @@ export default function LocationDialog({
     <div className={B}>
       <DialogOverlay onClick={onClose}/>
 
-      <DialogWindow mix={`${B}__window`} title="Выберите ваш магазин">
+      <DialogWindow
+        mix={`${B}__window`}
+        title="Выберите ваш магазин"
+        onClose={onClose}
+      >
         <ul className={`${B}__store-list`}>
           {stores.map((store) => (
             <li key={store.code} className={`${B}__store`}>
@@ -36,6 +40,10 @@ export default function LocationDialog({
 
       <style jsx global>
         {`
+        .${B}__window {
+          padding: ${styleVars.padding * 2}px;
+        }
+
         .${B}__store-list {
           list-style: none;
           margin: 0;
@@ -67,7 +75,7 @@ export default function LocationDialog({
 }
 
 LocationDialog.defaultProps = {
-  onClose: () => {},
+  onClose: null,
   onClickStore: () => {},
 };
 

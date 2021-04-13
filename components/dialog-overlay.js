@@ -14,7 +14,7 @@ export default function DialogOverlay({ onClick }) {
           z-index: 30;
           width: 100%;
           height: 100%;
-          background: rgba(255, 255, 255, .9);
+          background: rgba(0, 0, 0, .5);
         }
       `}
       </style>
@@ -22,6 +22,10 @@ export default function DialogOverlay({ onClick }) {
   );
 }
 
+DialogOverlay.defaultProps = {
+  onClick: null,
+};
+
 DialogOverlay.propTypes = {
-  onClick: proptypes.func.isRequired,
+  onClick: proptypes.func,
 };
