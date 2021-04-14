@@ -1,16 +1,30 @@
 import { getProductsPageData } from '../../lib/data';
+import apiHelpers from '../../lib/api-helpers';
 
-export default function handler(req, res) {
-  try {
+const actions = {
+  GET(req, res) {
     const { storeCode, page, ...filterParams } = req.query;
+
     if (filterParams.auditory) filterParams.auditory = filterParams.auditory.split(',');
     if (filterParams.type) filterParams.type = filterParams.type.split(',');
 
     const { products } = getProductsPageData(storeCode, page, filterParams);
 
-    res.status(200).json(products);
+    apiHelpers.sendData(res, products);
+  },
+};
+
+export default function handler(req, res) {
+  const action = actions[req.method];
+
+  if (!action) {
+    apiHelpers.sendNoMatchError(res, req.method);
+    return;
+  }
+
+  try {
+    action(req, res);
   } catch (err) {
-    console.error(err);
-    res.status(502).json({ error: 'Request error' });
+    apiHelpers.sendServerError(res);
   }
 }

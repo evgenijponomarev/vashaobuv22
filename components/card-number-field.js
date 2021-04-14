@@ -4,14 +4,11 @@ import TextField from './text-field';
 
 const WIDTH = 430;
 
-export default function CardNumberField({
-  value,
-  onChange,
-}) {
+export default function CardNumberField({ value, onChange, maxLength }) {
   const B = 'card-number-field';
 
   function onChangeHandler(newValue) {
-    if (newValue.match(/^\d{0,13}$/)) onChange(newValue);
+    if (newValue.length <= maxLength && newValue.match(/^\d*$/)) onChange(newValue);
   }
 
   return (
@@ -153,4 +150,5 @@ export default function CardNumberField({
 CardNumberField.propTypes = {
   value: proptypes.string.isRequired,
   onChange: proptypes.func.isRequired,
+  maxLength: proptypes.number.isRequired,
 };

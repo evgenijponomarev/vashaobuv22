@@ -2,11 +2,11 @@ import proptypes from '../lib/proptypes';
 import styleVars from '../styles/vars';
 import TextField from './text-field';
 
-export default function PhoneTailField({ value, onChange }) {
+export default function PhoneTailField({ value, onChange, maxLength }) {
   const B = 'phone-tail-field';
 
   function onChangeHandler(newValue) {
-    if (newValue.match(/^\d{0,4}$/)) onChange(newValue);
+    if (newValue.length <= maxLength && newValue.match(/^\d*$/)) onChange(newValue);
   }
 
   return (
@@ -41,7 +41,7 @@ export default function PhoneTailField({ value, onChange }) {
         .${B} .${B}__input {
           font-size: 24px;
           font-weight: 500;
-          letter-spacing: 0.05rem;
+          letter-spacing: 0.08rem;
           color: #000;
           padding: 0;
         }
@@ -53,6 +53,7 @@ export default function PhoneTailField({ value, onChange }) {
         }
 
         .${B} .${B}__input {
+          border-radius: 0;
           width: 64px;
           border: none;
         }
@@ -65,4 +66,5 @@ export default function PhoneTailField({ value, onChange }) {
 PhoneTailField.propTypes = {
   value: proptypes.string.isRequired,
   onChange: proptypes.func.isRequired,
+  maxLength: proptypes.number.isRequired,
 };
