@@ -3,7 +3,7 @@ import { getProductsPageServerSideProps } from '../../lib/server-side-props';
 import Layout from '../../components/layout';
 import ProductList from '../../components/product-list';
 
-export default function New({
+export default function NewPage({
   storeCode,
   stores,
   products,
@@ -21,7 +21,7 @@ export async function getServerSideProps({ query }) {
   return getProductsPageServerSideProps(query, { is_new: true });
 }
 
-New.propTypes = {
+NewPage.propTypes = {
   storeCode: proptypes.string.isRequired,
   stores: proptypes.stores.isRequired,
   products: proptypes.products.isRequired,

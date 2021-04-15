@@ -4,7 +4,7 @@ import Layout from '../../components/layout';
 import ProfitLink from '../../components/profit-link';
 import BannerList from '../../components/banner-list';
 
-export default function Actions({ storeCode, stores, banners = [] }) {
+export default function ActionsPage({ storeCode, stores, banners }) {
   return (
     <Layout storeCode={storeCode} stores={stores} title="Акции">
       <ProfitLink storeCode={storeCode}/>
@@ -38,8 +38,12 @@ export async function getStaticProps({ params }) {
   };
 }
 
-Actions.propTypes = {
+ActionsPage.defaultProps = {
+  banners: [],
+};
+
+ActionsPage.propTypes = {
   stores: proptypes.stores.isRequired,
-  banners: proptypes.banners.isRequired,
+  banners: proptypes.banners,
   storeCode: proptypes.string.isRequired,
 };

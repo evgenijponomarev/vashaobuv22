@@ -11,7 +11,7 @@ const basicAuthCheck = initializeBasicAuth({
   ],
 });
 
-export default function AdminData() {
+export default function AdminDataPage() {
   return (
     <Layout title="Загрузка данных" isAdmin>
       <AdminUploadForm

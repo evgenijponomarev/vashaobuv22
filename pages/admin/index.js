@@ -14,7 +14,7 @@ const API_URL = '/api/banners';
 
 const basicAuthCheck = initializeBasicAuth({ users });
 
-export default function AdminBanners({ stores, banners }) {
+export default function AdminBannersPage({ stores, banners }) {
   const [bannersByStore, setBannersByStore] = useState(stores.reduce((acc, store) => ({
     ...acc,
     [store.code]: banners.filter((link) => link.includes(store.code)),
@@ -78,7 +78,7 @@ export async function getServerSideProps({ req, res }) {
   };
 }
 
-AdminBanners.propTypes = {
+AdminBannersPage.propTypes = {
   stores: proptypes.stores.isRequired,
   banners: proptypes.banners.isRequired,
 };

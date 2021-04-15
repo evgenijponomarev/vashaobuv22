@@ -1,12 +1,12 @@
 import proptypes from '../../lib/proptypes';
 import { getStores } from '../../lib/data';
 import Layout from '../../components/layout';
-import CheckBonusesForm from '../../components/check-bonuses-form';
+import Contacts from '../../components/contacts';
 
-export default function BonusesPage({ storeCode, stores }) {
+export default function ContactsPage({ storeCode, stores }) {
   return (
-    <Layout storeCode={storeCode} stores={stores} title="Сколько у меня бонусов?">
-      <CheckBonusesForm/>
+    <Layout storeCode={storeCode} stores={stores} title="Контакты">
+      <Contacts/>
     </Layout>
   );
 }
@@ -34,7 +34,7 @@ export async function getStaticProps({ params }) {
   };
 }
 
-BonusesPage.propTypes = {
+ContactsPage.propTypes = {
   stores: proptypes.stores.isRequired,
   storeCode: proptypes.string.isRequired,
 };

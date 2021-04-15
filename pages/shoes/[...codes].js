@@ -8,12 +8,14 @@ import {
 import Layout from '../../components/layout';
 import ProductCard from '../../components/product-card';
 
-export default function Shoe({
+export default function ShoePage({
   storeCode,
   stores,
   productData,
   productPhotos,
 }) {
+  if (!productData) return null;
+
   return (
     <Layout
       storeCode={storeCode}
@@ -62,9 +64,13 @@ export async function getStaticProps({ params }) {
   };
 }
 
-Shoe.propTypes = {
+ShoePage.defaultProps = {
+  productData: null,
+};
+
+ShoePage.propTypes = {
   storeCode: proptypes.string.isRequired,
   stores: proptypes.stores.isRequired,
-  productData: proptypes.productData.isRequired,
+  productData: proptypes.productData,
   productPhotos: proptypes.productPhotos.isRequired,
 };
