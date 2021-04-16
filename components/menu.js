@@ -33,12 +33,12 @@ const items = {
       text: 'Баннеры',
     },
     {
-      pathname: '/admin/data',
-      text: 'Данные',
-    },
-    {
       pathname: '/admin/contacts',
       text: 'Контакты',
+    },
+    {
+      pathname: '/admin/data',
+      text: 'Данные',
     },
   ],
 };

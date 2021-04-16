@@ -14,13 +14,14 @@
 
 # production
 /build
+
+# data
 /1s_import.log
 /uploads/*
 # /data/*
-/public/shoes_photos
-/public/banners
-/public/stores_photos
-/secret
+# /public/shoes_photos/*
+# /public/banners/*
+# /public/stores_photos/*
 
 # misc
 .DS_Store

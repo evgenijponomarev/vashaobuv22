@@ -1,7 +1,7 @@
 import initializeBasicAuth from 'nextjs-basic-auth';
 import Layout from '../../components/layout';
 import AdminUploadForm from '../../components/admin-upload-form';
-import users from '../../secret/users.json';
+import users from '../../data/users.json';
 
 const API_URL = '/api/data';
 
