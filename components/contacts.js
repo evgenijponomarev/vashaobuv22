@@ -1,22 +1,12 @@
+import getMapUrl from '../lib/get-map-url';
 import PropTypes from '../lib/prop-types';
 import styleVars from '../styles/vars';
 import PhotoGallery from './photo-gallery';
 
-const MAP_WIDTH = 650;
-const MAP_HEIGHT = 450;
-const MAP_LAYER = 'map';
-
 export default function Contacts({ address, map, photos }) {
   const B = 'contacts';
 
-  const mapQuery = [
-    `size=${MAP_WIDTH},${MAP_HEIGHT}`,
-    `l=${MAP_LAYER}`,
-    `ll=${map.coordinates}`,
-    `z=${map.zoom}`,
-    `pt=${map.coordinates},pm2gnl`,
-  ];
-  const mapUrl = `https://static-maps.yandex.ru/1.x/?${mapQuery.join('&')}`;
+  const mapUrl = getMapUrl(map.coordinates, map.zoom);
 
   return (
     <div className={B}>

@@ -17,7 +17,7 @@ export default function TextField({
   }
 
   return (
-    <>
+    <div>
       <input
         id={id}
         className={[B, mix].join(' ')}
@@ -34,7 +34,7 @@ export default function TextField({
           width: 100%;
           border: 1px solid ${styleVars.colors.green};
           border-radius: ${styleVars.borderRadius}px;
-          font-size: 20px;
+          font-size: 16px;
           padding: 4px ${styleVars.padding}px;
         }
 
@@ -43,7 +43,7 @@ export default function TextField({
         }
         `}
       </style>
-    </>
+    </div>
   );
 }
 

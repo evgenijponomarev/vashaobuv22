@@ -43,11 +43,10 @@ export default function AdminTabs({ tabList, contentList }) {
 
         .${B}__tab_selected {
           border-color: ${styleVars.colors.green};
-          border-radius: 0;
+          border-radius: ${styleVars.borderRadius}px ${styleVars.borderRadius}px 0 0;
         }
 
         .${B}__tab-panel {
-          padding: ${styleVars.padding}px 0;
           border-left: 1px solid ${styleVars.colors.green};
           border-right: 1px solid ${styleVars.colors.green};
           border-bottom: 1px solid ${styleVars.colors.green};

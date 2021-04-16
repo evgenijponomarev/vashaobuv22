@@ -8,6 +8,7 @@ import Layout from '../../components/layout';
 import AdminTabs from '../../components/admin-tabs';
 import AdminPhotoGallery from '../../components/admin-photo-gallery';
 import AdminUploadForm from '../../components/admin-upload-form';
+import AdminContactsForm from '../../components/admin-contacts-form';
 import users from '../../data/users.json';
 
 const API_URL = '/api/contacts';
@@ -43,9 +44,11 @@ export default function AdminContactsPage({ stores, contacts, photos }) {
           key: store.code,
           content: (
             <>
-              <div>
-                {contacts.find(({ store_code }) => store_code === store.code).address}
-              </div>
+              <AdminContactsForm
+                contacts={contacts.find(({ store_code }) => store_code === store.code)}
+                action={API_URL}
+                storeName={store.name}
+              />
 
               <AdminUploadForm
                 action={`${API_URL}/photos`}

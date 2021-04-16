@@ -41,12 +41,29 @@ export default function AdminUploadForm({
 
       {hiddenFields.map(({ key, value }) => <input key={key} type="hidden" name={key} value={value}/>)}
 
-      <button type="submit">Отправить</button>
+      <button className={`${B}__send-button`} type="submit">Отправить</button>
 
       <style jsx>
         {`
         .${B} {
           padding: ${styleVars.padding}px;
+          border-bottom: 1px solid ${styleVars.colors.green};
+        }
+
+        .${B}__send-button {
+          background: none;
+          border: 1px solid ${styleVars.colors.green};
+          border-radius: ${styleVars.borderRadius}px;
+          color: ${styleVars.colors.green};
+          padding: ${styleVars.padding}px;
+          cursor: pointer;
+        }
+
+        .${B}__send-button:hover,
+        .${B}__send-button:focus {
+          outline: none;
+          background: ${styleVars.colors.green};
+          color: #fff;
         }
         `}
       </style>
