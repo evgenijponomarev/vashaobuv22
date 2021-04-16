@@ -1,12 +1,12 @@
 import PropTypes from '../lib/prop-types';
 import styleVars from '../styles/vars';
 
-export default function AdminBannerList({ banners, onDelete }) {
-  const B = 'admin-banner-list';
+export default function AdminPhotoGallery({ photos, onDelete }) {
+  const B = 'admin-photo-gallery';
 
   return (
     <div className={B}>
-      {banners.map((link) => (
+      {photos.map((link) => (
         <div className={`${B}__item`} key={link}>
           <img className={`${B}__image`} src={link} alt="Рекламный баннер"/>
 
@@ -61,7 +61,7 @@ export default function AdminBannerList({ banners, onDelete }) {
   );
 }
 
-AdminBannerList.propTypes = {
-  banners: PropTypes.banners.isRequired,
+AdminPhotoGallery.propTypes = {
+  photos: PropTypes.photos.isRequired,
   onDelete: PropTypes.func.isRequired,
 };

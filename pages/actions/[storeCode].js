@@ -44,6 +44,6 @@ ActionsPage.defaultProps = {
 
 ActionsPage.propTypes = {
   stores: PropTypes.stores.isRequired,
-  banners: PropTypes.banners,
+  banners: PropTypes.photos,
   storeCode: PropTypes.string.isRequired,
 };

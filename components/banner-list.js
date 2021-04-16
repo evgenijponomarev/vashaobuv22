@@ -33,5 +33,5 @@ export default function BannerList({ banners }) {
 }
 
 BannerList.propTypes = {
-  banners: PropTypes.banners.isRequired,
+  banners: PropTypes.photos.isRequired,
 };
