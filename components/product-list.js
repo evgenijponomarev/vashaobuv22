@@ -121,6 +121,7 @@ export default function ProductList({ products, pagination, filters }) {
           display: flex;
           flex-wrap: wrap;
           align-items: flex-start;
+          width: 100%;
         }
 
         .${B}__item {

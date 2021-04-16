@@ -14,16 +14,14 @@ export default function ShoePage({
   productData,
   productPhotos,
 }) {
-  if (!productData) return null;
-
   return (
     <Layout
       storeCode={storeCode}
       pathname="/new/[storeCode]"
       stores={stores}
-      title={productData.name}
+      title={productData?.name ?? 'Страница не найдена'}
     >
-      <ProductCard data={productData} photos={productPhotos}/>
+      {productData && <ProductCard data={productData} photos={productPhotos}/>}
     </Layout>
   );
 }
@@ -44,7 +42,7 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: true,
+    fallback: false,
   };
 }
 

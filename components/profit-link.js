@@ -12,7 +12,11 @@ export default function ProfitLink({ storeCode }) {
         query: { storeCode },
       }}
       >
-        <a className={`${B}__link`}>Выгодные предложения</a>
+        <a className={`${B}__link`}>
+          <span className={`${B}__link-text`}>
+            Перейти к самым выгодным предложениям
+          </span>
+        </a>
       </Link>
 
       <style jsx>
@@ -24,18 +28,47 @@ export default function ProfitLink({ storeCode }) {
         }
 
         .${B}__link {
-          display: block;
-          padding: ${styleVars.padding}px 20px;
-          border: 2px solid ${styleVars.colors.green};
-          border-radius: ${styleVars.borderRadius}px;
-          text-align: center;
-          color: ${styleVars.colors.green};
+          display: flex;
+          align-items: center;
           text-decoration: none;
-          font-size: 18px;
-          font-weight: 400;
         }
 
-        .${B}__link:hover {
+        .${B}__link:hover .${B}__link-text {
+          text-decoration: none;
+        }
+
+        .${B}__link::before,
+        .${B}__link::after {
+          content: '';
+          display: block;
+          width: 60px;
+          height: 60px;
+          background-image: url(/images/cashback.svg);
+          background-repeat: no-repeat;
+        }
+
+        .${B}__link::before {
+          transform: rotate(-80deg) translate(-40px, 36px);
+          margin-right: -10px;
+        }
+
+        .${B}__link::after {
+          transform: scale(-1, 1) rotate(-80deg) translate(-40px, 36px);
+          margin-left: -10px;
+        }
+
+        .${B}__link-text {
+          display: block;
+          color: ${styleVars.colors.green};
+          font-size: 22px;
+          font-weight: 300;
+          border: 2px solid ${styleVars.colors.green};
+          padding: ${styleVars.padding}px ${styleVars.padding * 2}px;
+          border-radius: ${styleVars.borderRadius}px;
+        }
+
+        .${B}__link:hover .${B}__link-text,
+        .${B}__link:focus .${B}__link-text {
           background: ${styleVars.colors.green};
           color: #fff;
         }

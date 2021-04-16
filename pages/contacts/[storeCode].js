@@ -9,13 +9,9 @@ export default function ContactsPage({
   contacts,
   photos,
 }) {
-  if (!contacts) return null;
-
-  const { address, map } = contacts;
-
   return (
     <Layout storeCode={storeCode} stores={stores} title="Контакты">
-      <Contacts address={address} map={map} photos={photos}/>
+      {contacts && <Contacts address={contacts.address} map={contacts.map} photos={photos}/>}
     </Layout>
   );
 }
@@ -29,7 +25,7 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: true,
+    fallback: false,
   };
 }
 

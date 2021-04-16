@@ -23,12 +23,27 @@ export default function Layout({
 
   const [isLocationDialogOpened, toggleLocationDialog] = useState(false);
 
-  const storeName = stores.find(({ code }) => code === storeCode)?.name ?? '';
+  const isExistingStore = stores.find(({ code }) => code === storeCode);
+
+  const storeName = stores.find(({ code }) => code === storeCode)?.name ?? 'Выберите ваш магазин';
 
   useEffect(() => {
     const userStoreCode = localStorage.getItem('store');
 
-    if (storeCode && storeCode !== userStoreCode) localStorage.setItem('store', storeCode);
+    if (!isExistingStore) {
+      if (userStoreCode) {
+        router.push({
+          pathname: '/new/[storeCode]',
+          query: {
+            storeCode: userStoreCode,
+          },
+        });
+      } else {
+        toggleLocationDialog(true);
+      }
+    } else if (storeCode !== userStoreCode) {
+      localStorage.setItem('store', storeCode);
+    }
   }, [storeCode]);
 
   return (
@@ -61,7 +76,7 @@ export default function Layout({
         <LocationDialog
           pathname={pathname || router.pathname}
           stores={stores}
-          onClose={() => toggleLocationDialog(false)}
+          onClose={isExistingStore ? () => toggleLocationDialog(false) : null}
           onClickStore={() => toggleLocationDialog(false)}
         />
       )}

@@ -1,34 +1,13 @@
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import PropTypes from '../lib/prop-types';
 import { getStores } from '../lib/data';
 import Layout from '../components/layout';
-import LocationDialog from '../components/location-dialog';
 
 export default function Home({ stores }) {
-  const router = useRouter();
-
-  const [isLocationDialogOpened, toggleLocationDialog] = useState(false);
-
-  useEffect(() => {
-    const storeCode = localStorage.getItem('store');
-
-    if (storeCode) {
-      router.push({
-        pathname: '/new/[storeCode]',
-        query: { storeCode },
-      });
-    } else {
-      toggleLocationDialog(true);
-    }
-  });
-
   return (
-    <Layout pathname="/new/[storeCode]">
-      {isLocationDialogOpened && (
-        <LocationDialog stores={stores} pathname="/new/[storeCode]"/>
-      )}
-    </Layout>
+    <Layout
+      stores={stores}
+      pathname="/new/[storeCode]"
+    />
   );
 }
 
