@@ -36,6 +36,10 @@ const items = {
       pathname: '/admin/data',
       text: 'Данные',
     },
+    {
+      pathname: '/admin/contacts',
+      text: 'Контакты',
+    },
   ],
 };
 
