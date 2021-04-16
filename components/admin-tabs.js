@@ -6,7 +6,7 @@ import {
   resetIdCounter,
 } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import proptypes from '../lib/proptypes';
+import PropTypes from '../lib/prop-types';
 import styleVars from '../styles/vars';
 
 export default function AdminTabs({ tabList, contentList }) {
@@ -59,6 +59,6 @@ export default function AdminTabs({ tabList, contentList }) {
 }
 
 AdminTabs.propTypes = {
-  tabList: proptypes.tabList.isRequired,
-  contentList: proptypes.tabContentList.isRequired,
+  tabList: PropTypes.tabList.isRequired,
+  contentList: PropTypes.tabContentList.isRequired,
 };

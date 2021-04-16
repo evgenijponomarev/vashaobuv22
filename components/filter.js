@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import Checkbox from './checkbox';
-import proptypes from '../lib/proptypes';
+import PropTypes from '../lib/prop-types';
 import styleVars from '../styles/vars';
 
 const OPTION_LABELS = {
@@ -155,6 +155,6 @@ export default function Filter({ filters, onChange }) {
 }
 
 Filter.propTypes = {
-  filters: proptypes.filters.isRequired,
-  onChange: proptypes.func.isRequired,
+  filters: PropTypes.filters.isRequired,
+  onChange: PropTypes.func.isRequired,
 };

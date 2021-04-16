@@ -1,4 +1,4 @@
-import proptypes from '../lib/proptypes';
+import PropTypes from '../lib/prop-types';
 import styleVars from '../styles/vars';
 
 export default function AdminBannerList({ banners, onDelete }) {
@@ -62,6 +62,6 @@ export default function AdminBannerList({ banners, onDelete }) {
 }
 
 AdminBannerList.propTypes = {
-  banners: proptypes.banners.isRequired,
-  onDelete: proptypes.func.isRequired,
+  banners: PropTypes.banners.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };

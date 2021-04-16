@@ -1,4 +1,4 @@
-import proptypes from '../lib/proptypes';
+import PropTypes from '../lib/prop-types';
 import styleVars from '../styles/vars';
 import TextField from './text-field';
 
@@ -148,7 +148,7 @@ export default function CardNumberField({ value, onChange, maxLength }) {
 }
 
 CardNumberField.propTypes = {
-  value: proptypes.string.isRequired,
-  onChange: proptypes.func.isRequired,
-  maxLength: proptypes.number.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  maxLength: PropTypes.number.isRequired,
 };

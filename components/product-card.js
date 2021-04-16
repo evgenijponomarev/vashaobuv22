@@ -1,12 +1,9 @@
-import { useState } from 'react';
-import proptypes from '../lib/proptypes';
+import PropTypes from '../lib/prop-types';
 import styleVars from '../styles/vars';
-import PhotoDialog from './photo-dialog';
+import PhotoGallery from './photo-gallery';
 
 export default function ProductCard({ data, photos }) {
   const B = 'product-card';
-
-  const [openedPhoto, setOpenedPhoto] = useState('');
 
   const options = [
     { name: 'Артикул', value: data.articul },
@@ -15,29 +12,6 @@ export default function ProductCard({ data, photos }) {
 
   return (
     <div className={B}>
-      <div className={`${B}__photos`}>
-        <div
-          className={`${B}__photo ${B}__main-photo`}
-          onClick={() => setOpenedPhoto(photos[0])}
-        >
-          <img className={`${B}__img`} src={photos[0]} alt={data.name}/>
-        </div>
-
-        {photos.length > 1 && (
-          <div className={`${B}__added-photos`}>
-            {photos.slice(1).map((photoUrl) => (
-              <div
-                className={`${B}__photo ${B}__added-photo`}
-                key={photoUrl}
-                onClick={() => setOpenedPhoto(photoUrl)}
-              >
-                <img className={`${B}__img`} src={photoUrl} alt={data.name}/>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
       <div className={`${B}__details`}>
         <div className={`${B}__price`}>
           {data.price} рублей
@@ -54,56 +28,10 @@ export default function ProductCard({ data, photos }) {
         </div>
       </div>
 
-      {openedPhoto && (
-        <PhotoDialog
-          photoUrl={openedPhoto}
-          title={data.name}
-          onClose={() => setOpenedPhoto('')}
-        />
-      )}
+      <PhotoGallery photos={photos}/>
 
       <style jsx global>
         {`
-        .${B} {
-          display: flex;
-        }
-
-        .${B}__photos {
-          display: flex;
-          padding: ${styleVars.padding}px;
-        }
-
-        .${B}__photo {
-          border-radius: ${styleVars.borderRadius}px;
-          box-shadow: ${styleVars.boxShadow} rgba(0, 0, 0, .5);
-          cursor: pointer;
-          transition: transform ${styleVars.transitionTime};
-        }
-
-        .${B}__photo:hover {
-          transform: scale(1.03);
-        }
-
-        .${B}__main-photo {
-          width: 250px;
-        }
-
-        .${B}__added-photos {
-          width: 80px;
-          flex-shrink: 0;
-          padding-left: ${styleVars.padding}px;
-        }
-
-        .${B}__added-photo {
-          margin-bottom: ${styleVars.padding}px;
-        }
-
-        .${B}__img {
-          width: 100%;
-          border-radius: inherit;
-          vertical-align: middle;
-        }
-
         .${B}__details {
           width: 100%;
           max-width: 350px;
@@ -137,10 +65,6 @@ export default function ProductCard({ data, photos }) {
         }
 
         @media (max-width: 620px) {
-          .${B} {
-            flex-direction: column;
-          }
-
           .${B}__details {
             max-width: 100%;
           }
@@ -152,6 +76,6 @@ export default function ProductCard({ data, photos }) {
 }
 
 ProductCard.propTypes = {
-  data: proptypes.productData.isRequired,
-  photos: proptypes.productPhotos.isRequired,
+  data: PropTypes.productData.isRequired,
+  photos: PropTypes.productPhotos.isRequired,
 };

@@ -1,4 +1,4 @@
-import proptypes from '../lib/proptypes';
+import PropTypes from '../lib/prop-types';
 
 export default function Container({ children, mix }) {
   const B = 'container';
@@ -25,6 +25,6 @@ Container.defaultProps = {
 };
 
 Container.propTypes = {
-  children: proptypes.node.isRequired,
-  mix: proptypes.string,
+  children: PropTypes.node.isRequired,
+  mix: PropTypes.string,
 };

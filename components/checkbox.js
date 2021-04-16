@@ -1,4 +1,4 @@
-import proptypes from '../lib/proptypes';
+import PropTypes from '../lib/prop-types';
 import styleVars from '../styles/vars';
 
 export default function Checkbox({
@@ -57,8 +57,8 @@ export default function Checkbox({
 }
 
 Checkbox.propTypes = {
-  id: proptypes.string.isRequired,
-  label: proptypes.string.isRequired,
-  isChecked: proptypes.bool.isRequired,
-  onChange: proptypes.func.isRequired,
+  id: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  isChecked: PropTypes.bool.isRequired,
+  onChange: PropTypes.func.isRequired,
 };

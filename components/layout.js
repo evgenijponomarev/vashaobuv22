@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import proptypes from '../lib/proptypes';
+import PropTypes from '../lib/prop-types';
 import Header from './header';
 import Menu from './menu';
 import LocationButton from './location-button';
@@ -97,10 +97,10 @@ Layout.defaultProps = {
 };
 
 Layout.propTypes = {
-  storeCode: proptypes.string,
-  pathname: proptypes.string,
-  stores: proptypes.stores,
-  title: proptypes.string,
-  children: proptypes.node,
-  isAdmin: proptypes.bool,
+  storeCode: PropTypes.string,
+  pathname: PropTypes.string,
+  stores: PropTypes.stores,
+  title: PropTypes.string,
+  children: PropTypes.node,
+  isAdmin: PropTypes.bool,
 };

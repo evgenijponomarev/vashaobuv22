@@ -1,4 +1,4 @@
-import proptypes from '../lib/proptypes';
+import PropTypes from '../lib/prop-types';
 import styleVars from '../styles/vars';
 
 export default function TextField({
@@ -56,11 +56,11 @@ TextField.defaultProps = {
 };
 
 TextField.propTypes = {
-  value: proptypes.string.isRequired,
-  onChange: proptypes.func.isRequired,
-  type: proptypes.string,
-  mix: proptypes.string,
-  pattern: proptypes.string,
-  placeholder: proptypes.string,
-  id: proptypes.string,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  type: PropTypes.string,
+  mix: PropTypes.string,
+  pattern: PropTypes.string,
+  placeholder: PropTypes.string,
+  id: PropTypes.string,
 };

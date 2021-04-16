@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import proptypes from '../lib/proptypes';
+import PropTypes from '../lib/prop-types';
 import styleVars from '../styles/vars';
 
 export default function Product({ productData }) {
@@ -173,5 +173,5 @@ export default function Product({ productData }) {
 }
 
 Product.propTypes = {
-  productData: proptypes.product.isRequired,
+  productData: PropTypes.product.isRequired,
 };

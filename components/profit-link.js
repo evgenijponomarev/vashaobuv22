@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import proptypes from '../lib/proptypes';
+import PropTypes from '../lib/prop-types';
 import styleVars from '../styles/vars';
 
 export default function ProfitLink({ storeCode }) {
@@ -46,5 +46,5 @@ export default function ProfitLink({ storeCode }) {
 }
 
 ProfitLink.propTypes = {
-  storeCode: proptypes.string.isRequired,
+  storeCode: PropTypes.string.isRequired,
 };

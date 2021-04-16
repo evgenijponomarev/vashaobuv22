@@ -1,4 +1,4 @@
-import proptypes from '../../lib/proptypes';
+import PropTypes from '../../lib/prop-types';
 import { getProductsPageServerSideProps } from '../../lib/server-side-props';
 import Layout from '../../components/layout';
 import ProductList from '../../components/product-list';
@@ -22,9 +22,9 @@ export async function getServerSideProps({ query }) {
 }
 
 ProfitPage.propTypes = {
-  storeCode: proptypes.string.isRequired,
-  stores: proptypes.stores.isRequired,
-  products: proptypes.products.isRequired,
-  pagination: proptypes.pagination.isRequired,
-  filters: proptypes.filters.isRequired,
+  storeCode: PropTypes.string.isRequired,
+  stores: PropTypes.stores.isRequired,
+  products: PropTypes.products.isRequired,
+  pagination: PropTypes.pagination.isRequired,
+  filters: PropTypes.filters.isRequired,
 };

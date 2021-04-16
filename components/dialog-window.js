@@ -1,5 +1,6 @@
-import proptypes from '../lib/proptypes';
+import PropTypes from '../lib/prop-types';
 import styleVars from '../styles/vars';
+import DialogCloser from './dialog-closer';
 
 export default function DialogWindow({
   title,
@@ -11,7 +12,7 @@ export default function DialogWindow({
 
   return (
     <div className={[B, mix].join(' ')}>
-      {onClose && <div className={`${B}__closer`} onClick={onClose}/>}
+      {onClose && <DialogCloser mix={`${B}__closer`} onClick={onClose}/>}
 
       {title && (
         <h2 className={`${B}__title`}>
@@ -48,11 +49,6 @@ export default function DialogWindow({
           position: absolute;
           left: 100%;
           bottom: 100%;
-          width: 40px;
-          height: 40px;
-          background-image: url(/images/close.svg);
-          cursor: pointer;
-          transition: transform ${styleVars.transitionTime};
         }
 
         .${B}__closer:hover {
@@ -71,8 +67,8 @@ DialogWindow.defaultProps = {
 };
 
 DialogWindow.propTypes = {
-  title: proptypes.string,
-  children: proptypes.node.isRequired,
-  mix: proptypes.string,
-  onClose: proptypes.func,
+  title: PropTypes.string,
+  children: PropTypes.node.isRequired,
+  mix: PropTypes.string,
+  onClose: PropTypes.func,
 };

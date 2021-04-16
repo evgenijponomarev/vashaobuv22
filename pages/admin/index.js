@@ -2,7 +2,7 @@ import _ from 'lodash';
 import axios from 'axios';
 import { useState } from 'react';
 import initializeBasicAuth from 'nextjs-basic-auth';
-import proptypes from '../../lib/proptypes';
+import PropTypes from '../../lib/prop-types';
 import { getStores, getBannerLinks } from '../../lib/data';
 import Layout from '../../components/layout';
 import AdminTabs from '../../components/admin-tabs';
@@ -79,6 +79,6 @@ export async function getServerSideProps({ req, res }) {
 }
 
 AdminBannersPage.propTypes = {
-  stores: proptypes.stores.isRequired,
-  banners: proptypes.banners.isRequired,
+  stores: PropTypes.stores.isRequired,
+  banners: PropTypes.banners.isRequired,
 };

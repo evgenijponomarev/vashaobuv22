@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading, react/forbid-prop-types */
-import proptypes from '../lib/proptypes';
+import PropTypes from '../lib/prop-types';
 import styleVars from '../styles/vars';
 
 export default function App({ Component, pageProps }) {
@@ -38,6 +38,6 @@ App.defaultProps = {
 };
 
 App.propTypes = {
-  Component: proptypes.func.isRequired,
-  pageProps: proptypes.object,
+  Component: PropTypes.func.isRequired,
+  pageProps: PropTypes.object,
 };

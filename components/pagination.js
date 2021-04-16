@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import proptypes from '../lib/proptypes';
+import PropTypes from '../lib/prop-types';
 import styleVars from '../styles/vars';
 
 export default function Pagination({ pagination }) {
@@ -83,5 +83,5 @@ export default function Pagination({ pagination }) {
 }
 
 Pagination.propTypes = {
-  pagination: proptypes.pagination.isRequired,
+  pagination: PropTypes.pagination.isRequired,
 };

@@ -1,4 +1,4 @@
-import proptypes from '../../lib/proptypes';
+import PropTypes from '../../lib/prop-types';
 import { getStores, getBannerLinks } from '../../lib/data';
 import Layout from '../../components/layout';
 import ProfitLink from '../../components/profit-link';
@@ -43,7 +43,7 @@ ActionsPage.defaultProps = {
 };
 
 ActionsPage.propTypes = {
-  stores: proptypes.stores.isRequired,
-  banners: proptypes.banners,
-  storeCode: proptypes.string.isRequired,
+  stores: PropTypes.stores.isRequired,
+  banners: PropTypes.banners,
+  storeCode: PropTypes.string.isRequired,
 };

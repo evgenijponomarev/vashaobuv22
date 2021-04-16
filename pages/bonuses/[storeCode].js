@@ -1,4 +1,4 @@
-import proptypes from '../../lib/proptypes';
+import PropTypes from '../../lib/prop-types';
 import { getStores } from '../../lib/data';
 import Layout from '../../components/layout';
 import CheckBonusesForm from '../../components/check-bonuses-form';
@@ -35,6 +35,6 @@ export async function getStaticProps({ params }) {
 }
 
 BonusesPage.propTypes = {
-  stores: proptypes.stores.isRequired,
-  storeCode: proptypes.string.isRequired,
+  stores: PropTypes.stores.isRequired,
+  storeCode: PropTypes.string.isRequired,
 };

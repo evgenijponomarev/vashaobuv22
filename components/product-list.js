@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import proptypes from '../lib/proptypes';
+import PropTypes from '../lib/prop-types';
 import Filter from './filter';
 import Product from './product';
 import Pagination from './pagination';
@@ -169,7 +169,7 @@ ProductList.defaultProps = {
 };
 
 ProductList.propTypes = {
-  products: proptypes.products.isRequired,
-  pagination: proptypes.pagination,
-  filters: proptypes.filters,
+  products: PropTypes.products.isRequired,
+  pagination: PropTypes.pagination,
+  filters: PropTypes.filters,
 };

@@ -1,4 +1,4 @@
-import proptypes from '../lib/proptypes';
+import PropTypes from '../lib/prop-types';
 import styleVars from '../styles/vars';
 
 export default function ContentLoader({ onClick }) {
@@ -45,5 +45,5 @@ export default function ContentLoader({ onClick }) {
 }
 
 ContentLoader.propTypes = {
-  onClick: proptypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
 };

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import proptypes from '../lib/proptypes';
+import PropTypes from '../lib/prop-types';
 import DialogOverlay from './dialog-overlay';
 import DialogWindow from './dialog-window';
 import styleVars from '../styles/vars';
@@ -80,8 +80,8 @@ LocationDialog.defaultProps = {
 };
 
 LocationDialog.propTypes = {
-  pathname: proptypes.string.isRequired,
-  stores: proptypes.stores.isRequired,
-  onClose: proptypes.func,
-  onClickStore: proptypes.func,
+  pathname: PropTypes.string.isRequired,
+  stores: PropTypes.stores.isRequired,
+  onClose: PropTypes.func,
+  onClickStore: PropTypes.func,
 };

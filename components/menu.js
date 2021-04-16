@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import styleVars from '../styles/vars';
-import proptypes from '../lib/proptypes';
+import PropTypes from '../lib/prop-types';
 
 const items = {
   public: [
@@ -223,6 +223,6 @@ Menu.defaultProps = {
 };
 
 Menu.propTypes = {
-  isAdmin: proptypes.bool,
-  storeCode: proptypes.string,
+  isAdmin: PropTypes.bool,
+  storeCode: PropTypes.string,
 };

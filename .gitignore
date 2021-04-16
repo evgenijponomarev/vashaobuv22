@@ -16,8 +16,9 @@
 /build
 /1s_import.log
 /uploads/*
-/data/*
+# /data/*
 /public/shoes_photos
+/secret
 
 # misc
 .DS_Store
@@ -32,5 +33,3 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
-
-/secret

@@ -1,4 +1,4 @@
-import proptypes from '../lib/proptypes';
+import PropTypes from '../lib/prop-types';
 import styleVars from '../styles/vars';
 
 export default function LocationButton({ onClick, storeName }) {
@@ -53,6 +53,6 @@ export default function LocationButton({ onClick, storeName }) {
 }
 
 LocationButton.propTypes = {
-  storeName: proptypes.string.isRequired,
-  onClick: proptypes.func.isRequired,
+  storeName: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
 };

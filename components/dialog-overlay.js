@@ -1,4 +1,4 @@
-import proptypes from '../lib/proptypes';
+import PropTypes from '../lib/prop-types';
 
 export default function DialogOverlay({ onClick }) {
   const B = 'dialog-overlay';
@@ -27,5 +27,5 @@ DialogOverlay.defaultProps = {
 };
 
 DialogOverlay.propTypes = {
-  onClick: proptypes.func,
+  onClick: PropTypes.func,
 };

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import proptypes from '../lib/proptypes';
+import PropTypes from '../lib/prop-types';
 import { getStores } from '../lib/data';
 import Layout from '../components/layout';
 import LocationDialog from '../components/location-dialog';
@@ -42,5 +42,5 @@ export async function getStaticProps() {
 }
 
 Home.propTypes = {
-  stores: proptypes.stores.isRequired,
+  stores: PropTypes.stores.isRequired,
 };

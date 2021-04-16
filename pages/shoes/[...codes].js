@@ -1,4 +1,4 @@
-import proptypes from '../../lib/proptypes';
+import PropTypes from '../../lib/prop-types';
 import {
   getStores,
   getAllProductCodes,
@@ -69,8 +69,8 @@ ShoePage.defaultProps = {
 };
 
 ShoePage.propTypes = {
-  storeCode: proptypes.string.isRequired,
-  stores: proptypes.stores.isRequired,
-  productData: proptypes.productData,
-  productPhotos: proptypes.productPhotos.isRequired,
+  storeCode: PropTypes.string.isRequired,
+  stores: PropTypes.stores.isRequired,
+  productData: PropTypes.productData,
+  productPhotos: PropTypes.productPhotos.isRequired,
 };

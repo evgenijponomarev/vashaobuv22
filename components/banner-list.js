@@ -1,4 +1,4 @@
-import proptypes from '../lib/proptypes';
+import PropTypes from '../lib/prop-types';
 import styleVars from '../styles/vars';
 
 export default function BannerList({ banners }) {
@@ -33,5 +33,5 @@ export default function BannerList({ banners }) {
 }
 
 BannerList.propTypes = {
-  banners: proptypes.banners.isRequired,
+  banners: PropTypes.banners.isRequired,
 };

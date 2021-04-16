@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useRef } from 'react';
 import { useRouter } from 'next/router';
-import proptypes from '../lib/proptypes';
+import PropTypes from '../lib/prop-types';
 import styleVars from '../styles/vars';
 
 export default function AdminUploadForm({ action, fieldName, hiddenFields }) {
@@ -57,10 +57,10 @@ AdminUploadForm.defaultProps = {
 };
 
 AdminUploadForm.propTypes = {
-  action: proptypes.string.isRequired,
-  fieldName: proptypes.string.isRequired,
-  hiddenFields: proptypes.arrayOf(proptypes.shape({
-    key: proptypes.string.isRequired,
-    value: proptypes.string.isRequired,
+  action: PropTypes.string.isRequired,
+  fieldName: PropTypes.string.isRequired,
+  hiddenFields: PropTypes.arrayOf(PropTypes.shape({
+    key: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
   })),
 };

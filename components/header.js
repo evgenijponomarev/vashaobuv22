@@ -1,4 +1,4 @@
-import proptypes from '../lib/proptypes';
+import PropTypes from '../lib/prop-types';
 import Container from './container';
 import styleVars from '../styles/vars';
 
@@ -41,6 +41,6 @@ Header.defaultProps = {
 };
 
 Header.propTypes = {
-  children: proptypes.node.isRequired,
-  mix: proptypes.string,
+  children: PropTypes.node.isRequired,
+  mix: PropTypes.string,
 };

@@ -1,4 +1,4 @@
-export default {
+const styleVars = {
   colors: {
     green: '#0a0',
   },
@@ -9,3 +9,5 @@ export default {
   headerHeigh: 40,
   padding: 10,
 };
+
+export default styleVars;
