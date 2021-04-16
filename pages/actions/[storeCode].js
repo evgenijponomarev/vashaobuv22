@@ -32,7 +32,7 @@ export async function getStaticProps({ params }) {
     props: {
       storeCode: params.storeCode,
       stores: getStores(),
-      banners: getBannerLinks(params.storeCode),
+      banners: getBannerLinks(params.storeCode).reverse(),
     },
     revalidate: 10,
   };

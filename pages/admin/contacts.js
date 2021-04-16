@@ -1,6 +1,6 @@
+import { useRouter } from 'next/router';
 import _ from 'lodash';
 import axios from 'axios';
-import { useState } from 'react';
 import initializeBasicAuth from 'nextjs-basic-auth';
 import PropTypes from '../../lib/prop-types';
 import { getStores, getContacts, getAllStorePhotos } from '../../lib/data';
@@ -15,23 +15,21 @@ const API_URL = '/api/contacts';
 const basicAuthCheck = initializeBasicAuth({ users });
 
 export default function AdminContactsPage({ stores, contacts, photos }) {
-  const [photosByStore, setPhotosByStore] = useState(stores.reduce((acc, store) => ({
+  const router = useRouter();
+
+  const photosByStore = stores.reduce((acc, store) => ({
     ...acc,
     [store.code]: photos.filter((link) => link.includes(store.code)),
-  }), {}));
+  }), {});
 
-  async function onDelete(storeCode, photoLink) {
+  async function onDelete(photoLink) {
     if (!window.confirm('Это взвешенное решение?')) return;
 
     const fileName = _.last(photoLink.split('/'));
 
     try {
       await axios.delete(`${API_URL}/photos?fileName=${fileName}`);
-
-      setPhotosByStore({
-        ...photosByStore,
-        [storeCode]: photosByStore[storeCode].filter((link) => link !== photoLink),
-      });
+      router.reload();
     } catch (err) {
       console.error(err);
     }
@@ -56,11 +54,12 @@ export default function AdminContactsPage({ stores, contacts, photos }) {
                   key: 'storeCode',
                   value: store.code,
                 }]}
+                onSubmit={() => router.reload()}
               />
 
               <AdminPhotoGallery
                 photos={photosByStore[store.code]}
-                onDelete={(link) => onDelete(store.code, link)}
+                onDelete={onDelete}
               />
             </>
           ),

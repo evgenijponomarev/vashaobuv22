@@ -18,6 +18,8 @@
 /uploads/*
 # /data/*
 /public/shoes_photos
+/public/banners
+/public/stores_photos
 /secret
 
 # misc

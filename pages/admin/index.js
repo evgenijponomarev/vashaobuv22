@@ -1,6 +1,6 @@
+import { useRouter } from 'next/router';
 import _ from 'lodash';
 import axios from 'axios';
-import { useState } from 'react';
 import initializeBasicAuth from 'nextjs-basic-auth';
 import PropTypes from '../../lib/prop-types';
 import { getStores, getBannerLinks } from '../../lib/data';
@@ -15,23 +15,21 @@ const API_URL = '/api/banners';
 const basicAuthCheck = initializeBasicAuth({ users });
 
 export default function AdminBannersPage({ stores, banners }) {
-  const [bannersByStore, setBannersByStore] = useState(stores.reduce((acc, store) => ({
+  const router = useRouter();
+
+  const bannersByStore = stores.reduce((acc, store) => ({
     ...acc,
     [store.code]: banners.filter((link) => link.includes(store.code)),
-  }), {}));
+  }), {});
 
-  async function onDelete(storeCode, bannerLink) {
+  async function onDelete(bannerLink) {
     if (!window.confirm('Это взвешенное решение?')) return;
 
     const fileName = _.last(bannerLink.split('/'));
 
     try {
       await axios.delete(`${API_URL}?fileName=${fileName}`);
-
-      setBannersByStore({
-        ...bannersByStore,
-        [storeCode]: bannersByStore[storeCode].filter((link) => link !== bannerLink),
-      });
+      router.reload();
     } catch (err) {
       console.error(err);
     }
@@ -52,11 +50,12 @@ export default function AdminBannersPage({ stores, banners }) {
                   key: 'storeCode',
                   value: store.code,
                 }]}
+                onSubmit={() => router.reload()}
               />
 
               <AdminPhotoGallery
                 photos={bannersByStore[store.code]}
-                onDelete={(link) => onDelete(store.code, link)}
+                onDelete={onDelete}
               />
             </>
           ),

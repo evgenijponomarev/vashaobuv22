@@ -1,15 +1,18 @@
 import axios from 'axios';
 import { useRef } from 'react';
-import { useRouter } from 'next/router';
 import PropTypes from '../lib/prop-types';
 import styleVars from '../styles/vars';
 
-export default function AdminUploadForm({ action, fieldName, hiddenFields }) {
+export default function AdminUploadForm({
+  action,
+  fieldName,
+  hiddenFields,
+  onSubmit,
+}) {
   const B = 'admin-upload-form';
   const formEl = useRef(null);
-  const router = useRouter();
 
-  async function onSubmit(event) {
+  async function onSubmitHandler(event) {
     event.preventDefault();
 
     const formData = new FormData(formEl.current);
@@ -17,13 +20,12 @@ export default function AdminUploadForm({ action, fieldName, hiddenFields }) {
     try {
       await axios.post(action, formData, { 'Content-Type': 'multipart/form-data' });
       alert('Готово');
+      formEl.current.reset();
+      onSubmit();
     } catch (err) {
       alert('Не удалось сохранить файл');
       console.log(err);
     }
-
-    formEl.current.reset();
-    router.reload();
   }
 
   return (
@@ -33,7 +35,7 @@ export default function AdminUploadForm({ action, fieldName, hiddenFields }) {
       method="post"
       action={action}
       encType="multipart/form-data"
-      onSubmit={onSubmit}
+      onSubmit={onSubmitHandler}
     >
       <input type="file" name={fieldName}/>
 
@@ -54,6 +56,7 @@ export default function AdminUploadForm({ action, fieldName, hiddenFields }) {
 
 AdminUploadForm.defaultProps = {
   hiddenFields: [],
+  onSubmit: () => {},
 };
 
 AdminUploadForm.propTypes = {
@@ -63,4 +66,5 @@ AdminUploadForm.propTypes = {
     key: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
   })),
+  onSubmit: PropTypes.func,
 };
