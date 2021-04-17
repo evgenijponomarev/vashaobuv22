@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import axios from 'axios';
 import styleVars from '../styles/vars';
-import PhoneTailField from './phone-tail-field';
+import PhoneField from './phone-field';
 import CardNumberField from './card-number-field';
 import DialogOverlay from './dialog-overlay';
 import DialogWindow from './dialog-window';
 
-const PHONE_TAIL_LENGTH = 4;
+const PHONE_LENGTH = 10;
 const CARD_NUMBER_LENGTH = 13;
 const ERROR_MESSAGE = {
   404: 'Карта с указанными данными не зарегистрирована',
@@ -16,26 +16,25 @@ const ERROR_MESSAGE = {
 export default function CheckBonusesForm() {
   const B = 'check-bonuses-form';
 
-  const [phoneTail, setPhoneTail] = useState('');
+  const [phone, setPhone] = useState('');
   const [cardNumber, setCardNumber] = useState('');
   const [bonusCount, setBonusCount] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [resultDialogIsOpened, setResultDialogIsOpened] = useState(false);
 
   const closeResultDialog = () => setResultDialogIsOpened(false);
+  const getNormalizedPhone = (p) => p.replace(/\D/g, '').slice(1);
 
-  function isFormFilled() {
-    return phoneTail.length === PHONE_TAIL_LENGTH
-      && cardNumber.length === CARD_NUMBER_LENGTH;
-  }
+  const isFormFilled = () => getNormalizedPhone(phone).length === PHONE_LENGTH
+    && cardNumber.length === CARD_NUMBER_LENGTH;
 
-  async function onSubmit(event) {
+  const onSubmit = async (event) => {
     event.preventDefault();
 
     if (!isFormFilled()) return;
 
     const query = [
-      `phoneTail=${phoneTail}`,
+      `phone=${getNormalizedPhone(phone)}`,
       `cardNumber=${cardNumber}`,
     ].join('&');
 
@@ -50,21 +49,20 @@ export default function CheckBonusesForm() {
     } finally {
       setResultDialogIsOpened(true);
     }
-  }
+  };
 
   return (
     <div className={B}>
       <div className={`${B}__description`}>
         Здесь вы&nbsp;можете узнать, сколько бонусов накопилось на&nbsp;вашей карте.<br/>
-        Для этого укажите последние четыре цифры своего номера телефона и&nbsp;номер карты.
+        Для этого укажите свой номер телефона и&nbsp;номер карты.
       </div>
 
       <form onSubmit={onSubmit}>
         <div className={`${B}__section`}>
-          <PhoneTailField
-            value={phoneTail}
-            onChange={setPhoneTail}
-            maxLength={PHONE_TAIL_LENGTH}
+          <PhoneField
+            value={phone}
+            onChange={setPhone}
           />
         </div>
 

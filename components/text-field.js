@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import InputMask from 'react-input-mask';
 import PropTypes from '../lib/prop-types';
 import styleVars from '../styles/vars';
 
@@ -9,16 +11,23 @@ export default function TextField({
   pattern,
   placeholder,
   id,
+  mask,
 }) {
   const B = 'text-field';
 
-  function onChangeHandler({ currentTarget }) {
-    onChange(currentTarget.value);
-  }
+  const onChangeHandler = ({ currentTarget }) => onChange(currentTarget.value);
+
+  const [InputTag, setInputTag] = useState('input');
+
+  // InputMask вызывает useLayoutEffect, который на сервере вываливает ошибку.
+  // Поэтому сервер отдает обычный инпут, а на клиете он уже заменяется на InputMask
+  useEffect(() => {
+    if (mask && InputTag === 'input') setInputTag(InputMask);
+  });
 
   return (
     <div>
-      <input
+      <InputTag
         id={id}
         className={[B, mix].join(' ')}
         type={type}
@@ -26,6 +35,8 @@ export default function TextField({
         value={value}
         onChange={onChangeHandler}
         placeholder={placeholder}
+        mask={mask}
+        noValidate
       />
 
       <style jsx>
@@ -53,6 +64,7 @@ TextField.defaultProps = {
   pattern: null,
   placeholder: '',
   id: '',
+  mask: null,
 };
 
 TextField.propTypes = {
@@ -63,4 +75,5 @@ TextField.propTypes = {
   pattern: PropTypes.string,
   placeholder: PropTypes.string,
   id: PropTypes.string,
+  mask: PropTypes.string,
 };

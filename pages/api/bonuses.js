@@ -3,10 +3,10 @@ import apiHelpers from '../../lib/api-helpers';
 
 const actions = {
   GET(req, res) {
-    const { phoneTail, cardNumber } = req.query;
+    const { phone, cardNumber } = req.query;
 
-    const bonusesEntry = getBonuses().find(({ phone_tail, card_number }) => (
-      +phone_tail === +phoneTail && +card_number === +cardNumber
+    const bonusesEntry = getBonuses().find(({ phone_number, card_number }) => (
+      +phone_number === +phone && +card_number === +cardNumber
     ));
 
     if (!bonusesEntry) {
