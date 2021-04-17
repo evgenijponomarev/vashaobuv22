@@ -94,12 +94,12 @@ export default function Menu({ storeCode, isAdmin }) {
           left: 0;
           top: 0;
           z-index: 1;
-          width: 40px;
-          height: 40px;
+          width: ${styleVars.headerHeigh}px;
+          height: ${styleVars.headerHeigh}px;
           background: url(/images/menu.svg);
           background-repeat: no-repeat;
           background-position: center;
-          background-size: 20px 20px;
+          background-size: ${styleVars.headerHeigh / 2}px ${styleVars.headerHeigh / 2}px;
           border: none;
           outline: none;
           cursor: pointer;
@@ -144,13 +144,14 @@ export default function Menu({ storeCode, isAdmin }) {
           display: flex;
           align-items: center;
           white-space: nowrap;
+          font-size: ${styleVars.headerFontSize}px;
         }
 
         .${B}__link:hover {
           opacity: .8;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 640px) {
           .${B} {
             width: 40px;
             height: auto;
@@ -212,7 +213,7 @@ export default function Menu({ storeCode, isAdmin }) {
           }
 
           .${B}_opened .${B}__toggler {
-            background-image: url(/images/close-white.svg);
+            background-image: url(/images/close.svg);
           }
         }
       `}

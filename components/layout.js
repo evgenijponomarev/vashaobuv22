@@ -28,6 +28,8 @@ export default function Layout({
   const storeName = stores.find(({ code }) => code === storeCode)?.name ?? 'Выберите ваш магазин';
 
   useEffect(() => {
+    if (isAdmin) return;
+
     const userStoreCode = localStorage.getItem('store');
 
     if (!isExistingStore) {

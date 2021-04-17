@@ -110,6 +110,7 @@ export default function CardNumberField({ value, onChange, maxLength }) {
           height: 1px;
           background: #fff;
           margin-top: 4px;
+          box-shadow: 0 1px 1px 0 #444;
         }
 
         @media (max-width: ${WIDTH}px) {

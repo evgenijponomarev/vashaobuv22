@@ -25,6 +25,8 @@ export default function Filter({ filters, onChange }) {
       if (AUDITORY_ORDER.indexOf(a) > AUDITORY_ORDER.indexOf(b)) return 1;
       return -1;
     });
+
+    filters.type.sort();
   }
 
   const filtersList = Object.entries(filters)
@@ -122,6 +124,7 @@ export default function Filter({ filters, onChange }) {
         .${B}__opener:focus {
           background: ${styleVars.colors.green};
           color: #fff;
+          outline: none;
         }
 
         .${B}__field {

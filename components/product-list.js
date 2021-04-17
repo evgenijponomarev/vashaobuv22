@@ -127,14 +127,8 @@ export default function ProductList({ products, pagination, filters }) {
         .${B}__item {
           display: block;
           padding: ${styleVars.padding}px;
-          width: 20%;
+          width: 25%;
           align-self: stretch;
-        }
-
-        @media (max-width: 1000px) {
-          .${B}__item {
-            width: 25%;
-          }
         }
 
         @media (max-width: 800px) {
