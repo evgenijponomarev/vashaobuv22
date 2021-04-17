@@ -22,7 +22,7 @@ export default function ProfitLink({ storeCode }) {
       <style jsx>
         {`
         .${B} {
-          padding: ${styleVars.padding}px;
+          padding: ${styleVars.padding}px 0 ${styleVars.padding * 5}px;
           display: flex;
           justify-content: center;
         }
