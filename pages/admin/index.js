@@ -29,6 +29,7 @@ export default function AdminBannersPage({ stores, banners, apiPassword }) {
       router.reload();
     } catch (err) {
       console.error(err);
+      alert('Не удалось удалить файл');
     }
   }
 

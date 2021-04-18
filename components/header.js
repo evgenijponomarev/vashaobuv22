@@ -26,6 +26,17 @@ export default function Header({ children, mix }) {
           box-shadow: ${styleVars.boxShadow} rgba(0, 0, 0, .4);
         }
 
+        .${B}::before {
+          content: '';
+          display: block;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 1px;
+          box-shadow: 0 0 20px 1px rgba(0, 0, 0, .5);
+        }
+
         .${B}__container {
           display: flex;
           height: 100%;

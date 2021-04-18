@@ -20,11 +20,17 @@ const actions = {
   POST(req, res) {
     const form = new multiparty.Form();
 
-    form.parse(req, (err, fields, files) => {
+    form.parse(req, (error, fields, files) => {
       const storeCode = fields.storeCode[0];
-      const apiPassword = fields.apiPassword[0];
+      const apiPassword = fields.apiPassword ? fields.apiPassword[0] : null;
 
-      apiHelpers.checkPassword(apiPassword);
+      try {
+        apiHelpers.checkPassword(apiPassword);
+      } catch (err) {
+        console.error(err);
+        apiHelpers.sendServerError(res);
+        return;
+      }
 
       const fileData = files.photo[0];
       fsHelpers.saveStorePhoto(storeCode, fileData);
@@ -44,6 +50,7 @@ export default function handler(req, res) {
   try {
     action(req, res);
   } catch (err) {
+    console.error(err);
     apiHelpers.sendServerError(res);
   }
 }

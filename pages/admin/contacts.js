@@ -19,7 +19,6 @@ export default function AdminContactsPage({
   apiPassword,
 }) {
   const router = useRouter();
-  console.log(stores)
 
   const photosByStore = stores.reduce((acc, store) => ({
     ...acc,
@@ -36,6 +35,7 @@ export default function AdminContactsPage({
       router.reload();
     } catch (err) {
       console.error(err);
+      alert('Не удалось удалить файл');
     }
   }
 

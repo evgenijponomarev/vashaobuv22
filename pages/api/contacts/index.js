@@ -43,6 +43,7 @@ export default function handler(req, res) {
   try {
     action(req, res);
   } catch (err) {
+    console.error(err);
     apiHelpers.sendServerError(res);
   }
 }

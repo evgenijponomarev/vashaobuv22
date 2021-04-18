@@ -8,9 +8,13 @@ export default function LocationDialog({
   pathname,
   stores,
   onClose,
-  onClickStore,
 }) {
   const B = 'location-dialog';
+
+  const onClickStore = (storeCode) => {
+    localStorage.setItem('store', storeCode);
+    onClose();
+  };
 
   return (
     <div className={B}>
@@ -24,14 +28,20 @@ export default function LocationDialog({
         <ul className={`${B}__store-list`}>
           {stores.map((store) => (
             <li key={store.code} className={`${B}__store`}>
-              <Link href={{
-                pathname,
-                query: {
-                  storeCode: store.code,
-                },
-              }}
+              <Link
+                href={{
+                  pathname,
+                  query: {
+                    storeCode: store.code,
+                  },
+                }}
               >
-                <a className={`${B}__link`} onClick={onClickStore}>{store.name}</a>
+                <a
+                  className={`${B}__link`}
+                  onClick={() => onClickStore(store.code)}
+                >
+                  {store.name}
+                </a>
               </Link>
             </li>
           ))}
@@ -76,12 +86,10 @@ export default function LocationDialog({
 
 LocationDialog.defaultProps = {
   onClose: null,
-  onClickStore: () => {},
 };
 
 LocationDialog.propTypes = {
   pathname: PropTypes.string.isRequired,
   stores: PropTypes.stores.isRequired,
   onClose: PropTypes.func,
-  onClickStore: PropTypes.func,
 };

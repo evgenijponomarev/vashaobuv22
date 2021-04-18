@@ -25,10 +25,11 @@ export default function AdminPhotoGallery({ photos, onDelete }) {
         .${B} {
           display: flex;
           padding: ${styleVars.padding}px 0;
+          flex-wrap: wrap;
         }
 
         .${B}__item {
-          width: 20%;
+          width: 198px;
           padding: ${styleVars.padding}px;
           text-align: center;
         }

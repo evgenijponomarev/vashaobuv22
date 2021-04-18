@@ -1,53 +1,47 @@
-import path from 'path';
-import nextConnect from 'next-connect';
+import multiparty from 'multiparty';
 import fsHelpers from '../../lib/fs-helpers';
 import apiHelpers from '../../lib/api-helpers';
-import { validateData, updateData } from '../../lib/data';
+import { updateData } from '../../lib/data';
 
-const PUBLIC_DIR = path.join(process.cwd(), 'public');
-const DATA_DIR = path.join(process.cwd(), 'data');
-const SHOES_PHOTOS_DIR = path.join(PUBLIC_DIR, 'shoes_photos');
-const DUMP_FIELD_NAME = '1s_dump';
-const DUMP_FILE_NAME = `${DUMP_FIELD_NAME}.zip`;
-const DATA_FILE_NAME = 'data.json';
+const actions = {
+  POST(req, res) {
+    const form = new multiparty.Form();
 
-let importFileName = '';
+    form.parse(req, async (error, fields, files) => {
+      const apiPassword = fields.apiPassword ? fields.apiPassword[0] : null;
 
-function unzipHandler(entry) {
-  this.dir = entry.fileName === DATA_FILE_NAME ? DATA_DIR : SHOES_PHOTOS_DIR;
-}
+      try {
+        apiHelpers.checkPassword(apiPassword);
+      } catch (err) {
+        console.error(err);
+        apiHelpers.sendServerError(res);
+        return;
+      }
 
-async function onSuccess(req, res) {
-  try {
-    await fsHelpers.unzip(DUMP_FILE_NAME, unzipHandler);
-  } catch (err) {
-    console.error(err);
-    apiHelpers.sendUnzipError(res);
+      const fileData = files.data[0];
+      await fsHelpers.saveSourceData(fileData);
+      const sourceData = fsHelpers.getSourceData();
+      updateData(sourceData);
+      apiHelpers.sendSuccessResponse(res);
+    });
+  },
+};
+
+export default function handler(req, res) {
+  const action = actions[req.method];
+
+  if (!action) {
+    apiHelpers.sendNoMatchError(res, req.method);
     return;
   }
 
   try {
-    const sourceData = fsHelpers.getSourceData();
-    if (!validateData(sourceData)) apiHelpers.sendDataFormatError(res);
-    updateData(sourceData);
+    action(req, res);
   } catch (err) {
     console.error(err);
-    apiHelpers.sendJsonError(res);
-    return;
+    apiHelpers.sendServerError(res);
   }
-
-  fsHelpers.updateDataImportLogs(importFileName);
-  apiHelpers.sendSuccessResponse(res);
 }
-
-const uploadMiddleware = fsHelpers.getUploadMiddlware(
-  DUMP_FILE_NAME,
-  (originalname) => { importFileName = originalname; },
-);
-
-export default nextConnect(apiHelpers.getCommonErrors())
-  .use(uploadMiddleware.single(DUMP_FIELD_NAME))
-  .post(onSuccess);
 
 export const config = {
   api: { bodyParser: false },

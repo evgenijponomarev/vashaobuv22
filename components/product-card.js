@@ -15,7 +15,7 @@ export default function ProductCard({ data, photos }) {
       <div className={`${B}__details`}>
         <div className={`${B}__price`}>{data.price}</div>
 
-        {data.extra_bonus && (
+        {!!data.extra_bonus && (
           <div className={`${B}__bonus`}>
             {data.extra_bonus}% вернем на бонусную карту
           </div>

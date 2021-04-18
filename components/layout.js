@@ -23,7 +23,7 @@ export default function Layout({
 
   const [isLocationDialogOpened, toggleLocationDialog] = useState(false);
 
-  const isExistingStore = stores.find(({ code }) => code === storeCode);
+  const isExistingStore = stores.some(({ code }) => code === storeCode);
 
   const storeName = stores.find(({ code }) => code === storeCode)?.name ?? 'Выберите ваш магазин';
 
@@ -31,20 +31,18 @@ export default function Layout({
     if (isAdmin) return;
 
     const userStoreCode = localStorage.getItem('store');
+    const isExistingStoreInLocalStorage = stores.some(({ code }) => code === userStoreCode);
 
-    if (!isExistingStore) {
-      if (userStoreCode) {
-        router.push({
-          pathname: '/new/[storeCode]',
-          query: {
-            storeCode: userStoreCode,
-          },
-        });
-      } else {
-        toggleLocationDialog(true);
-      }
-    } else if (storeCode !== userStoreCode) {
-      localStorage.setItem('store', storeCode);
+    if (!isExistingStoreInLocalStorage) {
+      localStorage.removeItem('store');
+      if (!isExistingStore) toggleLocationDialog(true);
+    } else if (!isExistingStore) {
+      router.push({
+        pathname: '/new/[storeCode]',
+        query: {
+          storeCode: userStoreCode,
+        },
+      });
     }
   }, [storeCode]);
 
@@ -59,7 +57,7 @@ export default function Layout({
         <Header>
           <Menu storeCode={storeCode} isAdmin={isAdmin}/>
 
-          {storeName && (
+          {!isAdmin && storeName && (
             <LocationButton
               onClick={() => toggleLocationDialog(true)}
               storeName={storeName}
@@ -74,12 +72,11 @@ export default function Layout({
         {children}
       </Container>
 
-      {isLocationDialogOpened && (
+      {!isAdmin && isLocationDialogOpened && (
         <LocationDialog
           pathname={pathname || router.pathname}
           stores={stores}
           onClose={isExistingStore ? () => toggleLocationDialog(false) : null}
-          onClickStore={() => toggleLocationDialog(false)}
         />
       )}
 

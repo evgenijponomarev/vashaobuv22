@@ -175,7 +175,6 @@ export default function Menu({ storeCode, isAdmin }) {
             position: absolute;
             top: ${styleVars.headerHeigh}px;
             left: 0;
-            width: 100vw;
           }
 
           .${B}__items {
@@ -194,7 +193,7 @@ export default function Menu({ storeCode, isAdmin }) {
 
           .${B}__link {
             color: ${styleVars.colors.green};
-            display: inline;
+            display: block;
             height: auto;
           }
 

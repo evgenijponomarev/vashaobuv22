@@ -10,7 +10,7 @@ export default function AdminDataPage({ apiPassword }) {
     <Layout title="Загрузка данных" isAdmin>
       <AdminUploadForm
         action={API_URL}
-        fieldName="1s_dump"
+        fieldName="data"
         hiddenFields={[
           {
             key: 'apiPassword',

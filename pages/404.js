@@ -1,6 +1,7 @@
 import PropTypes from '../lib/prop-types';
 import { getStores } from '../lib/data';
 import Layout from '../components/layout';
+import Message404 from '../components/message404';
 
 export default function Page404({ stores }) {
   return (
@@ -8,7 +9,9 @@ export default function Page404({ stores }) {
       stores={stores}
       pathname="/new/[storeCode]"
       title="Страница не найдена"
-    />
+    >
+      <Message404/>
+    </Layout>
   );
 }
 

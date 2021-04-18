@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-props-no-spreading, react/forbid-prop-types */
+/* eslint-disable react/jsx-props-no-spreading, react/forbid-prop-types, max-len */
 import Head from 'next/head';
 import PropTypes from '../lib/prop-types';
 import styleVars from '../styles/vars';
