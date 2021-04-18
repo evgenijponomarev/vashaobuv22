@@ -1,12 +1,15 @@
 import PropTypes from '../../lib/prop-types';
 import { getStores } from '../../lib/data';
 import Layout from '../../components/layout';
-import CheckBonusesForm from '../../components/check-bonuses-form';
+import BonusProgramDescription from '../../components/bonus-program-description';
+import BonusProgramLink from '../../components/bonus-program-link';
 
 export default function BonusesPage({ storeCode, stores }) {
   return (
-    <Layout storeCode={storeCode} stores={stores} title="Сколько у меня бонусов?">
-      <CheckBonusesForm/>
+    <Layout storeCode={storeCode} stores={stores} title="Бонусная программа">
+      <BonusProgramDescription/>
+
+      <BonusProgramLink storeCode={storeCode}/>
     </Layout>
   );
 }

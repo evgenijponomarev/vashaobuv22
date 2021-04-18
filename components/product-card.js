@@ -13,9 +13,13 @@ export default function ProductCard({ data, photos }) {
   return (
     <div className={B}>
       <div className={`${B}__details`}>
-        <div className={`${B}__price`}>
-          {data.price} рублей
-        </div>
+        <div className={`${B}__price`}>{data.price}</div>
+
+        {data.extra_bonus && (
+          <div className={`${B}__bonus`}>
+            {data.extra_bonus}% вернем на бонусную карту
+          </div>
+        )}
 
         <div className={`${B}__options`}>
           {options.map(({ name, value }) => (
@@ -43,6 +47,24 @@ export default function ProductCard({ data, photos }) {
           color: ${styleVars.colors.green};
           font-size: 30px;
           font-weight: 500;
+          display: flex;
+          align-items: center;
+        }
+
+        .${B}__price::after {
+          content: '';
+          width: 30px;
+          height: 30px;
+          display: block;
+          background: url(/images/rub.svg) 50% no-repeat;
+          background-size: contain;
+          margin-left: 4px;
+        }
+
+        .${B}__bonus {
+          font-size: 20px;
+          padding-bottom: ${styleVars.padding * 2}px;
+          font-style: italic;
         }
 
         .${B}__option {

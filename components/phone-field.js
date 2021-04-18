@@ -9,33 +9,41 @@ export default function PhoneField({ value, onChange }) {
     <div className={B}>
       <TextField
         mix={`${B}__input`}
-        pattern="^\+7\(\d{3}\)\d{3}\d{4}$"
+        pattern="^\+7\(\d{3}\)\d{3}-\d{2}-\d{2}$"
         value={value}
         onChange={onChange}
-        mask="+7(999)9999999"
+        mask="+7(999)999-99-99"
+        placeholder="Номер телефона"
       />
 
       <style jsx global>
         {`
         .${B} {
-          width: 250px;
+          width: 320px;
           display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: ${styleVars.padding}px;
           border: 1px solid ${styleVars.colors.green};
           border-radius: ${styleVars.borderRadius}px;
-          padding: ${styleVars.padding}px;
-          justify-content: center;
+        }
+
+        .${B}::before {
+          content: '';
+          display: block;
+          background: url(/images/phone.svg) 50% no-repeat;
+          background-size: contain;
+          width: 30px;
+          height: 40px;
         }
 
         .${B} .${B}__input {
           font-size: 24px;
           font-weight: 300;
-          letter-spacing: 0.08rem;
-          color: #000;
-          padding: 0;
-          border-radius: 0;
-          border: none;
           text-align: center;
+          letter-spacing: 0.08rem;
           font-family: monospace;
+          border: none;
         }
         `}
       </style>

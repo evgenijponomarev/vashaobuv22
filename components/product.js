@@ -28,7 +28,7 @@ export default function Product({ productData }) {
           />
 
           {!!productData.extra_bonus && (
-            <div className={`${B}__badge`}>Кэшбек {productData.extra_bonus}%</div>
+            <div className={`${B}__badge`}>{productData.extra_bonus}% бонусами</div>
           )}
 
           <div className={`${B}__details`}>
@@ -41,16 +41,6 @@ export default function Product({ productData }) {
             </div>
 
             <div className={`${B}__props`}>
-              <div className={`${B}__prop`}>
-                <div className={`${B}__prop-name`}>
-                  Артикул:
-                </div>
-
-                <div className={`${B}__prop-value`}>
-                  {productData.articul}
-                </div>
-              </div>
-
               <div className={`${B}__prop`}>
                 <div className={`${B}__prop-name`}>
                   Размеры:
@@ -105,14 +95,28 @@ export default function Product({ productData }) {
 
         .${B}__name {
           font-size: 18px;
-          padding: ${styleVars.padding}px 4px;
+          padding: ${styleVars.padding}px 4px 0;
           color: ${styleVars.colors.green};
+          max-height: 54px;
+          overflow: hidden;
         }
 
         .${B}__price {
           font-size: 22px;
           font-weight: 500;
-          padding: 0 4px;
+          padding: ${styleVars.padding}px 4px 0;
+          display: flex;
+          align-items: center;
+        }
+
+        .${B}__price::after {
+          content: '';
+          width: 26px;
+          height: 26px;
+          display: block;
+          background: url(/images/rub.svg) 50% no-repeat;
+          background-size: contain;
+          margin-left: 4px;
         }
 
         .${B}__props {
@@ -122,6 +126,8 @@ export default function Product({ productData }) {
         .${B}__prop {
           padding: 8px 0;
           color: #5d5d5d;
+          display: flex;
+          justify-content: space-between;
         }
 
         .${B}__prop-name {
@@ -135,22 +141,6 @@ export default function Product({ productData }) {
           white-space: nowrap;
           position: relative;
           overflow: hidden;
-        }
-
-        .${B}__prop-value::after {
-          content: '';
-          display: block;
-          position: absolute;
-          right: 0;
-          top: 0;
-          width: 20px;
-          height: 100%;
-          background: linear-gradient(to right, rgba(255, 255, 255, 0), #fff);
-        }
-
-        .${B}__price::after {
-          content: ' руб.';
-          font-size: 18px;
         }
 
         .${B}:hover {

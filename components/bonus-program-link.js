@@ -2,19 +2,19 @@ import Link from 'next/link';
 import PropTypes from '../lib/prop-types';
 import styleVars from '../styles/vars';
 
-export default function ProfitLink({ storeCode }) {
-  const B = 'profit-link';
+export default function BonusProgramLink({ storeCode }) {
+  const B = 'bonus-program-description';
 
   return (
     <div className={B}>
       <Link href={{
-        pathname: '/profit/[storeCode]',
+        pathname: '/bonuses/check/[storeCode]',
         query: { storeCode },
       }}
       >
         <a className={`${B}__link`}>
           <span className={`${B}__link-text`}>
-            Перейти к самым выгодным предложениям
+            Сколько у меня бонусов?
           </span>
         </a>
       </Link>
@@ -41,20 +41,11 @@ export default function ProfitLink({ storeCode }) {
         .${B}__link::after {
           content: '';
           display: block;
-          width: 60px;
-          height: 60px;
-          background-image: url(/images/cashback.svg);
-          background-repeat: no-repeat;
-        }
-
-        .${B}__link::before {
-          transform: rotate(-80deg) translate(-40px, 36px);
-          margin-right: -10px;
-        }
-
-        .${B}__link::after {
-          transform: scale(-1, 1) rotate(-80deg) translate(-40px, 36px);
-          margin-left: -10px;
+          width: 30px;
+          height: 30px;
+          background: url(/images/question.svg) 50% no-repeat;
+          background-size: contain;
+          margin: 0 10px;
         }
 
         .${B}__link-text {
@@ -85,6 +76,6 @@ export default function ProfitLink({ storeCode }) {
   );
 }
 
-ProfitLink.propTypes = {
+BonusProgramLink.propTypes = {
   storeCode: PropTypes.string.isRequired,
 };

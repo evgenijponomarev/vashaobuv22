@@ -104,6 +104,12 @@ export default function PhotoGallery({ photos }) {
           background-position: 50%;
           cursor: pointer;
           border-radius: ${styleVars.borderRadius}px;
+          box-shadow: ${styleVars.boxShadow} rgba(0, 0, 0, .5);
+          transition: transform ${styleVars.transitionTime};
+        }
+
+        .${B}__photo:hover {
+          transform: scale(1.02);
         }
 
         .${B}__photo-closer {

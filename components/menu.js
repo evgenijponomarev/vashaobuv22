@@ -60,27 +60,29 @@ export default function Menu({ storeCode, isAdmin }) {
         Меню
       </button>
 
-      <ul className={`${B}__items`}>
-        {items[isAdmin ? 'admin' : 'public'].map(({ pathname, text }) => {
-          const classNameList = [
-            `${B}__item`,
-            (router.pathname === pathname ? `${B}__item_current` : ''),
-          ];
+      <div className={`${B}__container`}>
+        <ul className={`${B}__items`}>
+          {items[isAdmin ? 'admin' : 'public'].map(({ pathname, text }) => {
+            const classNameList = [
+              `${B}__item`,
+              (router.pathname === pathname ? `${B}__item_current` : ''),
+            ];
 
-          const href = isAdmin ? pathname : {
-            pathname,
-            query: { storeCode },
-          };
+            const href = isAdmin ? pathname : {
+              pathname,
+              query: { storeCode },
+            };
 
-          return (
-            <li className={classNameList.join(' ')} key={pathname}>
-              <Link href={href}>
-                <a className={`${B}__link`}>{text}</a>
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
+            return (
+              <li className={classNameList.join(' ')} key={pathname}>
+                <Link href={href}>
+                  <a className={`${B}__link`}>{text}</a>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
 
       <style jsx global>
         {`
@@ -104,6 +106,10 @@ export default function Menu({ storeCode, isAdmin }) {
           outline: none;
           cursor: pointer;
           font-size: 0;
+        }
+
+        .${B}__container {
+          height: 100%;
         }
 
         .${B}__items {
@@ -163,22 +169,27 @@ export default function Menu({ storeCode, isAdmin }) {
             display: block;
           }
 
-          .${B}__items {
+          .${B}__container {
             display: none;
+            padding: ${styleVars.padding}px;
             position: absolute;
             top: ${styleVars.headerHeigh}px;
             left: 0;
+            width: 100vw;
+          }
+
+          .${B}__items {
+            display: block;
             background-color: ${styleVars.colors.green};
             height: auto;
             border-radius: ${styleVars.borderRadius}px;
-            margin-top: ${styleVars.padding}px;
-            margin-left: ${styleVars.padding}px;
             padding: ${styleVars.padding}px 20px;
             box-shadow: ${styleVars.boxShadow} rgba(0, 0, 0, .5);
           }
 
           .${B}__item {
             height: auto;
+            display: block;
           }
 
           .${B}__link {
@@ -200,7 +211,7 @@ export default function Menu({ storeCode, isAdmin }) {
             align-items: flex-start;
           }
 
-          .${B}_opened .${B}__items {
+          .${B}_opened .${B}__container {
             display: block;
           }
 
