@@ -1,15 +1,7 @@
-import initializeBasicAuth from 'nextjs-basic-auth';
 import Layout from '../../components/layout';
 import AdminUploadForm from '../../components/admin-upload-form';
-import users from '../../data/users.json';
 
 const API_URL = '/api/data';
-
-const basicAuthCheck = initializeBasicAuth({
-  users: [
-    users.find(({ user }) => user === 'admin'),
-  ],
-});
 
 export default function AdminDataPage() {
   return (
@@ -22,9 +14,7 @@ export default function AdminDataPage() {
   );
 }
 
-export async function getServerSideProps({ req, res }) {
-  await basicAuthCheck(req, res);
-
+export async function getServerSideProps() {
   return {
     props: {},
   };

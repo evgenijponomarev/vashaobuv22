@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import _ from 'lodash';
 import axios from 'axios';
-import initializeBasicAuth from 'nextjs-basic-auth';
 import PropTypes from '../../lib/prop-types';
 import { getStores, getContacts, getAllStorePhotos } from '../../lib/data';
 import Layout from '../../components/layout';
@@ -9,11 +8,8 @@ import AdminTabs from '../../components/admin-tabs';
 import AdminPhotoGallery from '../../components/admin-photo-gallery';
 import AdminUploadForm from '../../components/admin-upload-form';
 import AdminContactsForm from '../../components/admin-contacts-form';
-import users from '../../data/users.json';
 
 const API_URL = '/api/contacts';
-
-const basicAuthCheck = initializeBasicAuth({ users });
 
 export default function AdminContactsPage({ stores, contacts, photos }) {
   const router = useRouter();
@@ -72,9 +68,7 @@ export default function AdminContactsPage({ stores, contacts, photos }) {
   );
 }
 
-export async function getServerSideProps({ req, res }) {
-  await basicAuthCheck(req, res);
-
+export async function getServerSideProps() {
   return {
     props: {
       stores: getStores(),
