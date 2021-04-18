@@ -19,6 +19,7 @@ export default function AdminContactsPage({
   apiPassword,
 }) {
   const router = useRouter();
+  console.log(stores)
 
   const photosByStore = stores.reduce((acc, store) => ({
     ...acc,

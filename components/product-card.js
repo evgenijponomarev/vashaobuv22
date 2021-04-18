@@ -53,18 +53,19 @@ export default function ProductCard({ data, photos }) {
 
         .${B}__price::after {
           content: '';
-          width: 30px;
-          height: 30px;
+          width: 33px;
+          height: 33px;
           display: block;
           background: url(/images/rub.svg) 50% no-repeat;
           background-size: contain;
-          margin-left: 4px;
         }
 
         .${B}__bonus {
           font-size: 20px;
           padding-bottom: ${styleVars.padding * 2}px;
           font-style: italic;
+          color: #f00;
+          font-weight: 500;
         }
 
         .${B}__option {

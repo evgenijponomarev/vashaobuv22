@@ -116,7 +116,6 @@ export default function Product({ productData }) {
           display: block;
           background: url(/images/rub.svg) 50% no-repeat;
           background-size: contain;
-          margin-left: 4px;
         }
 
         .${B}__props {
