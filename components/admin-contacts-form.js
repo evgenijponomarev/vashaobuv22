@@ -9,7 +9,12 @@ import getMapUrl from '../lib/get-map-url';
 
 const clipboardy = require('clipboardy');
 
-export default function AdminContactsForm({ contacts, action, storeName }) {
+export default function AdminContactsForm({
+  contacts,
+  action,
+  storeName,
+  apiPassword,
+}) {
   const B = 'admin-contacts-form';
 
   const router = useRouter();
@@ -53,6 +58,7 @@ export default function AdminContactsForm({ contacts, action, storeName }) {
       address,
       coordinates,
       zoom,
+      apiPassword,
     };
 
     try {
@@ -231,4 +237,5 @@ AdminContactsForm.propTypes = {
   contacts: PropTypes.contacts.isRequired,
   action: PropTypes.string.isRequired,
   storeName: PropTypes.string.isRequired,
+  apiPassword: PropTypes.string.isRequired,
 };

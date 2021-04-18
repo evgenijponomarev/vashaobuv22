@@ -3,6 +3,7 @@ import _ from 'lodash';
 import axios from 'axios';
 import PropTypes from '../../lib/prop-types';
 import { getStores, getContacts, getAllStorePhotos } from '../../lib/data';
+import apiHelpers from '../../lib/api-helpers';
 import Layout from '../../components/layout';
 import AdminTabs from '../../components/admin-tabs';
 import AdminPhotoGallery from '../../components/admin-photo-gallery';
@@ -11,7 +12,12 @@ import AdminContactsForm from '../../components/admin-contacts-form';
 
 const API_URL = '/api/contacts';
 
-export default function AdminContactsPage({ stores, contacts, photos }) {
+export default function AdminContactsPage({
+  stores,
+  contacts,
+  photos,
+  apiPassword,
+}) {
   const router = useRouter();
 
   const photosByStore = stores.reduce((acc, store) => ({
@@ -25,7 +31,7 @@ export default function AdminContactsPage({ stores, contacts, photos }) {
     const fileName = _.last(photoLink.split('/'));
 
     try {
-      await axios.delete(`${API_URL}/photos?fileName=${fileName}`);
+      await axios.delete(`${API_URL}/photos?fileName=${fileName}&apiPassword=${apiPassword}`);
       router.reload();
     } catch (err) {
       console.error(err);
@@ -44,15 +50,22 @@ export default function AdminContactsPage({ stores, contacts, photos }) {
                 contacts={contacts.find(({ store_code }) => store_code === store.code)}
                 action={API_URL}
                 storeName={store.name}
+                apiPassword={apiPassword}
               />
 
               <AdminUploadForm
                 action={`${API_URL}/photos`}
                 fieldName="photo"
-                hiddenFields={[{
-                  key: 'storeCode',
-                  value: store.code,
-                }]}
+                hiddenFields={[
+                  {
+                    key: 'storeCode',
+                    value: store.code,
+                  },
+                  {
+                    key: 'apiPassword',
+                    value: apiPassword,
+                  },
+                ]}
                 onSubmit={() => router.reload()}
               />
 
@@ -74,6 +87,7 @@ export async function getServerSideProps() {
       stores: getStores(),
       contacts: getContacts(),
       photos: getAllStorePhotos(),
+      apiPassword: apiHelpers.createPassword(),
     },
   };
 }
@@ -82,4 +96,5 @@ AdminContactsPage.propTypes = {
   stores: PropTypes.stores.isRequired,
   contacts: PropTypes.arrayOf(PropTypes.contacts).isRequired,
   photos: PropTypes.photos.isRequired,
+  apiPassword: PropTypes.string.isRequired,
 };

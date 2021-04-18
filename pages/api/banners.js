@@ -5,7 +5,9 @@ import apiHelpers from '../../lib/api-helpers';
 
 const actions = {
   DELETE(req, res) {
-    const { fileName } = req.query;
+    const { fileName, apiPassword } = req.query;
+
+    apiHelpers.checkPassword(apiPassword);
 
     if (path.dirname(fileName) !== '.') {
       throw new Error(`Invalid file name: ${fileName}`);
@@ -20,6 +22,10 @@ const actions = {
 
     form.parse(req, (err, fields, files) => {
       const storeCode = fields.storeCode[0];
+      const apiPassword = fields.apiPassword[0];
+
+      apiHelpers.checkPassword(apiPassword);
+
       const fileData = files.banner[0];
       fsHelpers.saveBanner(storeCode, fileData);
       apiHelpers.sendSuccessResponse(res);

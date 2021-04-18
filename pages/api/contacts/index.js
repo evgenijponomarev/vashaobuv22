@@ -8,7 +8,10 @@ const actions = {
       address,
       coordinates,
       zoom,
+      apiPassword,
     } = req.body;
+
+    apiHelpers.checkPassword(apiPassword);
 
     if (
       coordinates.some((coord) => Number.isNaN(coord) || typeof coord !== 'number')

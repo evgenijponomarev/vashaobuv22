@@ -3,6 +3,7 @@ import _ from 'lodash';
 import axios from 'axios';
 import PropTypes from '../../lib/prop-types';
 import { getStores, getBannerLinks } from '../../lib/data';
+import apiHelpers from '../../lib/api-helpers';
 import Layout from '../../components/layout';
 import AdminTabs from '../../components/admin-tabs';
 import AdminPhotoGallery from '../../components/admin-photo-gallery';
@@ -10,7 +11,7 @@ import AdminUploadForm from '../../components/admin-upload-form';
 
 const API_URL = '/api/banners';
 
-export default function AdminBannersPage({ stores, banners }) {
+export default function AdminBannersPage({ stores, banners, apiPassword }) {
   const router = useRouter();
 
   const bannersByStore = stores.reduce((acc, store) => ({
@@ -24,7 +25,7 @@ export default function AdminBannersPage({ stores, banners }) {
     const fileName = _.last(bannerLink.split('/'));
 
     try {
-      await axios.delete(`${API_URL}?fileName=${fileName}`);
+      await axios.delete(`${API_URL}?fileName=${fileName}&apiPassword=${apiPassword}`);
       router.reload();
     } catch (err) {
       console.error(err);
@@ -42,10 +43,16 @@ export default function AdminBannersPage({ stores, banners }) {
               <AdminUploadForm
                 action={API_URL}
                 fieldName="banner"
-                hiddenFields={[{
-                  key: 'storeCode',
-                  value: store.code,
-                }]}
+                hiddenFields={[
+                  {
+                    key: 'storeCode',
+                    value: store.code,
+                  },
+                  {
+                    key: 'apiPassword',
+                    value: apiPassword,
+                  },
+                ]}
                 onSubmit={() => router.reload()}
               />
 
@@ -66,6 +73,7 @@ export async function getServerSideProps() {
     props: {
       stores: getStores(),
       banners: getBannerLinks(),
+      apiPassword: apiHelpers.createPassword(),
     },
   };
 }
@@ -73,4 +81,5 @@ export async function getServerSideProps() {
 AdminBannersPage.propTypes = {
   stores: PropTypes.stores.isRequired,
   banners: PropTypes.photos.isRequired,
+  apiPassword: PropTypes.string.isRequired,
 };
