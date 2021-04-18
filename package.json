@@ -19,6 +19,7 @@
     "multiparty": "^4.2.2",
     "next": "^10.0.0",
     "next-connect": "^0.10.1",
+    "next-ym": "^2.3.5",
     "prop-types": "^15.7.2",
     "react": "17.0.1",
     "react-dom": "17.0.1",
