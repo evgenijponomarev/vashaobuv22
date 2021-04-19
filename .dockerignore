@@ -6,7 +6,9 @@ Dockerfile
 docker-compose.yml
 node_modules/
 nginx/
-data/
-public/banners
-public/shoes_photos
-public/stores_photos
+data/*
+logs/*
+secret/*
+public/banners/*
+public/shoes_photos/*
+public/stores_photos/*

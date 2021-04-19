@@ -16,13 +16,13 @@
 /build
 
 # data
-/import.log
-/api-password
-/data
-/uploads
-/public/shoes_photos
-/public/banners
-/public/stores_photos
+# /logs/*
+# /secret/*
+# /data/*
+# /uploads/*
+# /public/shoes_photos/*
+# /public/banners/*
+# /public/stores_photos/*
 
 # misc
 .DS_Store
