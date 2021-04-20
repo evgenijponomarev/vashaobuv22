@@ -23,7 +23,7 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: false,
+    fallback: true,
   };
 }
 
@@ -34,7 +34,7 @@ export async function getStaticProps({ params }) {
       stores: getStores(),
       banners: getBannerLinks(params.storeCode).reverse(),
     },
-    revalidate: 10,
+    revalidate: 3,
   };
 }
 

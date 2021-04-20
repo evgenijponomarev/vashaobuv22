@@ -23,19 +23,5 @@ RUN npm run build
 # Expose the listening port
 EXPOSE 3000
 
-# Run container as non-root (unprivileged) user
-# The node user is provided in the Node.js Alpine base image
-USER root
-
-RUN chmod 777 ./data
-RUN chmod 777 ./logs
-RUN chmod 777 ./secret
-RUN chmod 777 ./uploads
-RUN chmod 777 ./public/shoes_photos
-RUN chmod 777 ./public/stores_photos
-RUN chmod 777 ./public/banners
-
-USER node
-
 # Run npm start script with PM2 when container starts
 CMD [ "pm2-runtime", "npm", "--", "start" ]

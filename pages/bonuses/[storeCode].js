@@ -23,7 +23,7 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: false,
+    fallback: true,
   };
 }
 
@@ -33,7 +33,7 @@ export async function getStaticProps({ params }) {
       storeCode: params.storeCode,
       stores: getStores(),
     },
-    revalidate: 10,
+    revalidate: 3,
   };
 }
 
