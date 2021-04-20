@@ -2,7 +2,13 @@ version: '3'
 services:
   nextjs:
     build: ./
+    volumes:
+      - public:/usr/app/public
   nginx: 
     build: ./nginx
+    volumes:
+      - public:/usr/app/public
     ports:
       - 80:80
+volumes:
+  public:
