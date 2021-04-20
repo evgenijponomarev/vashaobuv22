@@ -8,16 +8,6 @@ const actions = {
     const form = new multiparty.Form();
 
     form.parse(req, async (error, fields, files) => {
-      const apiPassword = fields.apiPassword ? fields.apiPassword[0] : null;
-
-      try {
-        apiHelpers.checkPassword(apiPassword);
-      } catch (err) {
-        console.error(err);
-        apiHelpers.sendServerError(res);
-        return;
-      }
-
       const fileData = files.data[0];
       await fsHelpers.saveSourceData(fileData);
       const sourceData = fsHelpers.getSourceData();
