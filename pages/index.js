@@ -11,12 +11,11 @@ export default function Home({ stores }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   return {
     props: {
       stores: getStores(),
     },
-    revalidate: 3,
   };
 }
 

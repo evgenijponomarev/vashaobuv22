@@ -14,27 +14,13 @@ export default function ActionsPage({ storeCode, stores, banners }) {
   );
 }
 
-export async function getStaticPaths() {
-  const paths = getStores().map(({ code }) => ({
-    params: {
-      storeCode: code,
-    },
-  }));
-
-  return {
-    paths,
-    fallback: true,
-  };
-}
-
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ query }) {
   return {
     props: {
-      storeCode: params.storeCode,
+      storeCode: query.storeCode,
       stores: getStores(),
-      banners: getBannerLinks(params.storeCode).reverse(),
+      banners: getBannerLinks(query.storeCode).reverse(),
     },
-    revalidate: 3,
   };
 }
 

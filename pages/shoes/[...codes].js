@@ -2,7 +2,6 @@ import Link from 'next/link';
 import PropTypes from '../../lib/prop-types';
 import {
   getStores,
-  getAllProductCodes,
   getProductData,
   getProductPhotoLinks,
 } from '../../lib/data';
@@ -60,28 +59,8 @@ export default function ShoePage({
   );
 }
 
-export async function getStaticPaths() {
-  const storeCodes = getStores().map(({ code }) => code);
-  const productCodesByStore = storeCodes.map((storeCode) => ({
-    storeCode,
-    productCodes: getAllProductCodes(storeCode),
-  }));
-  const paths = productCodesByStore.flatMap(({ storeCode, productCodes }) => (
-    productCodes.map((productCode) => ({
-      params: {
-        codes: [storeCode, productCode],
-      },
-    }))
-  ));
-
-  return {
-    paths,
-    fallback: true,
-  };
-}
-
-export async function getStaticProps({ params }) {
-  const [storeCode, productCode] = params.codes;
+export async function getServerSideProps({ query }) {
+  const [storeCode, productCode] = query.codes;
   const stores = getStores();
   const productData = getProductData(storeCode, productCode);
   const productPhotos = getProductPhotoLinks(productCode);
