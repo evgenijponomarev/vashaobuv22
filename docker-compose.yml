@@ -4,17 +4,23 @@ services:
     container_name: vashaobuv22_nextjs
     build: ./
     volumes:
-      - public:/usr/app/public
+      - shoes_photos:/usr/app/public/shoes_photos
+      - stores_photos:/usr/app/public/stores_photos
+      - banners:/usr/app/public/banners
       - data:/usr/app/data
       - logs:/usr/app/logs
   nginx: 
     container_name: vashaobuv22_nginx
     build: ./nginx
     volumes:
-      - public:/usr/app/public
+      - shoes_photos:/usr/app/public/shoes_photos
+      - stores_photos:/usr/app/public/stores_photos
+      - banners:/usr/app/public/banners
     ports:
       - 80:80
 volumes:
-  public:
+  shoes_photos:
+  stores_photos:
+  banners:
   data:
   logs:
