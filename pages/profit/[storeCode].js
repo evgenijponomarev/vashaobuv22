@@ -12,7 +12,21 @@ export default function ProfitPage({
 }) {
   return (
     <Layout storeCode={storeCode} stores={stores} title="Выгодные предложения">
-      <ProductList products={products} pagination={pagination} filters={filters}/>
+      <ProductList
+        products={products}
+        pagination={pagination}
+        filters={filters}
+        placeholderText={(
+          <>
+            <p>
+              В настоящий момент все наши предложения одинаково выгодны,
+              и нам нечего выделить среди них.
+            </p>
+
+            <p>Но в ближайшее время здесь появится что-то особенное — не пропустите!</p>
+          </>
+        )}
+      />
     </Layout>
   );
 }

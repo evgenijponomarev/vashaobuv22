@@ -12,7 +12,12 @@ export default function NewPage({
 }) {
   return (
     <Layout storeCode={storeCode} stores={stores} title="Новинки">
-      <ProductList products={products} pagination={pagination} filters={filters}/>
+      <ProductList
+        products={products}
+        pagination={pagination}
+        filters={filters}
+        placeholderText="К сожалению сейчас новинок нет, но они обязательно скоро появятся."
+      />
     </Layout>
   );
 }

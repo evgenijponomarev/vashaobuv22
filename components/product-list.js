@@ -8,7 +8,12 @@ import Pagination from './pagination';
 import ContentLoader from './content-loader';
 import styleVars from '../styles/vars';
 
-export default function ProductList({ products, pagination, filters }) {
+export default function ProductList({
+  products,
+  pagination,
+  filters,
+  placeholderText,
+}) {
   const B = 'product-list';
 
   const router = useRouter();
@@ -70,6 +75,10 @@ export default function ProductList({ products, pagination, filters }) {
 
   return (
     <div className={B}>
+      {productList.length === 0 && (
+        <div className={`${B}__placeholder-text`}>{placeholderText}</div>
+      )}
+
       {isVisibleFilter() && (
         <div className={`${B}__sidebar`}>
           <Filter
@@ -80,31 +89,37 @@ export default function ProductList({ products, pagination, filters }) {
         </div>
       )}
 
-      <div className={`${B}__items`}>
-        {productList.map((product) => (
-          <div className={`${B}__item`} key={product.code}>
-            <Product productData={product}/>
-          </div>
-        ))}
+      {productList.length > 0 && (
+        <div className={`${B}__items`}>
+          {productList.map((product) => (
+            <div className={`${B}__item`} key={product.code}>
+              <Product productData={product}/>
+            </div>
+          ))}
 
-        {
-          pagination
-          && lastPageNum < pagination.pagesCount
-          && <ContentLoader onClick={getNextPage}/>
-        }
+          {
+            pagination
+            && lastPageNum < pagination.pagesCount
+            && <ContentLoader onClick={getNextPage}/>
+          }
 
-        {pagination && (
-          <Pagination
-            pagination={pagination}
-            onGetMore={getNextPage}
-          />
-        )}
-      </div>
+          {pagination && (
+            <Pagination
+              pagination={pagination}
+              onGetMore={getNextPage}
+            />
+          )}
+        </div>
+      )}
 
       <style jsx>
         {`
         .${B} {
           display: flex;
+        }
+
+        .${B}__placeholder-text {
+          padding: ${styleVars.padding}px;
         }
 
         .${B}__sidebar {
@@ -161,10 +176,12 @@ export default function ProductList({ products, pagination, filters }) {
 ProductList.defaultProps = {
   pagination: null,
   filters: null,
+  placeholderText: '',
 };
 
 ProductList.propTypes = {
   products: PropTypes.products.isRequired,
   pagination: PropTypes.pagination,
   filters: PropTypes.filters,
+  placeholderText: PropTypes.node,
 };
