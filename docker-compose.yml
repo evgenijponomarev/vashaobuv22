@@ -1,12 +1,14 @@
 version: '3'
 services:
   nextjs:
+    container_name: vashaobuv22_nextjs
     build: ./
     volumes:
       - public:/usr/app/public
       - data:/usr/app/data
       - logs:/usr/app/logs
   nginx: 
+    container_name: vashaobuv22_nginx
     build: ./nginx
     volumes:
       - public:/usr/app/public
