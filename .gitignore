@@ -14,8 +14,6 @@
 
 # production
 /build
-
-# data
 /logs/*
 /secret/*
 /data/*
@@ -23,6 +21,7 @@
 /public/shoes_photos/*
 /public/banners/*
 /public/stores_photos/*
+/nginx/.htpasswd
 
 # misc
 .DS_Store
