@@ -10,41 +10,19 @@ const actions = {
 
     const form = new multiparty.Form();
 
-    form.on('error', (err) => {
-      console.log(`Error parsing form: ${err.stack}`);
+    form.parse(req, async (error, fields, files) => {
+      console.log('DATA UPLOADING ERROR:\n');
+      console.log(error);
+      console.log('DATA UPLOADING FIELDS:\n');
+      console.log(fields);
+      console.log('DATA UPLOADING files:\n');
+      console.log(files);
+      const fileData = files.data[0];
+      await fsHelpers.saveSourceData(fileData);
+      const sourceData = fsHelpers.getSourceData();
+      updateData(sourceData);
+      apiHelpers.sendSuccessResponse(res);
     });
-
-    form.on('part', (part) => {
-      console.log('DATA UPLOADING PART:\n');
-      console.log(part);
-      part.resume();
-
-      part.on('error', (err) => {
-        console.error(err);
-      });
-    });
-
-    form.on('close', () => {
-      console.log('Upload completed!');
-      res.setHeader('text/plain');
-      res.end('ALL OK');
-    });
-
-    form.parse(req);
-
-    // form.parse(req, async (error, fields, files) => {
-    //   console.log('DATA UPLOADING ERROR:\n');
-    //   console.log(error);
-    //   console.log('DATA UPLOADING FIELDS:\n');
-    //   console.log(fields);
-    //   console.log('DATA UPLOADING files:\n');
-    //   console.log(files);
-    //   const fileData = files.data[0];
-    //   await fsHelpers.saveSourceData(fileData);
-    //   const sourceData = fsHelpers.getSourceData();
-    //   updateData(sourceData);
-    //   apiHelpers.sendSuccessResponse(res);
-    // });
   },
 };
 
