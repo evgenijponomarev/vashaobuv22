@@ -13,7 +13,9 @@ export default function ProductCard({ data, photos }) {
   return (
     <div className={B}>
       <div className={`${B}__details`}>
-        <div className={`${B}__price`}>{data.price}</div>
+        <div className={`${B}__price`}>
+          <span>{data.price}</span>
+        </div>
 
         {!!data.extra_bonus && (
           <div className={`${B}__bonus`}>
@@ -53,11 +55,12 @@ export default function ProductCard({ data, photos }) {
 
         .${B}__price::after {
           content: '';
-          width: 33px;
-          height: 33px;
+          width: 39px;
+          height: 39px;
           display: block;
           background: url(/images/rub.svg) 50% no-repeat;
           background-size: contain;
+          transform: translate(-4px, 1px);
         }
 
         .${B}__bonus {

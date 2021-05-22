@@ -37,7 +37,7 @@ export default function Product({ productData }) {
             </div>
 
             <div className={`${B}__price`}>
-              {productData.price}
+              <span>{productData.price}</span>
             </div>
 
             <div className={`${B}__props`}>
@@ -111,11 +111,12 @@ export default function Product({ productData }) {
 
         .${B}__price::after {
           content: '';
-          width: 26px;
-          height: 26px;
+          width: 20px;
+          height: 27px;
           display: block;
           background: url(/images/rub.svg) 50% no-repeat;
-          background-size: contain;
+          background-size: 30px auto;
+          transform: translateY(1px);
         }
 
         .${B}__props {
