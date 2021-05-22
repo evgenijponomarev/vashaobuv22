@@ -66,26 +66,30 @@ export default function ProductList({
     });
   }
 
-  function isVisibleFilter() {
-    const filterEntries = Object.entries(filters);
+  const filterEntries = Object.entries(filters);
 
-    return filterEntries.length > 0
-      && filterEntries.some(([, value]) => value.length > 1);
-  }
+  const isVisibleFilter = filterEntries.length > 0
+    && filterEntries.some(([, value]) => value.length > 1);
 
   return (
     <div className={B}>
-      {productList.length === 0 && (
-        <div className={`${B}__placeholder-text`}>{placeholderText}</div>
-      )}
-
-      {isVisibleFilter() && (
+      {isVisibleFilter && (
         <div className={`${B}__sidebar`}>
           <Filter
             filters={filters}
             onChange={onChangeFilter}
             onClear={onClearFilter}
           />
+        </div>
+      )}
+
+      {productList.length === 0 && !isVisibleFilter && (
+        <div className={`${B}__placeholder-text`}>{placeholderText}</div>
+      )}
+
+      {productList.length === 0 && isVisibleFilter && (
+        <div className={`${B}__placeholder-text`}>
+          Нет товаров, удовлетворяющих выбранным условиям.
         </div>
       )}
 
