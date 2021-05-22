@@ -93,7 +93,7 @@ export default function PhotoGallery({ photos }) {
         .${B}__item {
           padding: ${styleVars.padding}px;
           width: 450px;
-          height: 450px;
+          height: 600px;
         }
 
         .${B}__photo {
