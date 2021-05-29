@@ -93,7 +93,7 @@ export default function PhotoGallery({ photos }) {
         .${B}__item {
           padding: ${styleVars.padding}px;
           width: 450px;
-          height: 600px;
+          height: 675px;
         }
 
         .${B}__photo {
@@ -173,14 +173,14 @@ export default function PhotoGallery({ photos }) {
         @media (max-width: 900px) {
           .${B}__item {
             width: 50vw;
-            height: 50vw;
+            height: 75vw;
           }
         }
 
         @media (max-width: 450px) {
           .${B}__item {
             width: 100vw;
-            height: 100vw;
+            height: 150vw;
           }
 
           .${B}__button-arrow {
