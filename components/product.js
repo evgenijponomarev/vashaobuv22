@@ -97,7 +97,7 @@ export default function Product({ productData }) {
           font-size: 18px;
           padding: ${styleVars.padding}px 4px 0;
           color: ${styleVars.colors.green};
-          max-height: 54px;
+          max-height: 56px;
           overflow: hidden;
         }
 
